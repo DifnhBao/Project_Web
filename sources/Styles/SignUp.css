@@ -3,8 +3,8 @@ body {
   display: flex;
   justify-content: flex-end; /* đẩy hết về bên phải */
   margin: 0;
-  height: 100vh; 
-  background: linear-gradient(to top, #121212, #1b2a2f)
+  height: 100vh;
+  background: linear-gradient(to top, #121212, #1b2a2f);
 }
 
 .tittle {
@@ -21,7 +21,7 @@ h1 {
 }
 
 .container {
-  background: #121215;
+  background-color: #ffffff29;
   color: white;
   font-family: Arial;
   padding: 40px;
