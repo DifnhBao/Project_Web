@@ -29,7 +29,6 @@ body {
 .header .tittle img {
   width: 50%;
   margin-left: -8%;
-  cursor: pointer;
 }
 
 .back-next-search {
@@ -50,7 +49,7 @@ body {
   cursor: pointer;
 }
 
-.chevron:hover {
+.chevron button:hover {
   color: white;
   transform: scale(1.2s);
 }
@@ -139,14 +138,13 @@ body {
 
 .menu {
   grid-area: menu;
-  /* padding: 20px; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  /* align-items: center; */
   padding-top: 50px;
   padding-left: 10%;
   gap: 20px;
+  cursor: pointer;
 }
 
 .menu nav a {
@@ -193,7 +191,8 @@ body {
 
 .main h1 {
   margin-bottom: 20px;
-  font-size: 34px;
+  margin-top: 0px;
+  font-size: 50px;
   font-weight: bold;
 }
 .main h2 {

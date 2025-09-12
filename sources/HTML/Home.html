@@ -4,19 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="/sources/Styles/Home.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
+
+    <link rel="stylesheet" href="/sources/Styles/Home.css" />
+    <link rel="stylesheet" href="/sources/Styles/library.css" />
     <title>NhacCuaTui</title>
   </head>
   <body>
     <header class="header">
       <div class="tittle">
-        <img src="/images/logo.png" alt="logo" />
-        <!-- <i class="fa-solid fa-music"></i>
-        <p>EnjoyMusic</p> -->
+        <a href="/sources/HTML/Home.html"
+          ><img src="/images/logo.png" alt="logo"
+        /></a>
       </div>
 
       <div class="back-next-search">
@@ -31,7 +33,7 @@
             <i class="fa-solid fa-chevron-right"></i>
           </button>
         </div>
-  
+
         <div class="search-box">
           <i class="fa-solid fa-magnifying-glass i-search"></i>
           <input class="input-text" placeholder="Bạn muốn phát nội dung gì?" />
@@ -41,42 +43,59 @@
       <div class="header-right">
         <button class="sign-up head">
           <a href="/sources/HTML/SignUp.html" class="a-sign-up">Sign up</a>
-          >
         </button>
         <button class="login head">
           <a href="/sources/HTML/SignIn.html">Sign in</a>
           <!-- <i class="fa-solid fa-user"></i> -->
         </button>
       </div>
-      \
     </header>
 
     <div class="menu">
       <nav>
-        <a href="#"
-          ><i class="fa-solid fa-house" onclick="loadPage('home')"></i> Home</a
-        >
-        <a href="/sources/HTML/library.html" onclick="loadPage('library')"
+        <a onclick="loadPage('Home')"><i class="fa-solid fa-house"></i> Home</a>
+        <a onclick="loadPage('Library')"
           ><i class="fa-solid fa-book"></i> Library</a
         >
-        <a href="#" onclick="loadPage('playlist')"
+        <a onclick="loadPage('playlist')"
           ><i class="fa-solid fa-list"></i> My Playlist</a
         >
       </nav>
     </div>
 
-    <div class="main">
-      <h1>Home</h1>
-      <h2>Featured Playlists</h2>
-      <div class="playlists">
-        <div class="playlists-card"><img src="" alt="Playlist1" /></div>
-        <div class="playlists-card"><img src="" alt="Playlist2" /></div>
-        <div class="playlists-card"><img src="" alt="Playlist3" /></div>
-        <div class="playlists-card"><img src="" alt="Playlist4" /></div>
-
-        <!--  -->
+    <!-- TEMPLATE-MAIN -->
+    <!-- HOME -->
+    <template id="Home-template">
+      <div class="home-menu">
+        <h1>Home</h1>
+        <h2>Featured Playlists</h2>
+        <div class="playlists">
+          <div class="playlists-card"><img src="" alt="Playlist1" /></div>
+          <div class="playlists-card"><img src="" alt="Playlist2" /></div>
+          <div class="playlists-card"><img src="" alt="Playlist3" /></div>
+          <div class="playlists-card"><img src="" alt="Playlist4" /></div>
+        </div>
       </div>
-    </div>
+    </template>
+
+    <!-- LIBRARY -->
+    <template id="Library-template">
+      <div class="library-menu">
+        <h1>Your Library</h1>
+
+        <div class="info">
+          <p>Title</p>
+          <p>Artist</p>
+          <p>Album</p>
+          <p>Duration</p>
+        </div>
+      </div>
+    </template>
+    <!-- ------------- -->
+
+    <!-- ----CONTAINER-- -->
+    <div class="main"></div>
+    <!-- --------------- -->
 
     <footer class="info">
       <div class="info-player">
@@ -112,5 +131,7 @@
         <input type="range" value="50" min="0" max="100" />
       </div>
     </footer>
+
+    <script src="/sources/Scripts/Home.js"></script>
   </body>
 </html>
