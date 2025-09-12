@@ -3,20 +3,15 @@ function loadPage(page) {
   main.innerHTML = "";
 
   if (page === "Home") {
-    if (main.classList.contains("main-of-library")) {
-      main.classList.remove("main-of-library");
-    }
-
     const template = document.getElementById("Home-template");
-    const clone = template.content.cloneNode(true);
-    main.append(clone);
+    main.appendChild(template.content.cloneNode(true));
   } else if (page === "Library") {
-    main.classList.add("main-of-library");
-
     const template = document.getElementById("Library-template");
-    const clone = template.content.cloneNode(true);
-    main.appendChild(clone);
+    main.appendChild(template.content.cloneNode(true));
+  } else if (page === "MyPlaylist") {
+    loadMyPlaylist(); // gọi hàm trong MyPlaylist.js
   }
 }
 
+// Trang mặc định
 loadPage("Home");

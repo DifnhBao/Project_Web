@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="/sources/Styles/Home.css" />
     <link rel="stylesheet" href="/sources/Styles/library.css" />
+    <link rel="stylesheet" href="/sources/Styles/MyPlaylists.css" />
     <title>NhacCuaTui</title>
   </head>
   <body>
@@ -57,7 +58,7 @@
         <a onclick="loadPage('Library')"
           ><i class="fa-solid fa-book"></i> Library</a
         >
-        <a onclick="loadPage('playlist')"
+        <a onclick="loadMyPlaylist()"
           ><i class="fa-solid fa-list"></i> My Playlist</a
         >
       </nav>
@@ -88,6 +89,21 @@
           <p>Artist</p>
           <p>Album</p>
           <p>Duration</p>
+        </div>
+      </div>
+    </template>
+
+    <!-- My Playlists -->
+    <template id="MyPlaylist-template">
+      <div class="myplaylist-menu">
+        <div class="main-header">
+          <h1>My Playlist</h1>
+          <button class="new-playlist-btn">+ New Playlist</button>
+        </div>
+
+        <!-- Grid Playlist -->
+        <div class="playlist-grid" id="playlistGrid">
+          <!-- JS sẽ render các playlist ở đây -->
         </div>
       </div>
     </template>
@@ -133,5 +149,6 @@
     </footer>
 
     <script src="/sources/Scripts/Home.js"></script>
+    <script src="/sources/Scripts/MyPlaylist.js"></script>
   </body>
 </html>
