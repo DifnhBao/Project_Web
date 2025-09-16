@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="\Thachj\css\dash_board.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="Thachj/javascript/dash_board.js"></script>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2><i class="fa fa-music"></i> Admin Dashboard</h2>
+        <ul>
+            <li class="active"><i class="fa fa-home"></i> Dashboard</li>
+            <li><i class="fa fa-users"></i> User Management</li>
+            <li><i class="fa fa-music"></i> Music Management</li>
+            <li><i class="fa fa-user"></i> Artist Management</li>
+            <li><i class="fa fa-list"></i> Playlist Management</li>
+            <li><i class="fa fa-chart-bar"></i> Analytics & Reports</li>
+            <li><i class="fa fa-cog"></i> System Settings</li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <div class="topbar">
+            <input type="text" placeholder="Search">
+            <div class="icons">
+                <i class="fa fa-bell" style="font-size: 20px;"></i>
+                <i class="fa-solid fa-user-circle" style="font-size: 35px; padding-right: 8px;"></i>
+            </div>
+        </div>
+
+        <h1>Dashboard</h1>
+
+        <div class="cards">
+            <div class="card"><br><span>Total Users</span></div>
+            <div class="card"><br><span>Total Songs</span></div>
+            <div class="card"><br><span>Total Artists</span></div>
+            <div class="card"><br><span>Total Playlists</span></div>
+        </div>
+
+        <div class="charts">
+            <div class="chart">
+                <h3>New Users</h3>
+                <canvas id="lineChart"></canvas>
+            </div>
+            <div class="chart">
+                <h3>Music Genres</h3>
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+
+        <div class="lists">
+            <div class="list">
+                <h3>Top 5 Artists</h3>
+                <ol>
+                </ol>
+            </div>
+            <div class="list">
+                <h3>Top 5 Songs</h3>
+                <ol>
+
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script src="\Thachj\javascript\dash_board.js"></script>
+</body>
+
+</html>
