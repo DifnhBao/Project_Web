@@ -32,7 +32,8 @@
 }
 
 .new-playlist-btn:hover {
-  background-color: white;
+  /* background-color: white; */
+  color: rgb(88 196 220);
 }
 
 .playlist-grid {

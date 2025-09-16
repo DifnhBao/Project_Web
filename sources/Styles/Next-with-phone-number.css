@@ -1,9 +1,8 @@
-/* background-color:#1ed760; */
-
-
 body {
   font-family: Arial;
-  background-color: #121215;
+  background: linear-gradient(to top, #121212, #1b2a2f);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: white;
   display: flex;
   justify-content: center;
@@ -21,9 +20,9 @@ form h2 {
   font-size: 15px;
   width: 170px;
   height: 50px;
-  background-color: #121215;
+background-color: #FFFFFF29;
   color: white;
-   border: 1px solid #555;
+  border: 1px solid #555;
   border-radius: 5px;
   padding: 5px;
   margin-right: 10px;
@@ -34,25 +33,29 @@ form h2 {
   font-size: 15px;
   width: 500px;
   height: 40px;
-  background-color: #121215;
+  background-color: #ffffff29;
   color: white;
-   border: 1px solid #555;
+  border: 1px solid #555;
   border-radius: 5px;
   padding: 5px;
   margin-left: 10px;
 }
 
 button {
-    border: none;
-    background-color:#1ed760;
-    font-size: 15px;
-    margin-top: 50px;
-    width: 700px;
-    height: 50px;
-    border-radius: 30px;
-    font-weight: bold;
+  border: none;
+  background-color: rgb(88, 175, 223, 0.1);
+  color: rgb(88 196 220);
+  font-size: 15px;
+  margin-top: 50px;
+  width: 700px;
+  height: 50px;
+  border-radius: 30px;
+  font-weight: bold;
 }
 
 button:hover {
-    background-color: #1fdf64;
+  background-color: rgb(88 196 220);
+  color: white;
 }
+
+
