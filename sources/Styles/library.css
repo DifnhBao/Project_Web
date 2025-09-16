@@ -1,0 +1,30 @@
+/* ========== LIBRARY ========== */
+.table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #b3b3b3;
+}
+
+.table-header,
+.row {
+  display: grid;
+  grid-template-columns: 50px 1.7fr 1fr 1fr;
+  align-items: center;
+  padding: 15px;
+}
+
+.row:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 8px;
+}
+
+.cover {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}

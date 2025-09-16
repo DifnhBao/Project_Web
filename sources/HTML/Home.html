@@ -19,7 +19,7 @@
   <body>
     <!-- Sidebar -->
     <div class="menu">
-      <div class="tittle">
+      <div class="title">
         <a href="/sources/HTML/Home.html">
           <img src="/images/logo.png" alt="logo" />
         </a>
@@ -90,11 +90,34 @@
         <!-- LIBRARY -->
         <div id="library" class="library-menu section">
           <h1>Your Library</h1>
-          <div class="info">
-            <p>Title</p>
-            <p>Artist</p>
-            <p>Album</p>
-            <p>Duration</p>
+
+          <div class="table">
+            <div class="table-header">
+              <div class="col index">#</div>
+              <div class="col title">Title</div>
+              <div class="col artist">Artist</div>
+              <div class="col duration">Duration</div>
+            </div>
+
+            <div class="row">
+              <div class="col index">1</div>
+              <div class="col title">
+                <img src="song1.jpg" alt="cover" class="cover" />
+                <span>Phép Màu</span>
+              </div>
+              <div class="col artist">MAYDAYs, Minh Tốc & Lam</div>
+              <div class="col duration">04:26</div>
+            </div>
+
+            <div class="row">
+              <div class="col index">2</div>
+              <div class="col title">
+                <img src="song2.jpg" alt="cover" class="cover" />
+                <span>Kho Báu (with Rhymastic)</span>
+              </div>
+              <div class="col artist">(S)TRONG, Rhymastic</div>
+              <div class="col duration">03:37</div>
+            </div>
           </div>
         </div>
 
@@ -131,7 +154,6 @@
             <button class="play"><i class="fa-solid fa-repeat"></i></button>
           </div>
           <div class="run">
-            
             <input type="range" class="seek-bar" value="0" min="0" max="100" />
             <span class="current-time">00:00</span>
             <span class="music-time">00:00</span>
@@ -150,6 +172,6 @@
     <!-- JS -->
     <script src="/sources/Scripts/Home.js"></script>
     <script src="/sources/Scripts/MyPlaylist.js"></script>
-    <script src="/sources/Scripts/"></script>
+    <!-- <script src="/sources/Scripts/"></script> -->
   </body>
 </html>

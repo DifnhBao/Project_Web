@@ -9,13 +9,16 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
     <link rel="stylesheet" href="/sources/Styles/dashboard.css" />
+    <link rel="stylesheet" href="/sources/Styles/admin_manage.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style></style>
   </head>
   <body>
     <!-- Sidebar -->
     <div class="sidebar">
-      <h2>Admin Dashboard</h2>
+      <div class="title">
+        <img src="/images/logo.png" alt="logo" />
+      </div>
 
       <a href="#" class="active" data-section="dashboard">
         <i class="fa-solid fa-house"></i> Dashboard
@@ -43,7 +46,7 @@
       <div class="header">
         <h2 id="page-title">Dashboard</h2>
         <div class="admin-info">
-          <span>Admin Name</span>
+          <span>Hi, Admin</span>
           <i class="fa-solid fa-user-circle"></i>
           <a href="/sources/HTML/SignIn.html" class="logout-from-dashboard">
             <i class="fa-solid fa-power-off"></i> Logout
@@ -56,35 +59,40 @@
         <div id="dashboard" class="section active">
           <!-- Cards -->
           <div class="cards">
-            <div class="card">
-              <h3>100</h3>
-              <p>Total User</p>
-            </div>
-            <div class="card">
-              <h3>230</h3>
-              <p>Total Songs</p>
-            </div>
-            <div class="card">
-              <h3>5</h3>
-              <p>Total Admin</p>
-            </div>
-            <div class="card">
-              <h3>📈</h3>
-              <p>Registrations</p>
-            </div>
+            <div class="card"><br /><span>Total Users</span></div>
+            <div class="card"><br /><span>Total Songs</span></div>
+            <div class="card"><br /><span>Total Artists</span></div>
+            <div class="card"><br /><span>Total Playlists</span></div>
           </div>
 
           <!-- Chart -->
-          <div class="chart-container">
-            <h3>Statistics</h3>
-            <canvas id="myChart"></canvas>
+          <div class="charts">
+            <div class="chart">
+              <h3>New Users</h3>
+              <canvas id="lineChart"></canvas>
+            </div>
+            <div class="chart">
+              <h3>Music Genres</h3>
+              <canvas id="barChart"></canvas>
+            </div>
+          </div>
+
+          <div class="lists">
+            <div class="list">
+              <h3>Top 5 Artists</h3>
+              <ol></ol>
+            </div>
+            <div class="list">
+              <h3>Top 5 Songs</h3>
+              <ol></ol>
+            </div>
           </div>
         </div>
 
         <!-- Manage User -->
         <div id="users" class="section">
-          <h3>Manage User</h3>
-          <p>Danh sách user hiển thị ở đây...</p>
+          <h3>User Manage</h3>
+          <p>Danh sách người dùng hiển thị ở đây...</p>
         </div>
 
         <!-- Manage Services -->
@@ -95,8 +103,47 @@
 
         <!-- Manage Admin -->
         <div id="admins" class="section">
-          <h3>Manage Admin</h3>
-          <p>Danh sách admin hiển thị ở đây...</p>
+          <div class="content-header">
+            <button style="width: fit-content" class="add-btn">
+              <i class="fa-solid fa-plus"></i> Add Admin
+            </button>
+          </div>
+
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email / Phone number</th>
+                <th>Role</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Bao</td>
+                <td>Dinh</td>
+                <td>dinhbao123@gmail.com</td>
+                <td>admin</td>
+                <td><button class="edit-btn">Edit</button></td>
+              </tr>
+              <tr>
+                <td>Thach</td>
+                <td>Dinh</td>
+                <td>dinhthach11@gmail.com</td>
+                <td>admin</td>
+                <td><button class="edit-btn">Edit</button></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <!-- <td><button class="edit-btn">Edit</button></td> -->
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         <!-- Statistics -->

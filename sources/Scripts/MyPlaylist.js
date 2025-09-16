@@ -1,5 +1,3 @@
-
-
 // Mock data (sau này thay bằng API)
 const playlists = [
   { title: "Chill Vibes", songs: 12 },
@@ -26,12 +24,6 @@ function renderPlaylists(container, data) {
 
 // Load MyPlaylist page
 function loadMyPlaylist() {
-  const main = document.querySelector(".main");
-  main.innerHTML = "";
-
-  const template = document.getElementById("MyPlaylist-template");
-  main.appendChild(template.content.cloneNode(true));
-
   const playlistGrid = document.getElementById("playlistGrid");
   renderPlaylists(playlistGrid, playlists);
 }

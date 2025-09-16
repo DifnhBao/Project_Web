@@ -1,0 +1,64 @@
+.content-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.add-btn {
+  background-color: rgb(88, 175, 223, 0.1);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-weight: bold;
+}
+
+.add-btn:hover {
+  background-color: rgb(88 196 220);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  overflow: hidden;
+  font-weight: bold;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 14px;
+  color: #ddd;
+  background-color: rgb(88, 175, 223, 0.1);
+}
+
+.admin-table thead {
+  background-color: #222;
+}
+
+.admin-table tr:nth-child(even) {
+  background-color: #181818;
+}
+
+.edit-btn {
+  background-color: rgb(88 196 220);
+  font-weight: bold;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.edit-btn:hover {
+  background-color: #444;
+}

@@ -1,19 +1,34 @@
-const links = document.querySelectorAll(".menu a");
-const sections = document.querySelectorAll(".section");
-const pageTitle = document.getElementById("page-title");
+// Lấy tất cả các menu item
+let menuItems = document.querySelectorAll(".menu nav a");
 
-links.forEach((link) => {
-  link.addEventListener("click", () => {
-    links.forEach((l) => l.classList.remove("active"));
-    link.classList.add("active");
+// Lặp qua từng menu item
+for (let i = 0; i < menuItems.length; i++) {
+  menuItems[i].addEventListener("click", function (e) {
+    e.preventDefault();
 
-    sections.forEach((sec) => sec.classList.remove("active"));
-    const sectionId = link.getAttribute("data-section");
-    document.getElementById(sectionId).classList.add("active");
+    // Bỏ class active ở tất cả menu
+    for (let j = 0; j < menuItems.length; j++) {
+      menuItems[j].classList.remove("active");
+    }
+    this.classList.add("active");
 
-    pageTitle.textContent = link.textContent.trim();
+    // Ẩn tất cả section
+    let sections = document.querySelectorAll(".section");
+    for (let k = 0; k < sections.length; k++) {
+      sections[k].classList.remove("active");
+    }
+
+    // Hiện section tương ứng
+    let target = this.getAttribute("data-section");
+    let section = document.getElementById(target);
+    section.classList.add("active");
+
+    // Nếu là playlist thì gọi render
+    if (target === "playlist") {
+      loadMyPlaylist();
+    }
   });
-});
+}
 
 function getGreeting() {
   const now = new Date();
