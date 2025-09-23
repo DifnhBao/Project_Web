@@ -23,6 +23,7 @@ body {
   left: 0;
   bottom: 0;
   width: 250px;
+  background: #ffffff0a;
 }
 
 .menu .title {
@@ -205,20 +206,46 @@ body {
   gap: 20px;
 }
 
+.playlists {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+}
+
 .playlists-card {
-  width: 180px;
-  height: 180px;
-  background: #ddd;
-  border-radius: 10px;
+  position: relative;
+  border-radius: 12px;
   overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  /* background: #222; */
+  height: 200px;
 }
 
 .playlists-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
+.playlists-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+.playlist-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+}
 /* ========== FOOTER PLAYER ========== */
 .info {
   position: fixed;
@@ -378,3 +405,6 @@ body {
 .section.active {
   display: block; /* chỉ hiện section đang active */
 }
+
+
+/*  company info */

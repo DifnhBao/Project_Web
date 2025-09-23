@@ -43,15 +43,10 @@
       <header class="header">
         <div class="back-next-search">
           <div class="back chevron">
-            <button>
-              <i class="fa-solid fa-chevron-left"></i>
-            </button>
+            <button><i class="fa-solid fa-chevron-left"></i></button>
           </div>
-
           <div class="next chevron">
-            <button>
-              <i class="fa-solid fa-chevron-right"></i>
-            </button>
+            <button><i class="fa-solid fa-chevron-right"></i></button>
           </div>
 
           <div class="search-box">
@@ -79,12 +74,9 @@
         <div id="home" class="home-menu section active">
           <div id="greeting" class="greeting-text"></div>
           <h2>Featured Playlists</h2>
-          <div class="playlists">
-            <div class="playlists-card"><img src="" alt="Playlist1" /></div>
-            <div class="playlists-card"><img src="" alt="Playlist2" /></div>
-            <div class="playlists-card"><img src="" alt="Playlist3" /></div>
-            <div class="playlists-card"><img src="" alt="Playlist4" /></div>
-          </div>
+          <div class="playlists" id="featuredPlaylists"></div>
+
+          
         </div>
 
         <!-- LIBRARY -->
@@ -99,25 +91,7 @@
               <div class="col duration">Duration</div>
             </div>
 
-            <div class="row">
-              <div class="col index">1</div>
-              <div class="col title">
-                <img src="song1.jpg" alt="cover" class="cover" />
-                <span>Phép Màu</span>
-              </div>
-              <div class="col artist">MAYDAYs, Minh Tốc & Lam</div>
-              <div class="col duration">04:26</div>
-            </div>
-
-            <div class="row">
-              <div class="col index">2</div>
-              <div class="col title">
-                <img src="song2.jpg" alt="cover" class="cover" />
-                <span>Kho Báu (with Rhymastic)</span>
-              </div>
-              <div class="col artist">(S)TRONG, Rhymastic</div>
-              <div class="col duration">03:37</div>
-            </div>
+            <div id="rowTable"></div>
           </div>
         </div>
 
@@ -170,8 +144,8 @@
     </div>
 
     <!-- JS -->
-    <script src="/sources/Scripts/Home.js"></script>
+    <script type="module" src="/sources/Scripts/Home.js"></script>
+    <script src="/sources/Scripts/Library.js"></script>
     <script src="/sources/Scripts/MyPlaylist.js"></script>
-    <!-- <script src="/sources/Scripts/"></script> -->
   </body>
 </html>

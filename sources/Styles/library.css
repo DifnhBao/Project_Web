@@ -1,30 +1,64 @@
-/* ========== LIBRARY ========== */
 .table {
   display: flex;
   flex-direction: column;
   width: 100%;
   margin-top: 20px;
   font-family: Arial, sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   color: #b3b3b3;
 }
 
-.table-header,
+.table-header {
+  display: grid;
+  grid-template-columns: 50px 2fr 1.2fr 0.8fr;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: #aaa;
+}
+
 .row {
   display: grid;
-  grid-template-columns: 50px 1.7fr 1fr 1fr;
+  grid-template-columns: 50px 2fr 1.2fr 0.8fr; /* 4 cột */
   align-items: center;
-  padding: 15px;
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.2s, color 0.2s;
 }
 
 .row:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border-radius: 8px;
+  color: #fff;
+  border-radius: 6px;
 }
 
-.cover {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
+.col.index {
+  text-align: center;
+  font-size: 14px;
+  color: #999;
+}
+
+.col.title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+  color: #fff;
+  overflow: hidden;
+}
+
+.col.artist,
+.col.duration {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.col.title img {
+  width: 42px;
+  height: 42px;
+  border-radius: 4px;
+  object-fit: cover;
 }

@@ -1,25 +1,32 @@
 // Mock data (sau này thay bằng API)
 const playlists = [
-  { title: "Chill Vibes", songs: 12 },
-  { title: "Workout Mix", songs: 8 },
-  { title: "Love Songs", songs: 20 },
-  { title: "Hip Hop Hits", songs: 15 },
-  { title: "Study Focus", songs: 5 },
-  { title: "Party Time", songs: 18 },
+  {
+    title: "Chill Vibes",
+    songs: 12,
+    image:
+      "https://image-cdn.nct.vn/playlist/2025/07/25/a/2/1/0/1753435482545_300.jpg",
+  },
+  { title: "Workout Mix", songs: 8, image:'' },
+  { title: "Love Songs", songs: 20, image:'' },
+  { title: "Hip Hop Hits", songs: 15, image:'' },
+  { title: "Study Focus", songs: 5, image:'' },
+  { title: "Party Time", songs: 18, image:'' },
 ];
 
 // Render playlists
-function renderPlaylists(container, data) {
-  container.innerHTML = "";
-  data.forEach((pl) => {
-    container.innerHTML += `
+function renderPlaylists(container, playlists) {
+  container.innerHTML = playlists
+    .map(
+      (playlist) =>
+        `
       <div class="playlist-card">
-        <div class="playlist-thumb"></div>
-        <p class="playlist-title">${pl.title}</p>
-        <p class="playlist-count">${pl.songs} songs</p>
+        <img src="${playlist.image}" alt="${playlist.name}" />
+        <p class="playlist-title">${playlist.title}</p>
+        <p class="playlist-count">${playlist.songs} songs</p>
       </div>
-    `;
-  });
+    `
+    )
+    .join("");
 }
 
 // Load MyPlaylist page
