@@ -292,6 +292,31 @@ body {
   color: #bbb;
 }
 
+.info-player button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  color: rgb(189, 189, 189);
+  margin-left: 16px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.info-player button:hover {
+  color: rgb(88 196 220);
+}
+
+/* Nút trái tim (like) */
+.like-icon i {
+  font-size: 22px;
+}
+
+/* Nút 3 chấm ngang */
+.expand-icon i {
+  font-size: 22px;
+}
+
 .player-center {
   display: flex;
   flex-direction: column;
@@ -301,7 +326,7 @@ body {
 
 .control {
   display: flex;
-  gap: 15px;
+  gap: 25px;
   font-size: 18px;
 }
 
@@ -406,5 +431,87 @@ body {
   display: block; /* chỉ hiện section đang active */
 }
 
-
 /*  company info */
+.company-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 60px;
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: sans-serif;
+  color: #ccc;
+  font-weight: normal;
+}
+
+.company-logo {
+  width: 100px;
+  margin-bottom: 24px;
+}
+
+.company-info h3 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.company-info ul {
+  font-size: 13px;
+  padding: 0;
+  margin-left: 20px;
+  margin-top: 10px;
+  color: #8f8f8f;
+}
+
+.company-info ul li {
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.company-right img:first-child {
+  display: block;
+  margin-bottom: 10px;
+  margin-top: 90px;
+  width: 105px;
+  margin-left: 16px;
+}
+
+.company-right img {
+  margin-bottom: 10px;
+  width: 125px;
+}
+
+.company-info a {
+  color: #1db954;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.company-info a:hover {
+  text-decoration: underline;
+}
+
+.company-bottom {
+  margin-top: 15px;
+  font-size: 13px;
+  color: #aaa;
+  text-align: center;
+}
+
+.company-bottom a {
+  color: #888;
+  margin: 0 5px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.company-bottom a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.company-bottom p {
+  margin-top: 5px;
+  color: #888;
+}
