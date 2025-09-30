@@ -21,15 +21,35 @@
       </header>
       <h1>Register to start listening</h1>
 
-      <form action="" class="form-group">
-        <label for="last-name">Last Name</label>
-        <input type="text" id="last-name" placeholder="Last Name" />
-        <label for="first-name">First Name</label>
-        <input type="text" id="first-name" placeholder="First Name" />
-        <label for="dob">Date of Birth</label>
-        <input type="text" id="dob" placeholder="dd/mm/yyy" />
+      <form
+        id="registerForm"
+        action="/register"
+        method="POST"
+        class="form-group"
+      >
+        <label for="username">User Name</label>
+        <input type="text" id="username" placeholder="username" />
+
         <label for="email">Email</label>
         <input type="text" id="email" placeholder="yourEmail@domain.com" />
+
+        <label for="password">Password</label>
+        <input type="text" id="password" placeholder="password" />
+
+        <div class="rules">
+          <p>Your password must have at least</p>
+          <ul class="requirements">
+            <li id="req-letter">1 letter</li>
+            <li id="req-digit">
+              1 digit or special character (for example: # ? ! &)
+            </li>
+            <li id="req-length">10 characters</li>
+          </ul>
+        </div>
+
+        <label for="confirm-password">Password Confirmation</label>
+        <input type="text" id="confirm-password" placeholder="" />
+
         <div class="usePhone">
           <a
             href="/sources/HTML/Next-with-phone-number.html"
@@ -39,7 +59,7 @@
         </div>
 
         <div class="submit">
-          <a href="/sources/HTML/SignUp_st1.html" class="next-create-password"
+          <a href="#" class="next-create-password"
             >Next</a
           >
         </div>
@@ -49,5 +69,7 @@
         <a href="/sources/HTML/SignIn.html">Sign In</a>
       </div>
     </div>
+
+    <script src="/sources/Scripts/SignUp_st1.js"></script>
   </body>
 </html>

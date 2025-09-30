@@ -152,6 +152,7 @@
       <!-- Footer -->
       <footer class="info">
         <div class="info-player">
+
           <a class="background-singer"><img src="" alt="Singer" /></a>
           <div class="info-song">
             <a href="#" class="song-tittle">Song Title</a>
@@ -170,6 +171,7 @@
         </div>
 
         <div class="player-center">
+
           <div class="control">
             <button class="play"><i class="fa-solid fa-shuffle"></i></button>
             <button class="play">
@@ -181,11 +183,12 @@
             </button>
             <button class="play"><i class="fa-solid fa-repeat"></i></button>
           </div>
+
           <div class="run">
-            <input type="range" class="seek-bar" value="0" min="0" max="100" />
-            <span class="current-time">00:00</span>
-            <span class="music-time">00:00</span>
-          </div>
+      <span class="current-time">00:00</span>
+      <input type="range" class="seek-bar" value="0" min="0" max="100" />
+      <span class="music-time">00:00</span>
+    </div>
         </div>
 
         <div class="vol">
@@ -199,7 +202,7 @@
 
     <!-- JS -->
     <script type="module" src="/sources/Scripts/Home.js"></script>
-    <script src="/sources/Scripts/Library.js"></script>
-    <script src="/sources/Scripts/MyPlaylist.js"></script>
+    <script type="module" src="/sources/Scripts/Library.js"></script>
+    <script type="module" src="/sources/Scripts/MyPlaylist.js"></script>
   </body>
 </html>

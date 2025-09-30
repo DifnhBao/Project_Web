@@ -85,3 +85,56 @@ body {
   color: #1ed760;
   margin-top: 10px;
 }
+
+.rules p {
+  font-weight: bold;
+}
+
+.requirements {
+  list-style: none;
+  padding: 0;
+}
+
+.requirements li {
+  position: relative;
+  padding-left: 20px;
+  margin: 8px 0;
+  color: #aaa; /* mặc định xám */
+}
+
+.requirements li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #555; /* mặc định xám đậm */
+}
+
+/* Nếu thỏa điều kiện -> xanh */
+.requirements li.valid {
+  color: #1ed760;
+}
+
+.requirements li.valid::before {
+  background-color: #1ed760;
+}
+
+/* Nếu sai điều kiện -> đỏ */
+.requirements li.invalid {
+  color: #ff4d4d;
+}
+
+.requirements li.invalid::before {
+  background-color: #ff4d4d;
+}
+
+.rules {
+  display: none;
+}
+
+.visible {
+  display: block;
+}

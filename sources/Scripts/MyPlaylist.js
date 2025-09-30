@@ -6,11 +6,11 @@ const playlists = [
     image:
       "https://image-cdn.nct.vn/playlist/2025/07/25/a/2/1/0/1753435482545_300.jpg",
   },
-  { title: "Workout Mix", songs: 8, image:'' },
-  { title: "Love Songs", songs: 20, image:'' },
-  { title: "Hip Hop Hits", songs: 15, image:'' },
-  { title: "Study Focus", songs: 5, image:'' },
-  { title: "Party Time", songs: 18, image:'' },
+  { title: "Workout Mix", songs: 8, image: "" },
+  { title: "Love Songs", songs: 20, image: "" },
+  { title: "Hip Hop Hits", songs: 15, image: "" },
+  { title: "Study Focus", songs: 5, image: "" },
+  { title: "Party Time", songs: 18, image: "" },
 ];
 
 // Render playlists
@@ -30,7 +30,7 @@ function renderPlaylists(container, playlists) {
 }
 
 // Load MyPlaylist page
-function loadMyPlaylist() {
+export function loadMyPlaylist() {
   const playlistGrid = document.getElementById("playlistGrid");
   renderPlaylists(playlistGrid, playlists);
 }

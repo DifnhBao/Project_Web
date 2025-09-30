@@ -1,10 +1,11 @@
-const passwordInput = document.getElementById("create-password");
+const passwordInput = document.getElementById("password");
 const reqLetter = document.getElementById("req-letter");
 const reqDigit = document.getElementById("req-digit");
 const reqLength = document.getElementById("req-length");
 
 passwordInput.addEventListener("input", function () {
   const value = passwordInput.value;
+  document.querySelector(".rules").classList.add("visible");
 
   // Điều kiện 1: có ít nhất 1 chữ cái
   if (/[a-zA-Z]/.test(value)) {
