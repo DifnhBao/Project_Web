@@ -60,10 +60,12 @@
 
         <div class="header-right">
           <button class="sign-up head">
-            <a href="/sources/HTML/SignUp.html" class="a-sign-up">Sign up</a>
+            <a href="/sources/HTML/Page/SignUp.html" class="a-sign-up"
+              >Sign up</a
+            >
           </button>
           <button class="login head">
-            <a href="/sources/HTML/SignIn.html">Sign in</a>
+            <a href="/sources/HTML/Page/SignIn.html">Sign in</a>
           </button>
         </div>
       </header>
@@ -152,7 +154,6 @@
       <!-- Footer -->
       <footer class="info">
         <div class="info-player">
-
           <a class="background-singer"><img src="" alt="Singer" /></a>
           <div class="info-song">
             <a href="#" class="song-tittle">Song Title</a>
@@ -171,24 +172,25 @@
         </div>
 
         <div class="player-center">
-
           <div class="control">
             <button class="play"><i class="fa-solid fa-shuffle"></i></button>
-            <button class="play">
+            <button id="prevBtn" class="play">
               <i class="fa-solid fa-backward-step"></i>
             </button>
-            <button class="play-btn"><i class="fas fa-play"></i></button>
-            <button class="play">
+            <button id="playBtn" class="play-btn">
+              <i class="fas fa-play"></i>
+            </button>
+            <button id="nextBtn" class="play">
               <i class="fa-solid fa-forward-step"></i>
             </button>
             <button class="play"><i class="fa-solid fa-repeat"></i></button>
           </div>
 
           <div class="run">
-      <span class="current-time">00:00</span>
-      <input type="range" class="seek-bar" value="0" min="0" max="100" />
-      <span class="music-time">00:00</span>
-    </div>
+            <span class="current-time">00:00</span>
+            <input type="range" class="seek-bar" value="0" min="0" max="100" />
+            <span class="music-time">00:00</span>
+          </div>
         </div>
 
         <div class="vol">

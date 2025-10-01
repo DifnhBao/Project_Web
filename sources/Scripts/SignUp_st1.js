@@ -36,7 +36,7 @@ passwordInput.addEventListener("input", function () {
 });
 
 const toggle = document.querySelector(".password-box .toggle i");
-const password_Input = document.getElementById("create-password");
+const password_Input = document.getElementById("password");
 
 toggle.addEventListener("click", () => {
   if (password_Input.type === "password") {

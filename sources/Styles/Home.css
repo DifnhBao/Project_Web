@@ -209,7 +209,8 @@ body {
 .playlists {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 30px;
+  row-gap: 100px; /* khoảng cách giữa các hàng */
+  column-gap: 30px; /* khoảng cách giữa các cột */
   margin-top: 20px;
 }
 
@@ -252,7 +253,7 @@ body {
   left: 0; /* chiếm từ cạnh trái */
   right: 0; /* đến cạnh phải */
   bottom: 0;
-  width: 100%; /* full chiều rộng */
+  width: 100%;
   height: 100px;
   background: #181818;
   display: flex;
@@ -276,20 +277,32 @@ body {
   overflow: hidden;
 }
 
+.background-singer img {
+  width: 100%;
+}
+
 .info-song a {
   display: block;
   text-decoration: none;
-  color: white;
 }
 
 .song-tittle {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
+  line-height: 20px;
+  color: #ffffff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* Ngăn xuống dòng */
+  max-width: 200px; /* hoặc % tùy khung info */
+  display: block;
 }
 
 .artist-name {
-  font-size: 14px;
-  color: #bbb;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #bdbdbd;
 }
 
 .info-player button {
@@ -321,6 +334,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   gap: 10px;
 }
 
@@ -347,6 +363,22 @@ body {
   font-size: 20px;
   color: black;
 }
+
+/* #playBtn i {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Khi chuyển sang trạng thái playing -> đổi icon */
+#playBtn.playing i {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+#playBtn.playing i::before {
+  content: "\f04c"; 
+  opacity: 1;
+  transform: scale(1);
+} */
 
 .control button {
   cursor: pointer;
@@ -375,7 +407,8 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 12px;
+  font-size: 11px;
+  color: #8f8f8f;
   width: 100%;
 }
 
