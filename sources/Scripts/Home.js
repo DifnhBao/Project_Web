@@ -7,6 +7,8 @@ import { setPlaylist } from "./Player.js";
 let menuItems = document.querySelectorAll(".menu nav a");
 menuItems.forEach((item) => {
   item.addEventListener("click", (e) => {
+    console.log("Clicked menu:", item.dataset.target);
+
     e.preventDefault();
     menuItems.forEach((el) => el.classList.remove("active"));
     item.classList.add("active");
@@ -61,7 +63,7 @@ async function renderFeaturedPlaylists() {
     </div>
   `
     )
-    .join("");  
+    .join("");
 
   // Khi click playlist -> load vào player
   container.querySelectorAll(".playlists-card").forEach((card, index) => {
@@ -72,3 +74,15 @@ async function renderFeaturedPlaylists() {
 }
 
 document.addEventListener("DOMContentLoaded", renderFeaturedPlaylists);
+
+const bannerRow = document.querySelector(".banner-row");
+const leftBtn = document.querySelector(".banner-btn.left");
+const rightBtn = document.querySelector(".banner-btn.right");
+
+leftBtn.addEventListener("click", () => {
+  bannerRow.scrollBy({ left: -1500, behavior: "smooth" });
+});
+
+rightBtn.addEventListener("click", () => {
+  bannerRow.scrollBy({ left: 1500, behavior: "smooth" });
+});

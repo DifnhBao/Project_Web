@@ -11,7 +11,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
 
-    <!-- CSS -->
+    <!-- CSS link -->
     <link rel="stylesheet" href="/sources/Styles/Home.css" />
     <link rel="stylesheet" href="/sources/Styles/library.css" />
     <link rel="stylesheet" href="/sources/Styles/MyPlaylists.css" />
@@ -75,6 +75,101 @@
         <!-- HOME -->
         <div id="home" class="home-menu section active">
           <div id="greeting" class="greeting-text"></div>
+
+          <!-- Banner -->
+          <div class="banner-container">
+            <button class="banner-btn left">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <div class="banner-row">
+              <div class="banner-item">
+                <img
+                  src="/images/image-playlist/1759214910211_1500.webp"
+                  alt="Ngày mới nhạc mới"
+                />
+              </div>
+              <div class="banner-item">
+                <img
+                  src="/images/image-playlist/1753758594293_1500.webp"
+                  alt="Nhạc hot TikTok"
+                />
+              </div>
+              <div class="banner-item">
+                <img
+                  src="/images/image-playlist/1756458645999_1500.webp"
+                  alt="Nhạc pop"
+                />
+              </div>
+              <div class="banner-item">
+                <img
+                  src="/images/image-playlist/1758769639928_1500.webp"
+                  alt="Quảng cáo"
+                />
+              </div>
+            </div>
+
+            <button class="banner-btn right">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <!-- ---- -->
+
+          <!-- Category Section -->
+          <div class="category-grid">
+            <div class="category-card" style="background-color: #b87933">
+              <h3>Indie Việt</h3>
+              <img src="/images/image-playlist/1696838532451_300.png" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #d94a5b">
+              <h3>Yêu</h3>
+              <img src="/images/image-playlist/1696839293898_300.png" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #43b144">
+              <h3>Nhạc Dance</h3>
+              <img src="/images/image-playlist/1696841115375_300.png" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #692f98">
+              <h3>Nhạc Pop</h3>
+              <img src="/images/image-playlist/1696838548999_300.png" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #2b7b77">
+              <h3>Ngủ Ngon</h3>
+              <img src="/images/image-playlist/1680590463876_300.jpg" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #e39a78">
+              <h3>Chill</h3>
+              <img src="/images/image-playlist/1699416746814_300.png" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #3e3e3e">
+              <h3>Hip-Hop/R&B</h3>
+              <img src="/images/image-playlist/1698918234719_300.png" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #da6c34">
+              <h3>Nhạc Trung</h3>
+              <img src="/images/image-playlist/1688372216230_300.jpg" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #345061">
+              <h3>Tập Luyện</h3>
+              <img src="/images/image-playlist/1696841096846_300.png" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #c38d53">
+              <h3>Acoustic Việt</h3>
+              <img src="/images/image-playlist/1699425701303_300.png" alt="" />
+            </div>
+          </div>
+          <!-- -------- -->
+
           <h2>Featured Playlists</h2>
           <div class="playlists" id="featuredPlaylists"></div>
 
@@ -204,7 +299,7 @@
 
     <!-- JS -->
     <script type="module" src="/sources/Scripts/Home.js"></script>
-    <script type="module" src="/sources/Scripts/Library.js"></script>
-    <script type="module" src="/sources/Scripts/MyPlaylist.js"></script>
+    <!-- <script type="module" src="/sources/Scripts/Library.js"></script>
+    <script type="module" src="/sources/Scripts/MyPlaylist.js"></script> -->
   </body>
 </html>
