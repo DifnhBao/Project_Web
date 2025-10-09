@@ -1,9 +1,8 @@
 // playlists.js
-export const JAMENDO_CLIENT_ID = "0ffcdfae"; // Thay bằng client_id thật
+export const JAMENDO_CLIENT_ID = "0ffcdfae"; 
 
 export async function fetchPlaylists(limit = 20) {
   try {
-    // Lấy limit*6 tracks từ Jamendo
     const url = `https://api.jamendo.com/v3.0/tracks/?client_id=${JAMENDO_CLIENT_ID}&format=json&limit=${
       limit * 6
     }`;

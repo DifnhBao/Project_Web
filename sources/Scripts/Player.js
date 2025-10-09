@@ -84,4 +84,82 @@ export function setPlaylist(playlist) {
   currentPlaylist = playlist;
   currentIndex = 0;
   loadSong(currentPlaylist[currentIndex]);
+
+  // render danh sách bài hát
+  const songListEl = document.getElementById("content");
+  if (!songListEl) return;
+
+  let inHTML = `
+    <div class="table-header">
+      <div class="col index">#</div>
+      <div class="col title">Title</div>
+      <div class="col artist">Artist</div>
+      <div class="col duration">Duration</div>
+    </div>  
+  `;
+
+  inHTML += currentPlaylist
+    .map(
+      (song, index) => `
+      <div class="row song-item" data-index="${index}">
+          <div class="col index">${index + 1}</div>
+          <div class="col title">
+              <img src="${song.image}" alt="${song.title}" />
+              <span>${song.title}</span>
+          </div>
+          <div class="col artist">${song.artist}</div>
+          <div class="col duration">${formatTime(song.duration)}</div>
+        </div>
+    `
+    )
+    .join("");
+
+  songListEl.innerHTML = inHTML;
+
+  // Gắn sự kiện click để chọn bài
+  songListEl.querySelectorAll(".song-item").forEach((item) => {
+    item.addEventListener("click", () => {
+      const index = parseInt(item.dataset.index);
+      currentIndex = index;
+      loadSong(currentPlaylist[currentIndex]);
+      audio.play();
+      playBtn.innerHTML = `<i class="fas fa-pause"></i>`;
+    });
+  });
 }
+
+// Điều chỉnh âm lượng
+const volumeBtn = document.querySelector(".volume");
+const volumeSlider = document.querySelector(".vol input");
+
+audio.volume = 0.5; 
+
+// Khi kéo thanh trượt
+volumeSlider.addEventListener("input", (e) => {
+  const value = e.target.value; 
+  audio.volume = value / 100; 
+
+  // Thay đổi icon tùy theo âm lượng
+  if (audio.volume === 0) {
+    volumeBtn.innerHTML = `<i class="fa-solid fa-volume-xmark"></i>`;
+  } else if (audio.volume < 0.5) {
+    volumeBtn.innerHTML = `<i class="fa-solid fa-volume-low"></i>`;
+  } else {
+    volumeBtn.innerHTML = `<i class="fa-solid fa-volume-high"></i>`;
+  }
+});
+
+// Khi bấm nút volume để mute/unmute
+let lastVolume = audio.volume;
+volumeBtn.addEventListener("click", () => {
+  if (audio.volume > 0) {
+    lastVolume = audio.volume;
+    audio.volume = 0;
+    volumeSlider.value = 0;
+    volumeBtn.innerHTML = `<i class="fa-solid fa-volume-xmark"></i>`;
+  } else {
+    audio.volume = lastVolume;
+    volumeSlider.value = lastVolume * 100;
+    volumeBtn.innerHTML = `<i class="fa-solid fa-volume-high"></i>`;
+  }
+});

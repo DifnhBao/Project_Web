@@ -1,3 +1,6 @@
+
+
+
 export const songs = [
   {
     id: 1,
@@ -70,3 +73,4 @@ export const songs = [
     duration: "04:15",
   },
 ];
+

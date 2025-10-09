@@ -4,23 +4,28 @@ import { loadMyPlaylist } from "./MyPlaylist.js";
 import { setPlaylist } from "./Player.js";
 
 // Menu navigation
-let menuItems = document.querySelectorAll(".menu nav a");
+let menuItems = document.querySelectorAll(".menu a");
+
 menuItems.forEach((item) => {
   item.addEventListener("click", (e) => {
-    console.log("Clicked menu:", item.dataset.target);
-
     e.preventDefault();
-    menuItems.forEach((el) => el.classList.remove("active"));
-    item.classList.add("active");
 
-    let target = item.getAttribute("data-section");
+    const target = item.dataset.section;
+
+    // Xóa active khỏi tất cả
+    menuItems.forEach((el) => el.classList.remove("active"));
     document
       .querySelectorAll(".section")
       .forEach((sec) => sec.classList.remove("active"));
-    document.getElementById(target).classList.add("active");
 
-    if (target === "playlist") loadMyPlaylist();
-    else if (target === "library") loadLibrary();
+    // Thêm active cho cái được chọn
+    item.classList.add("active");
+    document.getElementById(target)?.classList.add("active"); // thêm ? để tránh lỗi null
+
+    if (target === "playlist" && typeof loadMyPlaylist === "function")
+      loadMyPlaylist();
+    else if (target === "library" && typeof loadLibrary === "function")
+      loadLibrary();
   });
 });
 
@@ -48,20 +53,21 @@ async function renderFeaturedPlaylists() {
   const container = document.getElementById("featuredPlaylists");
   if (!container) return;
 
-  const playlists = await fetchPlaylists(20); // Lấy 10 playlist
-  console.log("Fetched playlists:", playlists); // debug
+  const playlists = await fetchPlaylists(20); // Lấy 20 playlist
 
   container.innerHTML = playlists
     .map(
       (pl, index) => `
-    <div class="playlists-card" data-index="${index}">
-      <img src="${pl.coverImage}" alt="${pl.name}" />
-      <div class="playlist-info">
-        <strong>${pl.name}</strong><br/>
-        ${pl.description}
+      <div class="playlists-card" data-index="${index}">
+        <div class="playlist-img">
+          <img src="${pl.coverImage}" alt="${pl.name}" />
+        </div>
+        <div class="playlist-info">
+          <strong>${pl.name}</strong>
+          <p>${pl.description}</p>
+        </div>
       </div>
-    </div>
-  `
+    `
     )
     .join("");
 
@@ -75,6 +81,7 @@ async function renderFeaturedPlaylists() {
 
 document.addEventListener("DOMContentLoaded", renderFeaturedPlaylists);
 
+//BANNER
 const bannerRow = document.querySelector(".banner-row");
 const leftBtn = document.querySelector(".banner-btn.left");
 const rightBtn = document.querySelector(".banner-btn.right");
