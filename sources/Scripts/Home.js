@@ -93,3 +93,29 @@ leftBtn.addEventListener("click", () => {
 rightBtn.addEventListener("click", () => {
   bannerRow.scrollBy({ left: 1500, behavior: "smooth" });
 });
+
+//Xử lí nút like
+const likeBtn = document.querySelector(".like-icon");
+let currentSong = {};
+// Khi bấm nút tim
+likeBtn.addEventListener("click", () => {
+  const icon = likeBtn.querySelector("i");
+
+  // Kiểm tra xem bài hát đã có trong songs chưa
+  const exists = songs.some((s) => s.id === currentSong.id);
+
+  if (exists) {
+    // Nếu đã có → bỏ khỏi thư viện
+    const index = songs.findIndex((s) => s.id === currentSong.id);
+    songs.splice(index, 1);
+    icon.classList.replace("fa-solid", "fa-regular");
+  } else {
+    // Nếu chưa có → thêm vào thư viện
+    songs.push(currentSong);
+    icon.classList.replace("fa-regular", "fa-solid");
+  }
+
+  // Cập nhật lại phần Library
+  console.log(currentSong);
+  loadLibrary();
+});

@@ -8,12 +8,13 @@
 :root {
   --sidebar-width: 250px;
   --sidebar-min: 60px;
+  --background-color: linear-gradient(0, #080811, #153837);
 }
 
 body {
   height: 100vh;
   font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
-  background: linear-gradient(0, #080811, #153837);
+  background: var(--background-color);
   color: white;
   font-weight: 600;
 }

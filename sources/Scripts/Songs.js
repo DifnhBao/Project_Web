@@ -1,6 +1,3 @@
-
-
-
 export const songs = [
   {
     id: 1,
