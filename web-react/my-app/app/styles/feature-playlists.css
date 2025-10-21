@@ -1,0 +1,68 @@
+.explore-container {
+  color: #fff;
+}
+
+section {
+  margin: 40px 0;
+}
+
+.title {
+  margin-bottom: 16px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.scroll-row {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  scroll-behavior: smooth;
+  padding-bottom: 8px;
+}
+
+.scroll-row::-webkit-scrollbar {
+  height: 0;
+}
+.scroll-row::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.card {
+  flex: 0 0 260px;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  background: transparent;
+}
+
+.card:hover {
+  transform: translateY(-7px);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.card_artist img {
+  border-radius: 50%;
+  object-fit: fill;
+}
+
+.card h3 {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.card p {
+  font-size: 12px;
+  font-weight: 550;
+  color: #aaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
