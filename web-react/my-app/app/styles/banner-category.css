@@ -8,10 +8,15 @@
   overflow-x: auto;
   scroll-behavior: smooth;
   gap: 10px;
+}
+
+.banner-row,
+.scroll-content {
   scrollbar-width: none;
 }
 
-.banner-row::-webkit-scrollbar {
+.banner-row::-webkit-scrollbar,
+.scroll-content::-webkit-scrollbar {
   display: none;
 }
 

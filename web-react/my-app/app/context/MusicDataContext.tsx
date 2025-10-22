@@ -5,11 +5,21 @@ import {
   fetchArtists,
   fetchPopularTracks,
 } from "@/app/utils/jamendo";
+import type { Track, Playlist, Artist } from "@/app/types/music";
 
-const MusicDataContext = createContext(null);
+interface MusicDataContextType {
+  tracks: Track[];
+  playlists: Playlist[];
+  artists: Artist[];
+  loaded: boolean;
+}
+
+const MusicDataContext = createContext<MusicDataContextType | undefined>(
+  undefined
+);
 
 export function MusicDataProvider({ children }: { children: React.ReactNode }) {
-  const [data, setData] = useState({
+  const [data, setData] = useState<MusicDataContextType>({
     tracks: [],
     playlists: [],
     artists: [],
@@ -20,7 +30,7 @@ export function MusicDataProvider({ children }: { children: React.ReactNode }) {
     async function load() {
       if (data.loaded) return;
       const [tracks, playlists, artists] = await Promise.all([
-        fetchPopularTracks(10),
+        fetchPopularTracks(),
         fetchPlaylists(),
         fetchArtists(),
       ]);
@@ -36,6 +46,10 @@ export function MusicDataProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useMusicData() {
-  return useContext(MusicDataContext);
+export function useMusicData(): MusicDataContextType {
+  const context = useContext(MusicDataContext);
+  if (!context) {
+    throw new Error("useMusicData must be used within a MusicDataProvider");
+  }
+  return context;
 }

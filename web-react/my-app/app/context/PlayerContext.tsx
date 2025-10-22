@@ -18,7 +18,7 @@ type Song = {
 
 type PlayerContextType = {
   playlist: Song[];
-  setPlaylist: (pl: Song[]) => void;
+  setPlaylist: (pl: Song[], startIndex?: number) => void;
   play: () => void;
   pause: () => void;
   togglePlay: () => void;
@@ -38,6 +38,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     audioRef.current = new Audio();
     audioRef.current.volume = 0.5;
+    (window as any)._audioRef = audioRef.current;
     const a = audioRef.current;
     const onEnded = () => {
       setCurrentIndex((idx) =>
@@ -58,9 +59,18 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     if (isPlaying) audioRef.current.play();
   }, [playlist, currentIndex]);
 
-  const setPlaylist = (pl: Song[]) => {
+  useEffect(() => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  }, [isPlaying]);
+
+  const setPlaylist = (pl: Song[], startIndex = 0) => {
     setPlaylistState(pl);
-    setCurrentIndex(0);
+    setCurrentIndex(startIndex);
     setIsPlaying(true);
   };
 

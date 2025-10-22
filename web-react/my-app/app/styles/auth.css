@@ -1,12 +1,14 @@
 /* ===== Container chính ===== */
-.auth-container {
+/* .auth-container {
   background-color: #ffffff29;
   color: white;
   font-family: Arial, sans-serif;
   padding: 40px;
   border-radius: 15px;
   width: 100%;
-  max-width: 380px; /* responsive hơn */
+  height: 100%;
+  max-width: 470px;
+  max-height: 550px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +19,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   box-sizing: border-box;
-}
+} */
 
 /* ===== Logo ===== */
 .auth-container img {
@@ -50,7 +52,7 @@
 
 /* ===== Input ===== */
 .auth-container input {
-  background-color: #1e1f21;
+  background-color: #373737;
   color: white;
   border: none;
   border-radius: 5px;
@@ -58,7 +60,9 @@
   height: 40px;
   padding-left: 10px;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 22px;
 }
 
 /* ===== Button ===== */

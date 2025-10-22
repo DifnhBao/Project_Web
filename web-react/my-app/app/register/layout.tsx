@@ -1,4 +1,3 @@
-import "../styles/auth.css";
 
 export default function Register({ children }: { children: React.ReactNode }) {
   return (

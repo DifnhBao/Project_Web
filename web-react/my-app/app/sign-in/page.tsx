@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import "@/app/styles/auth.css";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -27,16 +28,22 @@ export default function SignInPage() {
 
       <h1>Sign in to Enjoy</h1>
       <form onSubmit={handleSignIn}>
-        <label className="form_label">Email</label>
+        <label htmlFor="email" className="form_label">
+          Email
+        </label>
         <input
+          id="email"
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <label className="form_label">Password</label>
+        <label htmlFor="password" className="form_label">
+          Password
+        </label>
         <input
+          id="password"
           type="password"
           placeholder="Password"
           value={password}

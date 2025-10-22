@@ -1,6 +1,6 @@
 "use client";
 
-// import "../styles/home.css";
+import "../styles/header-bar.css";
 import "../styles/library.css";
 import "../styles/myplaylists.css";
 import "../styles/banner-category.css";

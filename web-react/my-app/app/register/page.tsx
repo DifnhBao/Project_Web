@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import "@/app/styles/auth.css";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -28,32 +29,33 @@ export default function RegisterPage() {
       </header>
 
       <form onSubmit={handleRegister}>
-        <label className="form_label">User Name</label>
+        <label htmlFor="email" className="form_label">
+          Email
+        </label>
         <input
-          type="text"
-          placeholder="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <label className="form_label">Email</label>
-        <input
+          id="email"
           type="email"
-          placeholder="Email"
+          placeholder="abc@domain.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <label className="form_label">Password</label>
+        <label htmlFor="password" className="form_label">
+          Password
+        </label>
         <input
+          id="password"
           type="password"
-          placeholder="Password"
+          placeholder="At least 8 characters, letters & numbers"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <label className="form_label">Password Confirmation</label>
+        <label htmlFor="confirm_password" className="form_label">
+          Password Confirmation
+        </label>
         <input
+          id="confirm_password"
           type="password"
           placeholder="Password Confirmation"
           value={confirmPW}

@@ -1,48 +1,34 @@
 "use client";
-import React, { useRef } from "react";
+import React from "react";
+import HorizontalScroll from "@/app/components/HorizontalScroll";
 
 function Banner() {
-  const bannerRowRef = useRef<HTMLDivElement>(null);
-  const scrollLeft = () => {
-    bannerRowRef.current?.scrollBy({ left: -1500, behavior: "smooth" });
-  };
-
-  const scrollRight = () => {
-    bannerRowRef.current?.scrollBy({ left: 1500, behavior: "smooth" });
-  };
-
   return (
     <div className="banner-section">
       {/* Banner chính */}
       <div className="banner-container">
-        <button className="banner-btn left" onClick={scrollLeft}>
-          <i className="fa-solid fa-chevron-left"></i>
-        </button>
-
-        <div className="banner-row" ref={bannerRowRef}>
-          <div className="banner-item">
-            <img
-              src="/images/Banner/ngay_moi_nhac_moi.webp"
-              alt="Ngày mới nhạc mới"
-            />
+        <HorizontalScroll>
+          <div className="banner-row">
+            <div className="banner-item">
+              <img
+                src="/images/Banner/ngay_moi_nhac_moi.webp"
+                alt="Ngày mới nhạc mới"
+              />
+            </div>
+            <div className="banner-item">
+              <img
+                src="/images/Banner/nhac_chill_trieu_view.webp"
+                alt="Nhạc hot TikTok"
+              />
+            </div>
+            <div className="banner-item">
+              <img src="/images/Banner/nhac_pop.webp" alt="Nhạc pop" />
+            </div>
+            <div className="banner-item">
+              <img src="/images/Banner/quang_cao.webp" alt="Quảng cáo" />
+            </div>
           </div>
-          <div className="banner-item">
-            <img
-              src="/images/Banner/nhac_chill_trieu_view.webp"
-              alt="Nhạc hot TikTok"
-            />
-          </div>
-          <div className="banner-item">
-            <img src="/images/Banner/nhac_pop.webp" alt="Nhạc pop" />
-          </div>
-          <div className="banner-item">
-            <img src="/images/Banner/quang_cao.webp" alt="Quảng cáo" />
-          </div>
-        </div>
-
-        <button className="banner-btn right" onClick={scrollRight}>
-          <i className="fa-solid fa-chevron-right"></i>
-        </button>
+        </HorizontalScroll>
       </div>
 
       {/* Category Section */}

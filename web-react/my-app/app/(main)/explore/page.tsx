@@ -1,11 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Banner from "../../components/Banner";
-import FeaturedPlaylists from "../../components/FeaturedPlaylists";
-
+import Banner from "@/app/components/Banner";
+import FeaturedPlaylists from "@/app/components/FeaturedPlaylists/FeaturedPlaylists";
+import type { SelectedItem } from "@/app/types/music";
 
 export default function HomePage() {
   const [greeting, setGreeting] = useState("");
+  const [selected, setSelected] = useState<SelectedItem | null>(null);
+  const [bgImage, setBgImage] = useState<string>("");
 
   useEffect(() => {
     function update() {
@@ -27,13 +29,43 @@ export default function HomePage() {
     return () => clearInterval(t);
   }, []);
 
+  if (selected)
+    return (
+      <div
+        id="home"
+        className="home-menu"
+        style={{
+          backgroundImage: bgImage ? `url(${bgImage})` : "none",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          transition: "background 0.4s ease-in-out",
+        }}
+      >
+        <FeaturedPlaylists
+          selected={selected}
+          onSelect={(item) => {
+            setSelected(item);
+            const cover =
+              "coverImage" in item ? item.coverImage : (item as any).image;
+            setBgImage(cover); //set background cho trang
+          }}
+          onBack={() => {
+            setSelected(null);
+            setBgImage(""); //xóa background khi quay lại
+          }}
+        />
+      </div>
+    );
+
   return (
     <div id="home" className="home-menu">
       <div id="greeting" className="greeting-text">
         {greeting}
       </div>
       <Banner />
-      <FeaturedPlaylists />
+      <FeaturedPlaylists onSelect={setSelected} />
+
+      {/* phần footer thông tin công ty */}
       <div className="company-info">
         <div className="company-left">
           <img
@@ -43,19 +75,10 @@ export default function HomePage() {
           />
           <h3>CÔNG TY CỔ PHẦN N C T</h3>
           <ul>
-            <li>
-              Thông tin giấy phép MXH số .../GP-BTTTT do Bộ Thông Tin và Truyền
-              thông cấp ngày ...
-            </li>
+            <li>Thông tin giấy phép MXH số ...</li>
             <li>Giấy Chứng nhận Đăng ký Kinh doanh ...</li>
-            <li>
-              Nhân sự chịu trách nhiệm quản lý nội dung thông tin: Ông Phan Hoài
-              Nam
-            </li>
-            <li>
-              Địa chỉ: Tầng 19, Tòa nhà 678, 67 Hoàng Văn Thái, Phường Tân Mỹ,
-              TP. Hồ Chí Minh
-            </li>
+            <li>Nhân sự chịu trách nhiệm: Ông Phan Hoài Nam</li>
+            <li>Địa chỉ: 67 Hoàng Văn Thái, TP.HCM</li>
             <li>
               Email: <a>support@nct.vn</a>
             </li>
@@ -66,13 +89,11 @@ export default function HomePage() {
         </div>
 
         <div className="company-right">
-          <img
-            src="/images/Logo/t_bo_cong_thuong.png"
-            alt="Đã thông báo Bộ Công Thương"
-          />
+          <img src="/images/Logo/t_bo_cong_thuong.png" alt="Bộ Công Thương" />
           <img src="/images/Logo/dmca.png" alt="DMCA Protected" />
         </div>
       </div>
+
       <div className="company-bottom">
         <a>Chính Sách Bảo Mật</a> • <a>Chính Sách SHTT</a> •{" "}
         <a>Thỏa Thuận Sử Dụng</a>
