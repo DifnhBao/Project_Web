@@ -16,7 +16,7 @@ export default function RegisterPage() {
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     const registerAccount = { email, password };
-    console.log("Đăng ký:", registerAccount);
+    console.log(">>> Đăng ký thành công: ", registerAccount);
     // Đăng ký xong chuyển đến đăng nhập
     openModal("signin");
   };

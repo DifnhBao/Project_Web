@@ -15,8 +15,9 @@ export default function SignInPage() {
     e.preventDefault();
     console.log("Đăng nhập:", email, password);
     // Giả sử đăng nhập thành công
+    localStorage.setItem("isLoggedIn", "true");
     closeModal();
-    router.push("/"); // quay lại trang chủ
+    router.push("/explore"); // quay lại trang chủ
   };
 
   return (
