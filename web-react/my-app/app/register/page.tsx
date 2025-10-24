@@ -68,7 +68,7 @@ export default function RegisterPage() {
         />
         <button type="submit">Register</button>
       </form>
-      <p>
+      <p className="switch-form">
         You already have an account?{" "}
         <a className="create" onClick={() => openModal("signin")}>
           Sign in

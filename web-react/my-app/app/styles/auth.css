@@ -154,6 +154,10 @@ input:checked + .slider:before {
   text-decoration: underline;
 }
 
+.switch-form {
+  margin-top: 20px;
+}
+
 .create {
   text-decoration: none;
   color: rgb(88, 196, 220);
