@@ -3,8 +3,8 @@ import LibraryTable from "../../components/MusicContainer/LibraryTable";
 
 export default function LibraryPage() {
   return (
-    <div id="library" className="library-menu">
-      <h1>Your Library</h1>
+    <div id="library_menu">
+      <h2>Your Library</h2>
       <div className="table">
         <div className="table_header">
           <div className="col_index">#</div>

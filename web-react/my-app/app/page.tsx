@@ -14,7 +14,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (!isClient) return; // chỉ chạy khi đã mount client-side
+    if (!isClient) return; 
 
     const isLoggedIn = localStorage.getItem("isLoggedIn");
 
@@ -23,7 +23,7 @@ export default function Home() {
       router.replace("/explore");
     } else {
       router.replace("/explore");
-      openModal("signin"); // Chưa đăng nhập, mở modal đăng nhập
+      openModal("signin"); 
     }
   }, [isClient]);
   //nếu đăng xuất xóa localStorage

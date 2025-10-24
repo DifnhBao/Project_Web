@@ -3,9 +3,9 @@ import MyPlaylistGrid from "../../components/MyPlaylistGrid";
 
 export default function MyPlaylistsPage() {
   return (
-    <div id="playlist" className="myplaylist-menu">
+    <div id="playlist_menu">
       <div className="main-header">
-        <h1>My Playlist</h1>
+        <h2>My Playlist</h2>
         <button className="new-playlist-btn">+ New Playlist</button>
       </div>
 

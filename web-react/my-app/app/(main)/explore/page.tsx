@@ -31,16 +31,7 @@ export default function HomePage() {
 
   if (selected)
     return (
-      <div
-        id="home"
-        className="home-menu"
-        style={{
-          backgroundImage: bgImage ? `url(${bgImage})` : "none",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          transition: "background 0.4s ease-in-out",
-        }}
-      >
+      <div id="home" className="home-menu">
         <FeaturedPlaylists
           selected={selected}
           onSelect={(item) => {
