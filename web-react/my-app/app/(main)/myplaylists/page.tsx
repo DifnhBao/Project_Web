@@ -8,9 +8,8 @@ export default function MyPlaylistsPage() {
         <h1>My Playlist</h1>
         <button className="new-playlist-btn">+ New Playlist</button>
       </div>
-      <div className="playlist-grid">
-        <MyPlaylistGrid />
-      </div>
+
+      <MyPlaylistGrid />
     </div>
   );
 }

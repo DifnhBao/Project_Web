@@ -47,11 +47,11 @@ export default function HomePage() {
             setSelected(item);
             const cover =
               "coverImage" in item ? item.coverImage : (item as any).image;
-            setBgImage(cover); //set background cho trang
+            setBgImage(cover);
           }}
           onBack={() => {
             setSelected(null);
-            setBgImage(""); //xóa background khi quay lại
+            setBgImage("");
           }}
         />
       </div>
@@ -75,10 +75,22 @@ export default function HomePage() {
           />
           <h3>CÔNG TY CỔ PHẦN N C T</h3>
           <ul>
-            <li>Thông tin giấy phép MXH số ...</li>
-            <li>Giấy Chứng nhận Đăng ký Kinh doanh ...</li>
-            <li>Nhân sự chịu trách nhiệm: Ông Phan Hoài Nam</li>
-            <li>Địa chỉ: 67 Hoàng Văn Thái, TP.HCM</li>
+            <li>
+              Giấy phép cung cấp dịch vụ mạng xã hội số 140/GP-BVHTTDL do Bộ Văn
+              Hóa, Thế thao và Du lịch cấp ngày 14/10/2025.
+            </li>
+            <li>
+              Giấy Chứng nhận Đăng ký Kinh doanh số 0305535715 do Sở kế hoạch và
+              Đầu tư thành phố Hồ Chí Minh cấp ngày 01/03/2008.
+            </li>
+            <li>
+              Nhân sự chịu trách nhiệm quản lý nội dung thông tin: Ông Phan Hoài
+              Nam
+            </li>
+            <li>
+              Địa chỉ: Tầng 19, Tòa nhà 678, 67 Hoàng Văn Thái, Phường Tân Mỹ,
+              TP. Hồ Chí Minh
+            </li>
             <li>
               Email: <a>support@nct.vn</a>
             </li>

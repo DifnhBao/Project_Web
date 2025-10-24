@@ -2,17 +2,20 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useModal } from "@/app/context/ModalContext";
 import "@/app/styles/auth.css";
 
 export default function SignInPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { openModal, closeModal } = useModal();
 
   const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Đăng nhập:", email, password);
     // Giả sử đăng nhập thành công
+    closeModal();
     router.push("/"); // quay lại trang chủ
   };
 
@@ -66,7 +69,7 @@ export default function SignInPage() {
       </div>
       <p>
         Not registered?{" "}
-        <a href="/register" className="create">
+        <a className="create" onClick={() => openModal("register")}>
           Create an account
         </a>
       </p>

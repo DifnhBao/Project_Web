@@ -13,10 +13,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div
-        className="modal-container"
-        onClick={(e) => e.stopPropagation()} // chặn click vào nội dung làm tắt modal
-      >
+      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>
           ✕
         </button>

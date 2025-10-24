@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import Modal from "./Modal";
-import Profile from "./Profile";
+import { useModal } from "@/app/context/ModalContext";
 
 import dynamic from "next/dynamic";
 
@@ -9,30 +8,8 @@ const SignInPage = dynamic(() => import("@/app/sign-in/page"));
 const RegisterPage = dynamic(() => import("@/app/register/page"));
 
 export default function Header() {
+  const { openModal } = useModal();
   const [q, setQ] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-
-  const [modalContent, setModalContent] = useState<
-    "profile" | "signin" | "register" | null
-  >(null);
-
-  const openModal = (type: "profile" | "signin" | "register") => {
-    setModalContent(type);
-    setIsOpen(true);
-  };
-
-  const renderModalContent = () => {
-    switch (modalContent) {
-      case "profile":
-        return <Profile />;
-      case "signin":
-        return <SignInPage />;
-      case "register":
-        return <RegisterPage />;
-      default:
-        return null;
-    }
-  };
 
   return (
     <header className="header">
@@ -61,11 +38,6 @@ export default function Header() {
           Sign Up
         </button>
       </div>
-
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        {/* Nội dung trống hoặc tùy bạn */}
-        {renderModalContent()}
-      </Modal>
     </header>
   );
 }

@@ -1,5 +1,6 @@
 import "./styles/globals.css";
 import { MusicDataProvider } from "./context/MusicDataContext";
+import { ModalProvider } from "@/app/context/ModalContext";
 
 export const metadata = {
   title: "NhacCuaTui",
@@ -19,7 +20,9 @@ export default function RootLayout({
         />
       </head>
       <MusicDataProvider>
-        <body>{children}</body>
+        <ModalProvider>
+          <body>{children}</body>
+        </ModalProvider>
       </MusicDataProvider>
     </html>
   );

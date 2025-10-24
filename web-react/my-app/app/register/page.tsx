@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useModal } from "@/app/context/ModalContext";
 import "@/app/styles/auth.css";
 
 export default function RegisterPage() {
@@ -10,12 +11,14 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPW, setConfirmPW] = useState("");
+  const { openModal } = useModal();
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Đăng ký:", email, password);
+    const registerAccount = { email, password };
+    console.log("Đăng ký:", registerAccount);
     // Đăng ký xong chuyển đến đăng nhập
-    router.push("/sign-in");
+    openModal("signin");
   };
 
   return (
@@ -28,6 +31,7 @@ export default function RegisterPage() {
         </div>
       </header>
 
+      <h1>Register to start listening</h1>
       <form onSubmit={handleRegister}>
         <label htmlFor="email" className="form_label">
           Email
@@ -66,7 +70,7 @@ export default function RegisterPage() {
       </form>
       <p>
         You already have an account?{" "}
-        <a href="/sign-in" className="create">
+        <a className="create" onClick={() => openModal("signin")}>
           Sign in
         </a>
       </p>

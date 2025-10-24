@@ -21,11 +21,11 @@ const Player: React.FC = () => {
   const [duration, setDuration] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
 
-  // Like button
-  const toggleLike = () => setLiked(!liked);
-
   // Lấy bài hiện tại
   const currentSong = playlist[currentIndex];
+
+  // Like button
+  const toggleLike = () => setLiked(!liked);
 
   // Theo dõi tiến trình phát
   useEffect(() => {
@@ -33,13 +33,33 @@ const Player: React.FC = () => {
     if (!audio) return;
 
     const updateProgress = () => {
-      if (audio.duration)
+      if (audio.duration) {
         setProgress((audio.currentTime / audio.duration) * 100);
+        setCurrentTime(audio.currentTime);
+        setDuration(audio.duration);
+      }
     };
-    audio.addEventListener("timeupdate", updateProgress);
 
-    return () => audio.removeEventListener("timeupdate", updateProgress);
+    audio.addEventListener("timeupdate", updateProgress);
+    audio.addEventListener("loadedmetadata", updateProgress);
+
+    return () => {
+      audio.removeEventListener("timeupdate", updateProgress);
+      audio.removeEventListener("loadedmetadata", updateProgress);
+    };
   }, [playlist, currentIndex]);
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const audio = (window as any)._audioRef as HTMLAudioElement;
+    if (!audio || !duration) return;
+
+    const newProgress = Number(e.target.value);
+    const newTime = (newProgress / 100) * duration;
+
+    setProgress(newProgress);
+    setCurrentTime(newTime);
+    audio.currentTime = newTime;
+  };
 
   // Xử lý next / prev
   const handleNext = () => {
@@ -152,7 +172,7 @@ const Player: React.FC = () => {
             value={progress}
             min={0}
             max={100}
-            onChange={(e) => setProgress(Number(e.target.value))}
+            onChange={handleSeek}
           />
           <span className="music-time">{formatTime(duration)}</span>
         </div>

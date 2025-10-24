@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import "../styles/library.css";
+import "@/app/styles/library.css"
 
 interface Song {
   id: number;

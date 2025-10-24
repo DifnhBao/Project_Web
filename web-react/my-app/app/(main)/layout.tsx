@@ -6,7 +6,7 @@ import "../styles/myplaylists.css";
 import "../styles/banner-category.css";
 import "@/app/styles/feature-playlists.css";
 
-import Player from "../components/Player";
+import Player from "../components/MusicContainer/Player";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { PlayerProvider } from "../context/PlayerContext";
