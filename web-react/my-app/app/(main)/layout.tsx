@@ -1,5 +1,7 @@
 "use client";
 
+import "@/app/styles/globals.css";
+
 import Player from "../components/MusicContainer/Player";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";

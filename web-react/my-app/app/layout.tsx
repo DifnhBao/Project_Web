@@ -1,4 +1,3 @@
-import "./styles/globals.css";
 import { MusicDataProvider } from "./context/MusicDataContext";
 import { ModalProvider } from "@/app/context/ModalContext";
 

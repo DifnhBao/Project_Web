@@ -1,0 +1,25 @@
+.tableHead {
+  display: grid;
+  grid-template-columns: 50px 2fr 1.5fr 1fr 1fr;
+  align-items: center;
+  padding: 12px 20px;
+  
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #aaa;
+  background-color: #1a1a1a;
+  text-transform: uppercase;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 50px 2fr 1.5fr 1fr 1fr;
+  align-items: center;
+  padding: 12px 20px;
+
+  text-align: left;
+  font-size: 14px;
+  color: black;
+  background-color: rgba(88, 175, 223, 0.1);
+}
