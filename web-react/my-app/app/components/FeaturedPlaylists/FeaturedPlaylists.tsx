@@ -1,5 +1,7 @@
 "use client";
 
+import "@/app/styles/feature-playlists.css";
+import "@/app/styles/library.css";
 import { useMusicData } from "@/app/context/MusicDataContext";
 import type { SelectedItem } from "@/app/types/music";
 

@@ -61,7 +61,7 @@ export async function fetchPopularTracks(limit = 20): Promise<Track[]> {
   return tracks;
 }
 
-// Lấy playlist có kèm danh sách bài hát 
+// Lấy playlist có kèm danh sách bài hát
 export async function fetchPlaylists(limit = 20): Promise<Playlist[]> {
   const randomOffset = Math.floor(Math.random() * 80);
   const url = `https://api.jamendo.com/v3.0/playlists/?client_id=${JAMENDO_CLIENT_ID}&format=json&limit=${limit}&offset=${randomOffset}`;
@@ -131,7 +131,7 @@ export async function fetchPlaylists(limit = 20): Promise<Playlist[]> {
   return filteredPlaylists;
 }
 
-// Lấy danh sách nghệ sĩ có bài hát 
+// Lấy danh sách nghệ sĩ có bài hát
 export async function fetchArtists(limit = 10): Promise<Artist[]> {
   const randomOffset = Math.floor(Math.random() * 120);
   const url = `https://api.jamendo.com/v3.0/artists/?client_id=${JAMENDO_CLIENT_ID}&format=json&limit=${limit}&offset=${randomOffset}`;
@@ -154,17 +154,21 @@ export async function fetchArtists(limit = 10): Promise<Artist[]> {
           })
         );
 
+        const artistImage =
+          artist.image ||
+          (tracks.length > 0 ? tracks[0].image : "/images/default-artist.jpg");
+
         return {
           id: artist.id,
           name: artist.name,
-          image: artist.image || "/images/default-artist.jpg",
+          image: artistImage,
           tracks,
         };
       } catch {
         return {
           id: artist.id,
           name: artist.name,
-          image: artist.image || "/images/default-artist.jpg",
+          image: "/images/default-artist.jpg",
           tracks: [],
         };
       }

@@ -1,23 +1,36 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useModal } from "@/app/context/ModalContext";
 import "@/app/styles/auth.css";
 
 export default function RegisterPage() {
-  const router = useRouter();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPW, setConfirmPW] = useState("");
+  // const [confirmPW, setConfirmPW] = useState("");
   const { openModal } = useModal();
 
-  const handleRegister = (e: React.FormEvent) => {
+  // const handleRegister = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   const registerAccount = { email, password };
+  //   console.log(">>> Đăng ký thành công: ", registerAccount);
+  //   // Đăng ký xong chuyển đến đăng nhập
+  //   openModal("signin");
+  // };
+
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    const registerAccount = { email, password };
-    console.log(">>> Đăng ký thành công: ", registerAccount);
-    // Đăng ký xong chuyển đến đăng nhập
+    console.log("Đăng ký với:", { username, email, password });
+    // gửi dữ liệu này đến backend Node.js
+    const res = await fetch("http://localhost:5000/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, password }),
+    });
+    const data = await res.json();
+    alert(data.message);
+
     openModal("signin");
   };
 
@@ -33,6 +46,17 @@ export default function RegisterPage() {
 
       <h1>Register to start listening</h1>
       <form onSubmit={handleRegister}>
+        <label htmlFor="username" className="form_label">
+          Username
+        </label>
+        <input
+          id="username"
+          type="text"
+          placeholder="abc"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
         <label htmlFor="email" className="form_label">
           Email
         </label>
@@ -55,7 +79,7 @@ export default function RegisterPage() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <label htmlFor="confirm_password" className="form_label">
+        {/* <label htmlFor="confirm_password" className="form_label">
           Password Confirmation
         </label>
         <input
@@ -65,7 +89,7 @@ export default function RegisterPage() {
           value={confirmPW}
           onChange={(e) => setConfirmPW(e.target.value)}
           required
-        />
+        /> */}
         <button type="submit">Register</button>
       </form>
       <p className="switch-form">

@@ -11,10 +11,27 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
   const { openModal, closeModal } = useModal();
 
-  const handleSignIn = (e: React.FormEvent) => {
+  // const handleSignIn = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   console.log("Đăng nhập:", email, password);
+  //   // Giả sử đăng nhập thành công
+  //   localStorage.setItem("isLoggedIn", "true");
+  //   closeModal();
+  //   router.push("/explore"); // quay lại trang chủ
+  // };
+
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Đăng nhập:", email, password);
-    // Giả sử đăng nhập thành công
+
+    const res = await fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+    alert(data.message);
+    console.log(">>> Đăng nhập thành công: ", { email, password });
+
     localStorage.setItem("isLoggedIn", "true");
     closeModal();
     router.push("/explore"); // quay lại trang chủ

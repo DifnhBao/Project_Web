@@ -1,4 +1,6 @@
 "use client";
+
+import "@/app/styles/banner-category.css";
 import React from "react";
 import HorizontalScroll from "@/app/components/HorizontalScroll";
 

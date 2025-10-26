@@ -1,11 +1,5 @@
 "use client";
 
-import "../styles/header-bar.css";
-import "../styles/library.css";
-import "../styles/myplaylists.css";
-import "../styles/banner-category.css";
-import "@/app/styles/feature-playlists.css";
-
 import Player from "../components/MusicContainer/Player";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";

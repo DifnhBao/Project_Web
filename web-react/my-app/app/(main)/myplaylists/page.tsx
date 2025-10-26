@@ -1,4 +1,6 @@
 "use client";
+
+import "@/app/styles/myplaylists.css";
 import MyPlaylistGrid from "../../components/MyPlaylistGrid";
 
 export default function MyPlaylistsPage() {

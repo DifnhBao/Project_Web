@@ -44,7 +44,7 @@ h2 {
 .playlist-card:hover {
   transform: scale(1.05);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-  background-color: #ffffff0a;
+  background-color: #ffffff29;
 }
 
 .playlist-card img {

@@ -1,5 +1,6 @@
 "use client";
-import LibraryTable from "../../components/MusicContainer/LibraryTable";
+import "@/app/styles/library.css";
+import LibraryTable from "@/app/components/MusicContainer/LibraryTable";
 
 export default function LibraryPage() {
   return (

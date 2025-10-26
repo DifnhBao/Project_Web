@@ -1,4 +1,5 @@
 "use client";
+import "@/app/styles/header-bar.css";
 import { useState } from "react";
 import { useModal } from "@/app/context/ModalContext";
 

@@ -36,10 +36,14 @@
 
 .card:hover {
   transform: translateY(-7px);
+  background-color: #ffffff29;
+  transition: transform 0.3s;
 }
 
 .card img {
   width: 100%;
+  object-fit: cover;
+  border-radius: 12px;
   border-radius: 8px;
   margin-bottom: 8px;
 }
