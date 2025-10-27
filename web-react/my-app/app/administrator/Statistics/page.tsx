@@ -1,40 +1,42 @@
+import styles from "@/app/styles/AdminPage/statistics.module.css";
+
 export default function Statistics() {
   return (
-    <div id="stats" className="section">
-      <div className="stats-container">
-        <div className="S-cards">
-          <div className="S-card">
+    <div id="stats" className={styles.section}>
+      <div className={styles.statsContainer}>
+        <div className={styles.Scards}>
+          <div className={styles.Scard}>
             <h3>Total Users</h3>
-            <p className="big-number">1.500.000</p>
-            <span className="growth">+15% this month</span>
+            <p className={styles.bigNumber}>1.500.000</p>
+            <span className={styles.growth}>+15% this month</span>
           </div>
 
-          <div className="S-card">
+          <div className={styles.Scard}>
             <h3>Total Songs</h3>
-            <p className="big-number">60.100</p>
-            <span className="growth">+5.320 uploaded</span>
+            <p className={styles.bigNumber}>60.100</p>
+            <span className={styles.growth}>+5.320 uploaded</span>
           </div>
 
-          <div className="S-card">
+          <div className={styles.Scard}>
             <h3>Total plays</h3>
-            <p className="big-number">81.201.583</p>
-            <span className="growth">+20% this month</span>
+            <p className={styles.bigNumber}>81.201.583</p>
+            <span className={styles.growth}>+20% this month</span>
           </div>
         </div>
 
-        <div className="S-charts">
-          <div className="chart-box">
-            <h3>Daily Plays Last 30 Days</h3>
-            <canvas id="S-lineChart"></canvas>
+        <div className={styles.Scharts}>
+          <div className={styles.chartBox}>
+            <h3 className={styles.chartBoxH3}>Daily Plays Last 30 Days</h3>
+            <canvas className={styles.SlineChart}></canvas>
           </div>
-          <div className="chart-box">
-            <h3>Gneres Popularity</h3>
-            <canvas id="circleChart"></canvas>
+          <div className={styles.chartBox}>
+            <h3 className={styles.chartBoxH3}>Gneres Popularity</h3>
+            <canvas className={styles.circleChart}></canvas>
           </div>
         </div>
       </div>
 
-      <div className="table-box">
+      <div className={styles.tableBox}>
         <h3>Top 5 most played songs</h3>
         <table>
           <thead>

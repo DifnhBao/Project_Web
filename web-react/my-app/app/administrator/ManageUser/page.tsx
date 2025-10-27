@@ -1,6 +1,27 @@
+"use client";
+
 import styles from "@/app/styles/AdminPage/ManageUser.module.css";
+import { useEffect, useState } from "react";
+
+interface User {
+  id: number;
+  username: string;
+  email: string;
+  role: string;
+}
 
 export default function ManageUser() {
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const res = await fetch("http://localhost:5000/api/users/get_all_users");
+      const data = await res.json();
+      setUsers(data);
+    };
+    fetchUsers();
+  }, []);
+
   return (
     <div id="users" className={styles.section}>
       <div>
@@ -12,7 +33,7 @@ export default function ManageUser() {
       <div className={styles.table}>
         <div className={styles.tableHead}>
           <div>ID</div>
-          <div>Name</div>
+          <div>Username</div>
           <div>Email</div>
           <div>Role</div>
           <div>Status</div>
@@ -20,21 +41,23 @@ export default function ManageUser() {
         </div>
 
         <div className="table_row">
-          <div className={styles.row}>
-            <div>001</div>
-            <div>Lê Đình Bảo</div>
-            <div>dinhbaor123@gmail.com</div>
-            <div>User</div>
-            <div>
-              <span className={`${styles.status} ${styles.active}`}>
-                Active
-              </span>
+          {users.map((user) => (
+            <div key={user.id} className={styles.row}>
+              <div>{user.id}</div>
+              <div>{user.username}</div>
+              <div>{user.email}</div>
+              <div>{user.role}</div>
+              <div>
+                <span className={`${styles.status} ${styles.active}`}>
+                  Active
+                </span>
+              </div>
+              <div className={styles.rowOption}>
+                <button className={styles.edit}>Edit</button>
+                <button className={styles.delete}>Delete</button>
+              </div>
             </div>
-            <div className={styles.rowOption}>
-              <button className={styles.edit}>Edit</button>
-              <button className={styles.delete}>Delete</button>
-            </div>
-          </div>
+          ))}
 
           <div className={styles.row}>
             <div>002</div>

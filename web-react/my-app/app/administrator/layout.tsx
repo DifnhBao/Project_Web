@@ -1,5 +1,4 @@
 import "@/app/styles/AdminPage/Dashboard.css";
-
 import Sidebar from "@/app/components/AdminPage/ad-Sidebar";
 import Header from "@/app/components/AdminPage/ad-Header";
 export default function AdminLayout({
@@ -13,7 +12,7 @@ export default function AdminLayout({
         <Sidebar />
         <div className="main">
           <Header />
-          <div>{children}</div>
+          <div className="main_content">{children}</div>
         </div>
       </body>
     </html>

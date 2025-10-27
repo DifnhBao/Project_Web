@@ -1,40 +1,49 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 import { useModal } from "@/app/context/ModalContext";
 import "@/app/styles/auth.css";
 
 export default function SignInPage() {
   const router = useRouter();
+  const pathname = usePathname();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { openModal, closeModal } = useModal();
 
-  // const handleSignIn = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   console.log("Đăng nhập:", email, password);
-  //   // Giả sử đăng nhập thành công
-  //   localStorage.setItem("isLoggedIn", "true");
-  //   closeModal();
-  //   router.push("/explore"); // quay lại trang chủ
-  // };
-
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:5000/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await res.json();
-    alert(data.message);
-    console.log(">>> Đăng nhập thành công: ", { email, password });
+    try {
+      const res = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    localStorage.setItem("isLoggedIn", "true");
-    closeModal();
-    router.push("/explore"); // quay lại trang chủ
+      const data = await res.json();
+      alert(data.message);
+
+      if (!res.ok) return;
+
+      console.log(">>> Đăng nhập thành công: ", { email, password });
+
+      // Lưu trạng thái đang nhập
+      localStorage.setItem("isLoggedIn", "true");
+
+      // Đóng modal
+      closeModal();
+
+      if (pathname.startsWith("/administrator")) {
+        router.refresh(); // làm mới trang admin để cập nhật
+      } else {
+        router.push("/explore"); // chuyển về explore
+      }
+    } catch (error) {
+      console.error("Lỗi đăng nhập:", error);
+      alert("Đăng nhập thất bại, vui lòng thử lại!");
+    }
   };
 
   return (
