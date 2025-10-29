@@ -15,9 +15,27 @@ export default function ManageUser() {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await fetch("http://localhost:5000/api/users/get_all_users");
-      const data = await res.json();
-      setUsers(data);
+      try {
+        // Gọi refresh để lấy access token mới
+        const tokenRes = await fetch("http://localhost:5000/auth/refresh", {
+          method: "GET",
+          credentials: "include", // gửi cookie kèm theo
+        });
+
+        if (!tokenRes.ok) throw new Error("Không thể refresh token");
+
+        const { accessToken } = await tokenRes.json();
+
+        // Gọi API cần xác thực
+        const res = await fetch("http://localhost:5000/users/get_all_users", {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+
+        const data = await res.json();
+        setUsers(data);
+      } catch (error) {
+        console.error("Lỗi khi tải user:", error);
+      }
     };
     fetchUsers();
   }, []);

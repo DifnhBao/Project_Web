@@ -16,21 +16,22 @@ export default function SignInPage() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
+      const res = await fetch("http://localhost:5000/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
+        credentials: "include", // để nhận cookie refresh token
       });
 
       const data = await res.json();
       alert(data.message);
 
-      if (!res.ok) return;
+      if (!res.ok) {
+        alert(data.message || "Đăng nhập thất bại!");
+        return;
+      }
 
       console.log(">>> Đăng nhập thành công: ", { email, password });
-
-      // Lưu trạng thái đang nhập
-      localStorage.setItem("isLoggedIn", "true");
 
       // Đóng modal
       closeModal();

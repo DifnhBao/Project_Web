@@ -9,6 +9,7 @@ export default function Home() {
   const { openModal, closeModal } = useModal();
   const pathname = usePathname();
   const [isClient, setIsClient] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
     setIsClient(true);
@@ -17,19 +18,32 @@ export default function Home() {
   useEffect(() => {
     if (!isClient) return;
 
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const checkLoginStatus = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/auth/me", {
+          credentials: "include", // gửi cookie kèm theo
+        });
 
-    if (pathname === "/") {
-      if (isLoggedIn === "true") {
-        closeModal();
-        router.replace("/explore");
-      } else {
+        if (res.ok) {
+          // Có token hợp lệ → user đang đăng nhập
+          closeModal();
+          router.replace("/explore");
+        } else {
+          // Không có token hoặc token hết hạn → chưa đăng nhập
+          router.replace("/explore");
+          openModal("signin");
+        }
+      } catch (error) {
+        console.error("Lỗi kiểm tra đăng nhập:", error);
         router.replace("/explore");
         openModal("signin");
+      } finally {
+        setIsChecking(false);
       }
-    }
+    };
+
+    checkLoginStatus();
   }, [isClient, pathname]);
-  //nếu đăng xuất xóa localStorage
 
   return null;
 }

@@ -11,19 +11,11 @@ export default function RegisterPage() {
   // const [confirmPW, setConfirmPW] = useState("");
   const { openModal } = useModal();
 
-  // const handleRegister = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   const registerAccount = { email, password };
-  //   console.log(">>> Đăng ký thành công: ", registerAccount);
-  //   // Đăng ký xong chuyển đến đăng nhập
-  //   openModal("signin");
-  // };
-
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Đăng ký với:", { username, email, password });
     // gửi dữ liệu này đến backend Node.js
-    const res = await fetch("http://localhost:5000/api/register", {
+    const res = await fetch("http://localhost:5000/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, email, password }),

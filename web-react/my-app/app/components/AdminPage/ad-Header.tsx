@@ -5,9 +5,18 @@ import { useRouter } from "next/navigation";
 export default function Header() {
   const { openModal } = useModal();
   const router = useRouter();
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    router.push("/administrator");
+  const handleLogout = async () => {
+    try {
+      await fetch("http://localhost:5000/auth/signout", {
+        method: "POST",
+        credentials: "include",
+      });
+      localStorage.removeItem("isLoggedIn");
+      router.push("/administrator");
+    } catch (error) {
+      console.error("Lỗi khi đăng xuất:", error);
+      alert("Đăng xuất thất bại!");
+    }
   };
 
   return (

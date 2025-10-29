@@ -16,7 +16,19 @@ export default function ManageAdmin() {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await fetch("http://localhost:5000/api/users/get_all_admins");
+      const tokenRes = await fetch("http://localhost:5000/auth/refresh", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (!tokenRes.ok) throw new Error("Không thể refresh token");
+
+      const { accessToken } = await tokenRes.json();
+
+      const res = await fetch("http://localhost:5000/users/get_all_admins", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      
       const data = await res.json();
       setAdmins(data);
     };
