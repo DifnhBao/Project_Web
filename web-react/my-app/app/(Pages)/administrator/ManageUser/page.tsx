@@ -27,7 +27,7 @@ export default function ManageUser() {
         const { accessToken } = await tokenRes.json();
 
         // Gọi API cần xác thực
-        const res = await fetch("http://localhost:5000/users/get_all_users", {
+        const res = await fetch("http://localhost:5000/users/allUsers", {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
 

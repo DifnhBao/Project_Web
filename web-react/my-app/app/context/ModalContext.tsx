@@ -1,11 +1,12 @@
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
-import dynamic from "next/dynamic";
 import Modal from "@/app/components/Modal";
 import Profile from "@/app/components/Profile";
 
-const SignInPage = dynamic(() => import("@/app/sign-in/page"));
-const RegisterPage = dynamic(() => import("@/app/register/page"));
+import dynamic from "next/dynamic";
+
+const SignInPage = dynamic(() => import("@/app/(Pages)/sign-in/page"));
+const RegisterPage = dynamic(() => import("@/app/(Pages)/register/page"));
 
 type ModalType = "profile" | "signin" | "register" | null;
 

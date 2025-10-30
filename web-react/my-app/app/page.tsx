@@ -21,7 +21,7 @@ export default function Home() {
     const checkLoginStatus = async () => {
       try {
         const res = await fetch("http://localhost:5000/auth/me", {
-          credentials: "include", // gửi cookie kèm theo
+          credentials: "include",
         });
 
         if (res.ok) {
@@ -35,8 +35,8 @@ export default function Home() {
         }
       } catch (error) {
         console.error("Lỗi kiểm tra đăng nhập:", error);
-        router.replace("/explore");
         openModal("signin");
+        router.replace("/explore");
       } finally {
         setIsChecking(false);
       }

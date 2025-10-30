@@ -25,10 +25,10 @@ export default function ManageAdmin() {
 
       const { accessToken } = await tokenRes.json();
 
-      const res = await fetch("http://localhost:5000/users/get_all_admins", {
+      const res = await fetch("http://localhost:5000/users/allAdmins", {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      
+
       const data = await res.json();
       setAdmins(data);
     };

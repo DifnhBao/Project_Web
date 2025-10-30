@@ -2,10 +2,11 @@
 
 import "@/app/styles/globals.css";
 
-import Player from "../components/MusicContainer/Player";
-import Sidebar from "../components/Sidebar";
-import Header from "../components/Header";
-import { PlayerProvider } from "../context/PlayerContext";
+import Player from "../../components/MusicContainer/Player";
+import Sidebar from "../../components/Sidebar";
+import Header from "../../components/Header";
+import { PlayerProvider } from "@/app/context/PlayerContext";
+import { UserProvider } from "@/app/context/UserContext";
 
 export default function ExploreLayout({
   children,
@@ -16,7 +17,10 @@ export default function ExploreLayout({
     <PlayerProvider>
       <Sidebar />
       <div className="main">
-        <Header />
+        <UserProvider>
+          <Header />
+        </UserProvider>
+
         <div id="content" className="content">
           {children}
         </div>
