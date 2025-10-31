@@ -3,6 +3,8 @@
 import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 import { useModal } from "@/app/context/ModalContext";
+import { useUser } from "@/app/context/UserContext";
+import { loginUser, loginAdmin, fetchCurrentUser } from "@/app/utils/authApi";
 import "@/app/styles/auth.css";
 
 export default function SignInPage() {
@@ -11,17 +13,17 @@ export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { openModal, closeModal } = useModal();
+  const { setUser } = useUser();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
-      const res = await fetch("http://localhost:5000/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-        credentials: "include", // để nhận cookie refresh token
-      });
+      const page = pathname.startsWith("/explore");
+
+      // Gọi đúng API tùy loại người dùng
+      const res = page
+        ? await loginUser(email, password)
+        : await loginAdmin(email, password);
 
       const data = await res.json();
       alert(data.message);
@@ -31,16 +33,17 @@ export default function SignInPage() {
         return;
       }
 
-      console.log(">>> Đăng nhập thành công: ", { email, password });
+      // Lấy thông tin user
+      const meRes = await fetchCurrentUser();
+      if (meRes.ok) {
+        const meData = await meRes.json();
+        setUser(meData.user);
+      }
 
       // Đóng modal
       closeModal();
-
-      if (pathname.startsWith("/administrator")) {
-        router.refresh(); // làm mới trang admin để cập nhật
-      } else {
-        router.push("/explore"); // chuyển về explore
-      }
+      // refresh trang để cập nhật thông tin user
+      router.refresh();
     } catch (error) {
       console.error("Lỗi đăng nhập:", error);
       alert("Đăng nhập thất bại, vui lòng thử lại!");

@@ -1,7 +1,6 @@
-import { MusicDataProvider } from "./context/MusicDataContext";
-import { ModalProvider } from "@/app/context/ModalContext";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "NhacCuaTui",
 };
 
@@ -18,11 +17,7 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         />
       </head>
-      <MusicDataProvider>
-        <ModalProvider>
-          <body>{children}</body>
-        </ModalProvider>
-      </MusicDataProvider>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

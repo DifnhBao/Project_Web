@@ -1,12 +1,18 @@
 "use client";
 
 import "@/app/styles/globals.css";
+import Sidebar from "@/app/components/Sidebar";
+import Header from "@/app/components/Header";
+import Player from "@/app/components/MusicContainer/Player";
+import { useEffect } from "react";
 
-import Player from "../../components/MusicContainer/Player";
-import Sidebar from "../../components/Sidebar";
-import Header from "../../components/Header";
-import { PlayerProvider } from "@/app/context/PlayerContext";
+import { useModal } from "@/app/context/ModalContext";
+import { useUser } from "@/app/context/UserContext";
+
 import { UserProvider } from "@/app/context/UserContext";
+import { ModalProvider } from "@/app/context/ModalContext";
+import { PlayerProvider } from "@/app/context/PlayerContext";
+import { MusicDataProvider } from "@/app/context/MusicDataContext";
 
 export default function ExploreLayout({
   children,
@@ -14,18 +20,37 @@ export default function ExploreLayout({
   children: React.ReactNode;
 }) {
   return (
-    <PlayerProvider>
+    <UserProvider>
+      <ModalProvider>
+        <MusicDataProvider>
+          <PlayerProvider>
+            <MainLayout>{children}</MainLayout>
+          </PlayerProvider>
+        </MusicDataProvider>
+      </ModalProvider>
+    </UserProvider>
+  );
+}
+
+function MainLayout({ children }: { children: React.ReactNode }) {
+  const { user, loading } = useUser();
+  const { openModal, closeModal } = useModal();
+
+  useEffect(() => {
+    if (loading) return;
+    user ? closeModal() : openModal("signin");
+  }, [user, loading, openModal, closeModal]);
+
+  return (
+    <>
       <Sidebar />
       <div className="main">
-        <UserProvider>
-          <Header />
-        </UserProvider>
-
+        <Header />
         <div id="content" className="content">
           {children}
         </div>
       </div>
       <Player />
-    </PlayerProvider>
+    </>
   );
 }

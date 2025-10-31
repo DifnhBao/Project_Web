@@ -4,7 +4,7 @@ import Banner from "@/app/components/Banner";
 import FeaturedPlaylists from "@/app/components/FeaturedPlaylists/FeaturedPlaylists";
 import type { SelectedItem } from "@/app/types/music";
 
-export default function HomePage() {
+export default function ExplorePage() {
   const [greeting, setGreeting] = useState("");
   const [selected, setSelected] = useState<SelectedItem | null>(null);
   const [bgImage, setBgImage] = useState<string>("");

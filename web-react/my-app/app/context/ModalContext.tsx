@@ -5,8 +5,12 @@ import Profile from "@/app/components/Profile";
 
 import dynamic from "next/dynamic";
 
-const SignInPage = dynamic(() => import("@/app/(Pages)/sign-in/page"));
-const RegisterPage = dynamic(() => import("@/app/(Pages)/register/page"));
+const SignInPage = dynamic(
+  () => import("@/app/(Pages)/(main)/auth/sign-in/page")
+);
+const RegisterPage = dynamic(
+  () => import("@/app/(Pages)/(main)/auth/register/page")
+);
 
 type ModalType = "profile" | "signin" | "register" | null;
 

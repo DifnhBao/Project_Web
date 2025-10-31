@@ -1,49 +1,28 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import { useModal } from "@/app/context/ModalContext";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-export default function Home() {
+export default function MusicApp() {
   const router = useRouter();
-  const { openModal, closeModal } = useModal();
-  const pathname = usePathname();
-  const [isClient, setIsClient] = useState(false);
-  const [isChecking, setIsChecking] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const handleClick = async () => {
+    setLoading(true);
+    // Cho hiệu ứng có thời gian hiển thị nhẹ
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    router.push("/explore");
+  };
 
-  useEffect(() => {
-    if (!isClient) return;
-
-    const checkLoginStatus = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/auth/me", {
-          credentials: "include",
-        });
-
-        if (res.ok) {
-          // Có token hợp lệ → user đang đăng nhập
-          closeModal();
-          router.replace("/explore");
-        } else {
-          // Không có token hoặc token hết hạn → chưa đăng nhập
-          router.replace("/explore");
-          openModal("signin");
-        }
-      } catch (error) {
-        console.error("Lỗi kiểm tra đăng nhập:", error);
-        openModal("signin");
-        router.replace("/explore");
-      } finally {
-        setIsChecking(false);
-      }
-    };
-
-    checkLoginStatus();
-  }, [isClient, pathname]);
-
-  return null;
+  return (
+    <div>
+      {!loading ? (
+        <button onClick={handleClick}>Click me to Listening</button>
+      ) : (
+        <div>
+          <p>Đang tải...</p>
+        </div>
+      )}
+    </div>
+  );
 }

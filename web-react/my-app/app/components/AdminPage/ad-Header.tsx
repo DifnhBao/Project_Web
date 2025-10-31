@@ -1,9 +1,11 @@
 "use client";
-import { useModal } from "@/app/context/ModalContext";
+// import { useModal } from "@/app/context/ModalContext";
 import { useRouter } from "next/navigation";
+import { useAdminUser } from "@/app/context/AdminUserContext";
 
 export default function Header() {
-  const { openModal } = useModal();
+  const { admin, loading } = useAdminUser();
+
   const router = useRouter();
   const handleLogout = async () => {
     try {
@@ -23,8 +25,8 @@ export default function Header() {
     <div className="header">
       <h2 id="page-title">Dashboard</h2>
       <div className="admin-info">
-        <span>Hi, Admin</span>
-        <i className="fa-solid fa-user-circle"></i>
+        {admin ? <span>Hi, {admin.username}</span> : <span>Hi, Admin</span>}
+        <i className="fa-solid fa-user"></i>
         <button onClick={handleLogout} className="logout-from-dashboard">
           <i className="fa-solid fa-power-off"></i> log out
         </button>
