@@ -1,5 +1,6 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
+import { fetchCurrentUser } from "../utils/authApi";
 
 interface User {
   id: number;
@@ -24,9 +25,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/auth/me", {
-          credentials: "include",
-        });
+        const res = await fetchCurrentUser();
         if (res.ok) {
           const data = await res.json();
           setUser(data.user);

@@ -3,36 +3,31 @@
 import stylesUser from "@/app/styles/AdminPage/ManageUser.module.css";
 import styles from "@/app/styles/AdminPage/ManageAdmin.module.css";
 import { useEffect, useState } from "react";
+import { refreshTokenByAdmin, getAdmins } from "@/app/utils/authApi";
 
 interface Admin {
   id: number;
   username: string;
   email: string;
   role: string;
+  status: string;
 }
 
 export default function ManageAdmin() {
   const [admins, setAdmins] = useState<Admin[]>([]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const tokenRes = await fetch("http://localhost:5000/auth/refresh", {
-        method: "GET",
-        credentials: "include",
-      });
-
-      if (!tokenRes.ok) throw new Error("Không thể refresh token");
-
-      const { accessToken } = await tokenRes.json();
-
-      const res = await fetch("http://localhost:5000/users/allAdmins", {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+    const fetchAdmins = async () => {
+      // Gọi API cần xác thực
+      const res = await getAdmins();
+      if (!res.ok) {
+        throw new Error("Không thể tải danh sách admin");
+      }
 
       const data = await res.json();
-      setAdmins(data);
+      setAdmins(data.reverse());
     };
-    fetchUsers();
+    fetchAdmins();
   }, []);
 
   return (
@@ -48,7 +43,7 @@ export default function ManageAdmin() {
           <div>ID</div>
           <div>Name</div>
           <div>Email</div>
-          <div>Role</div>
+          <div>Status</div>
           <div>Option</div>
         </div>
         <div className="table_row">
@@ -57,9 +52,16 @@ export default function ManageAdmin() {
               <div>{admin.id}</div>
               <div>{admin.username}</div>
               <div>{admin.email}</div>
-              <div>{admin.role}</div>
-              <div>
-                <button className={stylesUser.edit}>Edit</button>
+              <div className={`${styles.status} ${styles.active}`}>
+                {admin.status}
+              </div>
+              <div className={stylesUser.rowOption}>
+                <button className={stylesUser.edit}>
+                  {admin.status === "pending" ? "Accept" : "Edit"}
+                </button>
+                <button className={stylesUser.delete}>
+                  {admin.status === "pending" ? "Reject" : "Delete"}
+                </button>
               </div>
             </div>
           ))}

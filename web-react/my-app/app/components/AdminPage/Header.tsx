@@ -2,19 +2,24 @@
 // import { useModal } from "@/app/context/ModalContext";
 import { useRouter } from "next/navigation";
 import { useAdminUser } from "@/app/context/AdminUserContext";
+import { logoutAdmin } from "@/app/utils/authApi";
+import Sidebar from "@/app/components/AdminPage/Sidebar";
+
+import "@/app/styles/AdminPage/ad-Header.css";
+import "@/app/styles/AdminPage/ad-Sidebar.css";
 
 export default function Header() {
-  const { admin, loading } = useAdminUser();
+  const { admin, setAdmin } = useAdminUser();
+  console.log(">>> admin: ", admin);
 
   const router = useRouter();
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:5000/auth/signout", {
-        method: "POST",
-        credentials: "include",
-      });
-      localStorage.removeItem("isLoggedIn");
-      router.push("/administrator");
+      // Gọi API Logout đến backend
+      await logoutAdmin();
+
+      setAdmin(null);
+      router.replace("/administrator");
     } catch (error) {
       console.error("Lỗi khi đăng xuất:", error);
       alert("Đăng xuất thất bại!");
@@ -23,8 +28,16 @@ export default function Header() {
 
   return (
     <div className="header">
-      <h2 id="page-title">Dashboard</h2>
-      <div className="admin-info">
+      <div className="header-left">
+        <img src="../images/Logo/admin-logo.png" alt="logo web page" />
+        <h2 id="page-title">Dashboard</h2>
+      </div>
+
+      <div className="header-center">
+        <Sidebar />
+      </div>
+
+      <div className="header-right">
         {admin ? <span>Hi, {admin.username}</span> : <span>Hi, Admin</span>}
         <i className="fa-solid fa-user"></i>
         <button onClick={handleLogout} className="logout-from-dashboard">

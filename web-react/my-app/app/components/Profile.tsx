@@ -49,7 +49,6 @@ const Profile = () => {
     console.log("Dữ liệu gửi:", formData);
 
     // Sau này gửi lên SQL qua API
-    
 
     setNote("Đã gửi thông tin (demo). Kiểm tra console để xem dữ liệu.");
   };
@@ -74,22 +73,6 @@ const Profile = () => {
       </p>
 
       <form id="personalForm" noValidate onSubmit={handleSubmit}>
-        {/* Tên hiển thị */}
-        <div className="field">
-          <label htmlFor="displayName">
-            Tên hiển thị <span aria-hidden="true">*</span>
-          </label>
-          <input
-            id="displayName"
-            name="displayName"
-            type="text"
-            placeholder="Tên hiển thị trên hồ sơ"
-            value={formData.displayName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
         {/* Họ và tên */}
         <div className="field">
           <label htmlFor="fullName">

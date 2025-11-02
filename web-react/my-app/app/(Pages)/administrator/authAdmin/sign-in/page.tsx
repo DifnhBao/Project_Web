@@ -3,26 +3,22 @@
 import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 import { useModal } from "@/app/context/ModalContext";
-import { useUser } from "@/app/context/UserContext";
-import { loginUser, loginAdmin, fetchCurrentUser } from "@/app/utils/authApi";
+import { useAdminUser } from "@/app/context/AdminUserContext";
+import { loginAdmin, fetchCurrentAdmin } from "@/app/utils/authApi";
 import "@/app/styles/auth.css";
 
-export default function SignInPage() {
+export default function SignInAdminPage() {
   const router = useRouter();
   const pathname = usePathname();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { openModal, closeModal } = useModal();
-  const { setUser } = useUser();
+  const { setAdmin } = useAdminUser();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const page = pathname.startsWith("/explore");
-      const res = page
-        ? await loginUser(email, password)
-        : await loginAdmin(email, password);
-
+      const res = await loginAdmin(email, password);
       const data = await res.json();
       alert(data.message);
 
@@ -31,13 +27,11 @@ export default function SignInPage() {
         return;
       }
 
-      // console.log(">>> Đăng nhập thành công: ", { email, password });
-
-      // const meRes = await fetchCurrentAdmin();
-      // if (meRes.ok) {
-      //   const meData = await meRes.json();
-      //   setUser(meData.user);
-      // }
+      const meRes = await fetchCurrentAdmin();
+      if (meRes.ok) {
+        const meData = await meRes.json();
+        setAdmin(meData.admin);
+      }
 
       // Đóng modal
       closeModal();
@@ -64,7 +58,7 @@ export default function SignInPage() {
         </div>
       </header>
 
-      <h1>Sign in to Enjoy</h1>
+      <h1>Welcome, administrator</h1>
       <form onSubmit={handleSignIn}>
         <label htmlFor="email" className="form_label">
           Email
@@ -104,7 +98,7 @@ export default function SignInPage() {
       </div>
       <p>
         Not registered?{" "}
-        <a className="create" onClick={() => openModal("register")}>
+        <a className="create" onClick={() => openModal("register-admin")}>
           Create an account
         </a>
       </p>

@@ -9,8 +9,6 @@ export default function Header() {
   const [q, setQ] = useState("");
   const { user, loading } = useUser();
 
-  console.log(">>>user: ", user);
-
   return (
     <header className="header">
       <div className="search-box">

@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useModal } from "@/app/context/ModalContext";
+import { registerAdmin } from "@/app/utils/authApi";
 import "@/app/styles/auth.css";
 
-export default function RegisterPage() {
+export default function RegisterAdminPage() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,17 +14,18 @@ export default function RegisterPage() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Đăng ký với:", { username, email, password });
-    // gửi dữ liệu này đến backend Node.js
-    const res = await fetch("http://localhost:5000/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
-    });
-    const data = await res.json();
-    alert(data.message);
+    try {
+      // gửi dữ liệu này đến backend
+      const res = await registerAdmin(username, email, password);
+      const data = await res.json();
 
-    openModal("signin");
+      alert(data.message);
+
+      openModal("signin-admin");
+    } catch (error) {
+      console.error("Lỗi đăng kí: ", error);
+      alert("ĐĂng kí thất bại vui lòng thử lại!");
+    }
   };
 
   return (
@@ -36,7 +38,7 @@ export default function RegisterPage() {
         </div>
       </header>
 
-      <h1>Register to start listening</h1>
+      <h1>Become an administrator</h1>
       <form onSubmit={handleRegister}>
         <label htmlFor="username" className="form_label">
           Username
@@ -86,7 +88,7 @@ export default function RegisterPage() {
       </form>
       <p className="switch-form">
         You already have an account?{" "}
-        <a className="create" onClick={() => openModal("signin")}>
+        <a className="create" onClick={() => openModal("signin-admin")}>
           Sign in
         </a>
       </p>

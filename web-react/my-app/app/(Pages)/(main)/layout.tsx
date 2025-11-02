@@ -38,8 +38,8 @@ function MainLayout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (loading) return;
-    user ? closeModal() : openModal("signin");
-  }, [user, loading, openModal, closeModal]);
+    if (!user) openModal("signin");
+  }, [user, loading]);
 
   return (
     <>

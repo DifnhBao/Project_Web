@@ -1,8 +1,8 @@
 "use client";
 
 import "@/app/styles/AdminPage/Dashboard.css";
-import Sidebar from "@/app/components/AdminPage/ad-Sidebar";
-import Header from "@/app/components/AdminPage/ad-Header";
+import Sidebar from "@/app/components/AdminPage/Sidebar";
+import Header from "@/app/components/AdminPage/Header";
 
 import { AdminUserProvider } from "@/app/context/AdminUserContext";
 import { ModalProvider } from "@/app/context/ModalContext";
@@ -16,7 +16,7 @@ export default function AdminLayout({
     <div suppressHydrationWarning>
       <AdminUserProvider>
         <ModalProvider>
-          <Sidebar />
+          {/* <Sidebar /> */}
           <div className="main">
             <Header />
             <div className="main_content">{children}</div>

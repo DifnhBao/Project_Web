@@ -1,5 +1,5 @@
 .section {
-  padding: 40px;
+  padding: 120px 200px;
 }
 
 /* Nút Add User */
@@ -38,7 +38,7 @@
   font-weight: 800;
   letter-spacing: 1px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  color: #aaa;
+  color: #fff;
   background-color: #1a1a1a;
   text-transform: uppercase;
 }

@@ -1,5 +1,6 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
+import { fetchCurrentAdmin } from "../utils/authApi";
 
 interface Admin {
   id: number;
@@ -29,9 +30,7 @@ export const AdminUserProvider = ({
   useEffect(() => {
     const checkAdmin = async () => {
       try {
-        const res = await fetch("http://localhost:5000/admin/me", {
-          credentials: "include", // để gửi cookie (nếu backend dùng cookie-based auth)
-        });
+        const res = await fetchCurrentAdmin();
 
         if (res.ok) {
           const data = await res.json();

@@ -2,12 +2,14 @@
 
 import styles from "@/app/styles/AdminPage/ManageUser.module.css";
 import { useEffect, useState } from "react";
+import { refreshTokenByAdmin, getUsers } from "@/app/utils/authApi";
 
 interface User {
   id: number;
   username: string;
   email: string;
   role: string;
+  status: string;
 }
 
 export default function ManageUser() {
@@ -16,23 +18,14 @@ export default function ManageUser() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        // Gọi refresh để lấy access token mới
-        const tokenRes = await fetch("http://localhost:5000/auth/refresh", {
-          method: "GET",
-          credentials: "include", // gửi cookie kèm theo
-        });
-
-        if (!tokenRes.ok) throw new Error("Không thể refresh token");
-
-        const { accessToken } = await tokenRes.json();
-
         // Gọi API cần xác thực
-        const res = await fetch("http://localhost:5000/users/allUsers", {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-
+        const res = await getUsers();
+        if (!res.ok) {
+          throw new Error("Không thể tải danh sách user");
+        }
         const data = await res.json();
-        setUsers(data);
+
+        setUsers(data.reverse());
       } catch (error) {
         console.error("Lỗi khi tải user:", error);
       }
@@ -67,7 +60,7 @@ export default function ManageUser() {
               <div>{user.role}</div>
               <div>
                 <span className={`${styles.status} ${styles.active}`}>
-                  Active
+                  {user.status}
                 </span>
               </div>
               <div className={styles.rowOption}>
