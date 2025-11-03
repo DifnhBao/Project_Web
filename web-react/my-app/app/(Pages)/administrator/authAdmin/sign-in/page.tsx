@@ -36,12 +36,7 @@ export default function SignInAdminPage() {
       // Đóng modal
       closeModal();
 
-      if (pathname.startsWith("/administrator")) {
-        router.refresh();
-      } else {
-        router.replace("/explore");
-        router.refresh();
-      }
+      router.push("/administrator");
     } catch (error) {
       console.error("Lỗi đăng nhập:", error);
       alert("Đăng nhập thất bại, vui lòng thử lại!");

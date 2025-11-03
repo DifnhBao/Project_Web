@@ -23,10 +23,12 @@ export default function Header() {
 
       <div className="header-right">
         {user ? (
-          <button className="profile" onClick={() => openModal("profile")}>
-            <i className="fa-solid fa-user"></i>
+          <div>
             Hi, {user?.username}
-          </button>
+            <button className="profile" onClick={() => openModal("profile")}>
+              <i className="fa-solid fa-user"></i>
+            </button>
+          </div>
         ) : (
           <>
             <button className="sign-in" onClick={() => openModal("signin")}>

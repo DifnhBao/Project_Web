@@ -25,6 +25,16 @@ export async function registerAdmin(
   });
 }
 
+// Accept role admin or reject
+export async function AcceptOrReject(id: number, status: string) {
+  return await fetch(`http://localhost:5000/auth-admin/approve-admin/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status }),
+    credentials: "include",
+  });
+}
+
 // Đăng nhập
 export async function loginAdmin(email: string, password: string) {
   return await fetch("http://localhost:5000/auth-admin/login-admin", {
@@ -82,15 +92,18 @@ export async function fetchWithAutoRefresh(
     if (res.status === 401 || res.status === 403) {
       console.warn("Access token có thể đã hết hạn, đang thử refresh...");
 
-      const refreshRes = await refreshTokenByAdmin(); //dùng hàm sẵn có
+      const refreshRes = await refreshTokenByAdmin();
+      console.log("refreshRes: ", refreshRes);
 
       if (refreshRes.ok && retry) {
         console.log("Refresh token thành công, thử gọi lại request ban đầu...");
         // Gọi lại request ban đầu 1 lần duy nhất
+        // await new Promise((r) => setTimeout(r, 100));
         res = await fetch(url, {
           ...options,
           credentials: "include",
         });
+        console.log("res: ", res);
       } else {
         console.error("Không thể refresh token, yêu cầu đăng nhập lại.");
       }

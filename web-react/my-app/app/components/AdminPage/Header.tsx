@@ -3,14 +3,15 @@
 import { useRouter } from "next/navigation";
 import { useAdminUser } from "@/app/context/AdminUserContext";
 import { logoutAdmin } from "@/app/utils/authApi";
+import { useModal } from "@/app/context/ModalContext";
 import Sidebar from "@/app/components/AdminPage/Sidebar";
 
 import "@/app/styles/AdminPage/ad-Header.css";
 import "@/app/styles/AdminPage/ad-Sidebar.css";
 
 export default function Header() {
+  const { openModal } = useModal();
   const { admin, setAdmin } = useAdminUser();
-  console.log(">>> admin: ", admin);
 
   const router = useRouter();
   const handleLogout = async () => {
@@ -38,11 +39,27 @@ export default function Header() {
       </div>
 
       <div className="header-right">
-        {admin ? <span>Hi, {admin.username}</span> : <span>Hi, Admin</span>}
-        <i className="fa-solid fa-user"></i>
-        <button onClick={handleLogout} className="logout-from-dashboard">
-          <i className="fa-solid fa-power-off"></i> log out
-        </button>
+        {admin ? (
+          <>
+            <span>Hi, {admin.username}</span>
+            <i className="fa-solid fa-user"></i>
+            <button onClick={handleLogout} className="logout-from-dashboard">
+              <i className="fa-solid fa-power-off"></i> log out
+            </button>
+          </>
+        ) : (
+          <>
+            <i className="fa-solid fa-user"></i>
+            <button
+              className="logout-from-dashboard"
+              onClick={() => {
+                openModal("signin-admin");
+              }}
+            >
+              Sign in
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

@@ -33,6 +33,8 @@ export default function ManageUser() {
     fetchUsers();
   }, []);
 
+  if (users.length === 0) return null;
+
   return (
     <div id="users" className={styles.section}>
       <div>
@@ -71,7 +73,7 @@ export default function ManageUser() {
           ))}
 
           <div className={styles.row}>
-            <div>002</div>
+            <div>0</div>
             <div>Huỳnh Đình Thạch</div>
             <div>dinhthach11@gmail.com</div>
             <div>User</div>

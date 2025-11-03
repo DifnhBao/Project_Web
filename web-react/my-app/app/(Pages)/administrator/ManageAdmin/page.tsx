@@ -3,7 +3,8 @@
 import stylesUser from "@/app/styles/AdminPage/ManageUser.module.css";
 import styles from "@/app/styles/AdminPage/ManageAdmin.module.css";
 import { useEffect, useState } from "react";
-import { refreshTokenByAdmin, getAdmins } from "@/app/utils/authApi";
+import { getAdmins, AcceptOrReject } from "@/app/utils/authApi";
+import { useModal } from "@/app/context/ModalContext";
 
 interface Admin {
   id: number;
@@ -15,6 +16,7 @@ interface Admin {
 
 export default function ManageAdmin() {
   const [admins, setAdmins] = useState<Admin[]>([]);
+  const { openModal, closeModal } = useModal();
 
   useEffect(() => {
     const fetchAdmins = async () => {
@@ -30,10 +32,33 @@ export default function ManageAdmin() {
     fetchAdmins();
   }, []);
 
+  const handleAcceptOrReject = async (id: number, status: string) => {
+    const res = await AcceptOrReject(id, status);
+    const data = await res.json();
+    alert(data.message);
+
+    if (res.ok) {
+      //Gọi lại API để cập nhật danh sách
+      const updated = await getAdmins();
+      const adminsData = await updated.json();
+      setAdmins(adminsData.reverse());
+    } else {
+      alert(data.message || "Lỗi khi cập nhật trạng thái");
+    }
+  };
+
+  if (admins.length === 0) return null;
+
   return (
     <div id="admins" className={stylesUser.section}>
       <div>
-        <button style={{ width: "fit-content" }} className={stylesUser.add}>
+        <button
+          style={{ width: "fit-content" }}
+          className={stylesUser.add}
+          onClick={() => {
+            openModal("add-new-admin");
+          }}
+        >
           <i className="fa-solid fa-plus"></i> Add Admin
         </button>
       </div>
@@ -56,25 +81,30 @@ export default function ManageAdmin() {
                 {admin.status}
               </div>
               <div className={stylesUser.rowOption}>
-                <button className={stylesUser.edit}>
-                  {admin.status === "pending" ? "Accept" : "Edit"}
-                </button>
-                <button className={stylesUser.delete}>
-                  {admin.status === "pending" ? "Reject" : "Delete"}
-                </button>
+                {admin.status === "pending" ? (
+                  <>
+                    <button
+                      className={stylesUser.edit}
+                      onClick={() => handleAcceptOrReject(admin.id, "accept")}
+                    >
+                      Accept
+                    </button>
+                    <button
+                      className={stylesUser.delete}
+                      onClick={() => handleAcceptOrReject(admin.id, "reject")}
+                    >
+                      Reject
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button className={stylesUser.edit}>Edit</button>
+                    <button className={stylesUser.delete}>Delete</button>
+                  </>
+                )}
               </div>
             </div>
           ))}
-
-          <div className={styles.row}>
-            <div>002</div>
-            <div>Thach</div>
-            <div>dinhthach11@gmail.com</div>
-            <div>admin</div>
-            <div>
-              <button className={stylesUser.edit}>Edit</button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

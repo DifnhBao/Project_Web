@@ -20,12 +20,17 @@ const RegisterAdminPage = dynamic(
   () => import("@/app/(Pages)/administrator/authAdmin/register/page")
 );
 
+const AddNewAdmin = dynamic(
+  () => import("@/app/components/AdminPage/AddAdmin")
+);
+
 type ModalType =
   | "profile"
   | "signin"
   | "register"
   | "signin-admin"
   | "register-admin"
+  | "add-new-admin"
   | null;
 
 interface ModalContextType {
@@ -61,6 +66,8 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         return <SignInAdminPage />;
       case "register-admin":
         return <RegisterAdminPage />;
+      case "add-new-admin":
+        return <AddNewAdmin />;
       default:
         return null;
     }
