@@ -2,24 +2,29 @@
 
 import { useState } from "react";
 import { useModal } from "@/app/context/ModalContext";
-import { registerAdmin } from "@/app/utils/authApi";
+import { addNewAdmin } from "@/app/utils/authApi";
+import { mutate } from "swr";
 import "@/app/styles/auth.css";
 
 export default function AddNewAdmin() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { openModal, closeModal } = useModal();
+  const { closeModal } = useModal();
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const handleAddNewAdmin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // gửi dữ liệu này đến backend
-      //   const res = await registerAdmin(username, email, password);
-      //   const data = await res.json();
+      // Gửi dữ liệu này đến backend
+      const res = await addNewAdmin(username, email, password);
+      const data = await res.json();
 
-      //   alert(data.message);
-      closeModal();
+      alert(data.message);
+
+      if (res.ok) {
+        mutate("admins");
+        closeModal();
+      }
     } catch (error) {
       console.error("Lỗi thêm admin: ", error);
       alert("Thêm admin mới thất bại vui lòng thử lại!");
@@ -28,7 +33,8 @@ export default function AddNewAdmin() {
 
   return (
     <div className="auth-container register-page">
-      <form onSubmit={handleRegister}>
+      <h1>Add a new administrator</h1>
+      <form onSubmit={handleAddNewAdmin}>
         <label htmlFor="username" className="form_label">
           Username
         </label>

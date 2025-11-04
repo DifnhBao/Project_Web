@@ -2,52 +2,19 @@
 
 import stylesUser from "@/app/styles/AdminPage/ManageUser.module.css";
 import styles from "@/app/styles/AdminPage/ManageAdmin.module.css";
-import { useEffect, useState } from "react";
-import { getAdmins, AcceptOrReject } from "@/app/utils/authApi";
 import { useModal } from "@/app/context/ModalContext";
+import { useAdmins } from "@/hooks/useAdmins";
 
-interface Admin {
-  id: number;
-  username: string;
-  email: string;
-  role: string;
-  status: string;
-}
+import { getAdmins } from "@/app/utils/authApi";
 
 export default function ManageAdmin() {
-  const [admins, setAdmins] = useState<Admin[]>([]);
-  const { openModal, closeModal } = useModal();
+  const { openModal } = useModal();
+  const { admins, isLoading, error, updateAdminStatus, deleteAdmin } =
+    useAdmins();
 
-  useEffect(() => {
-    const fetchAdmins = async () => {
-      // Gọi API cần xác thực
-      const res = await getAdmins();
-      if (!res.ok) {
-        throw new Error("Không thể tải danh sách admin");
-      }
-
-      const data = await res.json();
-      setAdmins(data.reverse());
-    };
-    fetchAdmins();
-  }, []);
-
-  const handleAcceptOrReject = async (id: number, status: string) => {
-    const res = await AcceptOrReject(id, status);
-    const data = await res.json();
-    alert(data.message);
-
-    if (res.ok) {
-      //Gọi lại API để cập nhật danh sách
-      const updated = await getAdmins();
-      const adminsData = await updated.json();
-      setAdmins(adminsData.reverse());
-    } else {
-      alert(data.message || "Lỗi khi cập nhật trạng thái");
-    }
-  };
-
-  if (admins.length === 0) return null;
+  if (isLoading) return <p>Đang tải...</p>;
+  if (error) return <p>Lỗi tải danh sách admin!</p>;
+  if (!admins || admins.length === 0) return null;
 
   return (
     <div id="admins" className={stylesUser.section}>
@@ -55,9 +22,7 @@ export default function ManageAdmin() {
         <button
           style={{ width: "fit-content" }}
           className={stylesUser.add}
-          onClick={() => {
-            openModal("add-new-admin");
-          }}
+          onClick={() => openModal("add-new-admin")}
         >
           <i className="fa-solid fa-plus"></i> Add Admin
         </button>
@@ -77,21 +42,19 @@ export default function ManageAdmin() {
               <div>{admin.id}</div>
               <div>{admin.username}</div>
               <div>{admin.email}</div>
-              <div className={`${styles.status} ${styles.active}`}>
-                {admin.status}
-              </div>
+              <div className={styles.status}>{admin.status}</div>
               <div className={stylesUser.rowOption}>
                 {admin.status === "pending" ? (
                   <>
                     <button
                       className={stylesUser.edit}
-                      onClick={() => handleAcceptOrReject(admin.id, "accept")}
+                      onClick={() => updateAdminStatus(admin.id, "accept")}
                     >
                       Accept
                     </button>
                     <button
                       className={stylesUser.delete}
-                      onClick={() => handleAcceptOrReject(admin.id, "reject")}
+                      onClick={() => updateAdminStatus(admin.id, "reject")}
                     >
                       Reject
                     </button>
@@ -99,7 +62,12 @@ export default function ManageAdmin() {
                 ) : (
                   <>
                     <button className={stylesUser.edit}>Edit</button>
-                    <button className={stylesUser.delete}>Delete</button>
+                    <button
+                      className={stylesUser.delete}
+                      onClick={() => deleteAdmin(admin.id)}
+                    >
+                      Delete
+                    </button>
                   </>
                 )}
               </div>
