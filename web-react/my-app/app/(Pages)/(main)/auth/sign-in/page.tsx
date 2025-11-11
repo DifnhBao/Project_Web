@@ -4,7 +4,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 import { useModal } from "@/app/context/ModalContext";
 import { useUser } from "@/app/context/UserContext";
-import { loginUser, loginAdmin, fetchCurrentUser } from "@/app/utils/authApi";
+import { loginUser, fetchCurrentUser } from "@/app/utils/authApi";
 import "@/app/styles/auth.css";
 
 export default function SignInPage() {

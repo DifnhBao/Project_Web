@@ -2,24 +2,19 @@
 
 import { useState } from "react";
 import { useModal } from "@/app/context/ModalContext";
+import { registerUser } from "@/app/utils/authApi";
 import "@/app/styles/auth.css";
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [confirmPW, setConfirmPW] = useState("");
   const { openModal } = useModal();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Đăng ký với:", { username, email, password });
-    // gửi dữ liệu này đến backend Node.js
-    const res = await fetch("http://localhost:5000/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
-    });
+
+    const res = await registerUser(username, email, password);
     const data = await res.json();
     alert(data.message);
 

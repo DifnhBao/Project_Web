@@ -9,7 +9,7 @@ interface User {
   username: string;
   email: string;
   role: string;
-  status: string;
+  activity_status: string;
 }
 
 export default function ManageUser() {
@@ -25,7 +25,7 @@ export default function ManageUser() {
         }
         const data = await res.json();
 
-        setUsers(data.reverse());
+        setUsers(data);
       } catch (error) {
         console.error("Lỗi khi tải user:", error);
       }
@@ -34,6 +34,7 @@ export default function ManageUser() {
   }, []);
 
   if (users.length === 0) return null;
+  console.log("user:", users);
 
   return (
     <div id="users" className={styles.section}>
@@ -54,15 +55,21 @@ export default function ManageUser() {
         </div>
 
         <div className="table_row">
-          {users.map((user) => (
+          {users.map((user, index) => (
             <div key={user.id} className={styles.row}>
-              <div>{user.id}</div>
+              <div>{index + 1}</div>
               <div>{user.username}</div>
               <div>{user.email}</div>
               <div>{user.role}</div>
               <div>
-                <span className={`${styles.status} ${styles.active}`}>
-                  {user.status}
+                <span
+                  className={
+                    user.activity_status === "online"
+                      ? `${styles.status} ${styles.active}`
+                      : `${styles.status} ${styles.inactive}`
+                  }
+                >
+                  {user.activity_status}
                 </span>
               </div>
               <div className={styles.rowOption}>
@@ -79,7 +86,7 @@ export default function ManageUser() {
             <div>User</div>
             <div>
               <span className={`${styles.status} ${styles.inactive}`}>
-                inActive
+                offline
               </span>
             </div>
             <div className={styles.rowOption}>

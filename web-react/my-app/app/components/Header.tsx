@@ -1,13 +1,16 @@
 "use client";
 import "@/app/styles/header-bar.css";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useModal } from "@/app/context/ModalContext";
 import { useUser } from "@/app/context/UserContext";
+import { logoutUser } from "../utils/authApi";
 
 export default function Header() {
   const { openModal } = useModal();
   const [q, setQ] = useState("");
-  const { user, loading } = useUser();
+  const { user, loading, setUser } = useUser();
+  const router = useRouter();
 
   return (
     <header className="header">
@@ -25,6 +28,15 @@ export default function Header() {
         {user ? (
           <div>
             Hi, {user?.username}
+            <button
+              onClick={async () => {
+                await logoutUser();
+                setUser(null);
+                router.replace("/explore");
+              }}
+            >
+              Log out
+            </button>
             <button className="profile" onClick={() => openModal("profile")}>
               <i className="fa-solid fa-user"></i>
             </button>

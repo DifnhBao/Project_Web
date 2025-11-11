@@ -3,9 +3,7 @@
 import stylesUser from "@/app/styles/AdminPage/ManageUser.module.css";
 import styles from "@/app/styles/AdminPage/ManageAdmin.module.css";
 import { useModal } from "@/app/context/ModalContext";
-import { useAdmins } from "@/hooks/useAdmins";
-
-import { getAdmins } from "@/app/utils/authApi";
+import { useAdmins } from "@/app/hooks/useAdmins";
 
 export default function ManageAdmin() {
   const { openModal } = useModal();
@@ -29,22 +27,32 @@ export default function ManageAdmin() {
       </div>
 
       <div className={stylesUser.table}>
-        <div className={styles.tableHead}>
+        <div className={stylesUser.tableHead}>
           <div>ID</div>
           <div>Name</div>
           <div>Email</div>
+          <div>Role</div>
           <div>Status</div>
           <div>Option</div>
         </div>
         <div className="table_row">
-          {admins.map((admin) => (
-            <div key={admin.id} className={styles.row}>
-              <div>{admin.id}</div>
+          {admins.map((admin, index) => (
+            <div key={admin.id} className={stylesUser.row}>
+              <div>{index + 1}</div>
               <div>{admin.username}</div>
               <div>{admin.email}</div>
-              <div className={styles.status}>{admin.status}</div>
+              <div>{admin.role}</div>
+              <div
+                className={
+                  admin.account_status === "actived"
+                    ? `${styles.status} ${styles.active}`
+                    : `${styles.status} ${styles.inactive}`
+                }
+              >
+                {admin.account_status}
+              </div>
               <div className={stylesUser.rowOption}>
-                {admin.status === "pending" ? (
+                {admin.account_status === "pending" ? (
                   <>
                     <button
                       className={stylesUser.edit}

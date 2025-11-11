@@ -18,7 +18,6 @@ export default function Header() {
     try {
       // Gọi API Logout đến backend
       await logoutAdmin();
-
       setAdmin(null);
       router.replace("/administrator");
     } catch (error) {
@@ -29,7 +28,12 @@ export default function Header() {
 
   return (
     <div className="header">
-      <div className="header-left">
+      <div
+        className="header-left"
+        onClick={() => {
+          router.push("/administrator");
+        }}
+      >
         <img src="../images/Logo/admin-logo.png" alt="logo web page" />
         <h2 id="page-title">Dashboard</h2>
       </div>

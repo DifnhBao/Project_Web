@@ -1,92 +1,61 @@
 "use client";
 import { useState } from "react";
+import { addNewProfile, updateProfile } from "../utils/accountApi";
+import { useProfileForm } from "../hooks/useProfileForm";
 import "@/app/styles/Profile.css";
 
 const Profile = () => {
-  const [formData, setFormData] = useState({
-    displayName: "",
-    fullName: "",
-    gender: "",
-    birthYear: "",
-    phone: "",
-    address: "",
-  });
-
-  const [note, setNote] = useState("*Vui lòng nhập đầy đủ thông tin");
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  // Khi submit form
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setNote("");
-
-    // Kiểm tra dữ liệu bắt buộc
-    if (
-      !formData.displayName ||
-      !formData.fullName ||
-      !formData.gender ||
-      !formData.birthYear ||
-      !formData.phone
-    ) {
-      setNote("Vui lòng nhập đầy đủ các trường bắt buộc.");
-      return;
-    }
-
-    // Kiểm tra định dạng SĐT
-    const phonePattern = /^(0|\+84)(\d{9,10})$/;
-    if (!phonePattern.test(formData.phone.trim())) {
-      setNote("Số điện thoại không hợp lệ (bắt đầu bằng 0 hoặc +84).");
-      return;
-    }
-
-    // Nếu hợp lệ → xử lý dữ liệu
-    console.log("Dữ liệu gửi:", formData);
-
-    // Sau này gửi lên SQL qua API
-
-    setNote("Đã gửi thông tin (demo). Kiểm tra console để xem dữ liệu.");
-  };
-
-  const handleReset = () => {
-    setFormData({
-      displayName: "",
-      fullName: "",
-      gender: "",
-      birthYear: "",
-      phone: "",
-      address: "",
-    });
-    setNote("*Vui lòng nhập đầy đủ thông tin");
-  };
+  const {
+    formData,
+    note,
+    existingProfile,
+    handleChange,
+    handleReset,
+    handleSubmit,
+  } = useProfileForm();
 
   return (
     <div className="profile_card" role="region" aria-labelledby="form-title">
-      <h1 id="form-title">Nhập thông tin cá nhân</h1>
+      <h1 id="form-title">
+        {existingProfile
+          ? "Chỉnh sửa thông tin cá nhân"
+          : "Nhập thông tin cá nhân"}
+      </h1>
       <p className="lead">
-        Vui lòng điền đầy đủ thông tin. Các trường có dấu * là bắt buộc.
+        {existingProfile ? "" : "Vui lòng điền đầy đủ thông tin."}
       </p>
 
       <form id="personalForm" noValidate onSubmit={handleSubmit}>
         {/* Họ và tên */}
-        <div className="field">
-          <label htmlFor="fullName">
-            Họ và tên <span aria-hidden="true">*</span>
-          </label>
-          <input
-            id="fullName"
-            name="fullName"
-            type="text"
-            placeholder="Nguyễn Văn A"
-            value={formData.fullName}
-            onChange={handleChange}
-            required
-          />
+        <div className="name-row">
+          <div className="name-field first">
+            <label htmlFor="fullName">
+              First Name <span aria-hidden="true">*</span>
+            </label>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              placeholder="Nguyễn Văn"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="name-field last">
+            <label htmlFor="lastName">
+              Last Name <span aria-hidden="true">*</span>
+            </label>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              placeholder="A"
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
 
         {/* Giới tính */}
@@ -135,13 +104,10 @@ const Profile = () => {
             Năm sinh <span aria-hidden="true">*</span>
           </label>
           <input
-            id="birthYear"
-            name="birthYear"
-            type="number"
-            placeholder="1988"
-            min="1900"
-            max="2025"
-            value={formData.birthYear}
+            id="dateOfBirth"
+            name="dateOfBirth"
+            type="date"
+            value={formData.dateOfBirth}
             onChange={handleChange}
             required
           />
@@ -181,7 +147,7 @@ const Profile = () => {
             Xóa
           </button>
           <button type="submit" className="btn-primary">
-            Gửi thông tin
+            {existingProfile ? "Cập nhật thông tin" : "Gửi thông tin"}
           </button>
         </div>
 

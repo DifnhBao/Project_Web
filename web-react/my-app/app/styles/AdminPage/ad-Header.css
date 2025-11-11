@@ -18,7 +18,11 @@
   height: 100px;
   width: auto;
   display: block;
-  z-index: 101;
+  cursor: pointer;
+}
+
+.header-left h2 {
+  cursor: pointer;
 }
 
 /* Chia 3 phần: trái - giữa - phải */
@@ -47,6 +51,7 @@
 
 /* ===== Nút đăng xuất ===== */
 .logout-from-dashboard {
+  height: 35px;
   text-decoration: none;
   margin-left: 10px;
   padding: 6px 12px;

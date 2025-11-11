@@ -1,5 +1,18 @@
 // USER PAGE
 
+// Đăng kí cho user
+export async function registerUser(
+  username: string,
+  email: string,
+  password: string
+) {
+  return await fetch("http://localhost:5000/auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, email, password }),
+  });
+}
+
 // Đăng nhập cho user page
 export async function loginUser(email: string, password: string) {
   return await fetch("http://localhost:5000/auth/login", {
@@ -7,6 +20,13 @@ export async function loginUser(email: string, password: string) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
     credentials: "include", // để nhận cookie refresh token
+  });
+}
+
+export async function logoutUser() {
+  return await fetch("http://localhost:5000/auth/logout", {
+    method: "POST",
+    credentials: "include",
   });
 }
 
@@ -79,7 +99,7 @@ export async function fetchWithAutoRefresh(
     });
 
     // Nếu token hết hạn -> gọi API refresh
-    if (res.status === 401 || res.status === 403) {
+    if (res.status === 401) {
       console.warn("Access token có thể đã hết hạn, đang thử refresh...");
 
       const refreshRes = await refreshTokenByAdmin();
