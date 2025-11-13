@@ -5,6 +5,7 @@ import { useModal } from "@/app/context/ModalContext";
 import { addNewAdmin } from "@/app/utils/authApi";
 import { mutate } from "swr";
 import "@/app/styles/auth.css";
+// import "@/app/styles/AdminPage/addAdmin.css";
 
 export default function AddNewAdmin() {
   const [username, setUsername] = useState("");
@@ -32,7 +33,7 @@ export default function AddNewAdmin() {
   };
 
   return (
-    <div className="auth-container register-page">
+    <div className="auth-container">
       <h1>Add a new administrator</h1>
       <form onSubmit={handleAddNewAdmin}>
         <label htmlFor="username" className="form_label">

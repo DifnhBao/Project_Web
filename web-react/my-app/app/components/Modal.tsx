@@ -14,11 +14,13 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>
-          ✕
-        </button>
         {/* Vùng nội dung modal */}
-        <div className="modal-content">{children}</div>
+        <div className="modal-content">
+          <button className="modal-close" onClick={onClose}>
+            ✕
+          </button>
+          {children}
+        </div>
       </div>
     </div>
   );

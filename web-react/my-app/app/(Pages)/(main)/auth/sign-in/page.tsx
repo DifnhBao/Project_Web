@@ -83,7 +83,9 @@ export default function SignInPage() {
             <input type="checkbox" />
             <span className="slider round"></span>
           </label>
-          <label style={{ fontSize: "13px" }}>Remember me</label>
+          <label style={{ fontSize: "13px", color: "#6b7280" }}>
+            Remember me
+          </label>
         </div>
         <button type="submit" className="submit">
           Sign In
@@ -92,7 +94,7 @@ export default function SignInPage() {
       <div className="fogot-password">
         <a href="#">Forgot your password?</a>
       </div>
-      <p>
+      <p className="switch-form">
         Not registered?{" "}
         <a className="create" onClick={() => openModal("register")}>
           Create an account

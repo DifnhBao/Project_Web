@@ -3,6 +3,7 @@
 import styles from "@/app/styles/AdminPage/ManageUser.module.css";
 import { useEffect, useState } from "react";
 import { refreshTokenByAdmin, getUsers } from "@/app/utils/authApi";
+import { deleteAccount } from "@/app/utils/accountApi";
 
 interface User {
   id: number;
@@ -74,7 +75,14 @@ export default function ManageUser() {
               </div>
               <div className={styles.rowOption}>
                 <button className={styles.edit}>Edit</button>
-                <button className={styles.delete}>Delete</button>
+                <button
+                  className={styles.delete}
+                  onClick={() => {
+                    deleteAccount(user.id);
+                  }}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}
