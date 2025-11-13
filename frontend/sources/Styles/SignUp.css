@@ -1,0 +1,155 @@
+/* bgc: rgb(88, 175, 223, 0.1)
+   color: rgb(88 196 220) */
+body {
+  display: flex;
+  justify-content: flex-end; /* đẩy hết về bên phải */
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(to top, #121212, #1b2a2f);
+}
+
+.tittle a img {
+  width: 20em;
+}
+.container h1 {
+  text-align: left;
+  margin-left: 15px;
+}
+
+.container {
+  background-color: #ffffff29;
+  color: white;
+  font-family: Arial;
+  padding: 40px;
+  border-radius: 15px;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container h1 {
+  width: 300px;
+  text-align: center;
+  font-size: 40px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 15px;
+  margin-top: 15px;
+  margin-bottom: 3px;
+}
+
+.form-group input {
+  display: block;
+  background-color: #1e1f21;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  width: 350px;
+  height: 35px;
+  margin-top: 5px;
+  padding-left: 10px;
+}
+
+.next-create-password {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 30px;
+  background-color: rgb(88, 175, 223, 0.1);
+  color: rgb(88 196 220);
+  width: 320px;
+  height: 20px;
+  border-radius: 15px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+}
+.next-create-password:hover {
+  background: rgb(88 196 220);
+  color: white;
+}
+
+.logIn a {
+  color: rgb(88 196 220);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group .usePhone {
+  color: #1ed760;
+  margin-top: 10px;
+}
+
+.rules p {
+  font-weight: bold;
+}
+
+.requirements {
+  list-style: none;
+  padding: 0;
+  font-size: 14px;
+}
+
+.requirements li {
+  position: relative;
+  padding-left: 20px;
+  margin: 8px 0;
+  color: #aaa;
+}
+
+.requirements li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #555; /* mặc định xám đậm */
+}
+
+/* Nếu thỏa điều kiện -> xanh */
+.requirements li.valid {
+  color: #1ed760;
+}
+
+.requirements li.valid::before {
+  background-color: #1ed760;
+}
+
+/* Nếu sai điều kiện -> đỏ */
+.requirements li.invalid {
+  color: #ff4d4d;
+}
+
+.requirements li.invalid::before {
+  background-color: #ff4d4d;
+}
+
+.rules {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+.password-box {
+  position: relative;
+}
+
+.toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-45%);
+  cursor: pointer;
+  color: #ccc;
+  font-size: 15px;
+}

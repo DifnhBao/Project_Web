@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NhacCuaTui</title>
+
+    <!-- FontAwesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- CSS link -->
+    <link rel="stylesheet" href="/sources/Styles/Home.css" />
+    <link rel="stylesheet" href="/sources/Styles/library.css" />
+    <link rel="stylesheet" href="/sources/Styles/MyPlaylists.css" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="menu">
+      <div class="logo">
+        <a href="/sources/HTML/Page/Home.html">
+          <img src="/images/logo.png" alt="logo web page" />
+        </a>
+      </div>
+      <nav>
+        <a href="#" class="active" data-section="home"
+          ><i class="fa-regular fa-compass"></i> Explore</a
+        >
+        <a href="#" data-section="library"
+          ><i class="fa-solid fa-book"></i> Library</a
+        >
+        <a href="#" data-section="playlist"
+          ><i class="fa-solid fa-list"></i> My Playlist</a
+        >
+      </nav>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+      <!-- Header -->
+      <header class="header">
+        <div class="back-next-search">
+          <div class="back chevron">
+            <button><i class="fa-solid fa-chevron-left"></i></button>
+          </div>
+          <div class="next chevron">
+            <button><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass i-search"></i>
+            <input
+              class="input-text"
+              placeholder="Bạn muốn phát nội dung gì?"
+            />
+          </div>
+        </div>
+
+        <div class="header-right">
+          <button class="sign-up head">
+            <a href="/sources/HTML/Page/SignUp.html" class="a-sign-up"
+              >Sign up</a
+            >
+          </button>
+          <button class="login head">
+            <a href="/sources/HTML/Page/SignIn.html">Sign in</a>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div id="content" class="content">
+        <!-- HOME -->
+        <div id="home" class="home-menu section active">
+          <div id="greeting" class="greeting-text"></div>
+
+          <!-- Banner -->
+          <div class="banner-container">
+            <button class="banner-btn left">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <div class="banner-row">
+              <div class="banner-item">
+                <img
+                  src="/images/image-playlist/1759214910211_1500.webp"
+                  alt="Ngày mới nhạc mới"
+                />
+              </div>
+              <div class="banner-item">
+                <img
+                  src="/images/image-playlist/1753758594293_1500.webp"
+                  alt="Nhạc hot TikTok"
+                />
+              </div>
+              <div class="banner-item">
+                <img
+                  src="/images/image-playlist/1756458645999_1500.webp"
+                  alt="Nhạc pop"
+                />
+              </div>
+              <div class="banner-item">
+                <img
+                  src="/images/image-playlist/1758769639928_1500.webp"
+                  alt="Quảng cáo"
+                />
+              </div>
+            </div>
+
+            <button class="banner-btn right">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <!-- ---- -->
+
+          <!-- Category Section -->
+          <div class="category-grid">
+            <div class="category-card" style="background-color: #b87933">
+              <h3>Indie Việt</h3>
+              <img src="/images/image-playlist/1696838532451_300.png" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #d94a5b">
+              <h3>Yêu</h3>
+              <img src="/images/image-playlist/1696839293898_300.png" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #43b144">
+              <h3>Nhạc Dance</h3>
+              <img src="/images/image-playlist/1696841115375_300.png" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #692f98">
+              <h3>Nhạc Pop</h3>
+              <img src="/images/image-playlist/1696838548999_300.png" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #2b7b77">
+              <h3>Ngủ Ngon</h3>
+              <img src="/images/image-playlist/1680590463876_300.jpg" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #e39a78">
+              <h3>Chill</h3>
+              <img src="/images/image-playlist/1699416746814_300.png" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #3e3e3e">
+              <h3>Hip-Hop/R&B</h3>
+              <img src="/images/image-playlist/1698918234719_300.png" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #da6c34">
+              <h3>Nhạc Trung</h3>
+              <img src="/images/image-playlist/1688372216230_300.jpg" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #345061">
+              <h3>Tập Luyện</h3>
+              <img src="/images/image-playlist/1696841096846_300.png" alt="" />
+            </div>
+
+            <div class="category-card" style="background-color: #c38d53">
+              <h3>Acoustic Việt</h3>
+              <img src="/images/image-playlist/1699425701303_300.png" alt="" />
+            </div>
+          </div>
+          <!-- -------- -->
+
+          <h2>Featured Playlists</h2>
+          <div class="playlists" id="featuredPlaylists"></div>
+
+          <!-- Info Company -->
+          <div class="company-info">
+            <div class="company-left">
+              <img
+                src="/images/nct-footer-logo.png"
+                alt="NCT Logo"
+                class="company-logo"
+              />
+              <h3>CÔNG TY CỔ PHẦN N C T</h3>
+              <ul>
+                <li>
+                  Thông tin giấy phép MXH số .../GP-BTTTT do Bộ Thông Tin và
+                  Truyền thông cấp ngày ...
+                </li>
+                <li>
+                  Giấy Chứng nhận Đăng ký Kinh doanh số 0305535715 do Sở kế
+                  hoạch và Đầu tư thành phố Hồ Chí Minh cấp ngày 01/03/2008.
+                </li>
+                <li>
+                  Nhân sự chịu trách nhiệm quản lý nội dung thông tin: Ông Phan
+                  Hoài Nam
+                </li>
+                <li>
+                  Địa chỉ: Tầng 19, Tòa nhà 678, 67 Hoàng Văn Thái, Phường Tân
+                  Mỹ, TP. Hồ Chí Minh
+                </li>
+                <li>Email: <a>support@nct.vn</a></li>
+                <li>Số điện thoại: <a>(028) 3868 7979</a></li>
+              </ul>
+            </div>
+
+            <div class="company-right">
+              <img
+                src="/images/t_bo_cong_thuong.png"
+                alt="Đã thông báo Bộ Công Thương"
+              />
+              <img src="/images/dmca.png" alt="DMCA Protected" />
+            </div>
+          </div>
+
+          <div class="company-bottom">
+            <a>Chính Sách Bảo Mật</a> • <a>Chính Sách SHTT</a> •
+            <a>Thỏa Thuận Sử Dụng</a>
+            <p>© NCT Corp. All rights reserved</p>
+          </div>
+        </div>
+
+        <!-- LIBRARY -->
+        <div id="library" class="library-menu section">
+          <h1>Your Library</h1>
+
+          <div class="table">
+            <div class="table-header">
+              <div class="col index">#</div>
+              <div class="col title">Title</div>
+              <div class="col artist">Artist</div>
+              <div class="col duration">Duration</div>
+            </div>
+
+            <div id="rowTable"></div>
+          </div>
+        </div>
+
+        <!-- My Playlists -->
+        <div id="playlist" class="myplaylist-menu section">
+          <div class="main-header">
+            <h1>My Playlist</h1>
+            <button class="new-playlist-btn">+ New Playlist</button>
+          </div>
+          <div class="playlist-grid" id="playlistGrid"></div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="info">
+        <div class="info-player">
+          <a class="background-singer"><img src="" alt="Singer" /></a>
+          <div class="info-song">
+            <a href="#" class="song-tittle">Song Title</a>
+            <a href="#" class="artist-name">Artist Name</a>
+          </div>
+
+          <!-- Nút trái tim -->
+          <button class="icon-btn like-icon">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+
+          <!-- Nút dấu 3 chấm ngang -->
+          <button class="icon-btn expand-icon">
+            <i class="fa-solid fa-ellipsis"></i>
+          </button>
+        </div>
+
+        <div class="player-center">
+          <div class="control">
+            <button class="play"><i class="fa-solid fa-shuffle"></i></button>
+            <button id="prevBtn" class="play">
+              <i class="fa-solid fa-backward-step"></i>
+            </button>
+            <button id="playBtn" class="play-btn">
+              <i class="fas fa-play"></i>
+            </button>
+            <button id="nextBtn" class="play">
+              <i class="fa-solid fa-forward-step"></i>
+            </button>
+            <button class="play"><i class="fa-solid fa-repeat"></i></button>
+          </div>
+
+          <div class="run">
+            <span class="current-time">00:00</span>
+            <input type="range" class="seek-bar" value="0" min="0" max="100" />
+            <span class="music-time">00:00</span>
+          </div>
+        </div>
+
+        <div class="vol">
+          <button class="volume">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+          <input type="range" value="50" min="0" max="100" />
+        </div>
+      </footer>
+    </div>
+
+    <!-- JS -->
+    <script type="module" src="/sources/Scripts/Home.js"></script>
+  </body>
+</html>
