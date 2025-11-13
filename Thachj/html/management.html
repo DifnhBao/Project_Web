@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="/sources/Styles/dashboard.css" />
+    <!-- <link rel="stylesheet" href="/sources/Styles/admin_manage.css" /> -->
+    <link rel="stylesheet" href="/Thachj/css/user_management.css">
+    <link rel="stylesheet" href="/Thachj/css/services_management.css">
+    <link rel="stylesheet" href="/Thachj/css/statistics.css">
+    <link rel="stylesheet" href="/Thachj/css/settings.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style></style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="title">
+            <img src="/images/logo.png" alt="logo" />
+        </div>
+
+        <a href="#" class="active" data-section="dashboard">
+            <i class="fa-solid fa-house"></i> Dashboard
+        </a>
+        <a href="#" data-section="users">
+            <i class="fa-solid fa-users"></i> Manage User
+        </a>
+        <a href="#" data-section="services">
+            <i class="fa-solid fa-music"></i> Manage Services
+        </a>
+        <a href="#" data-section="admins">
+            <i class="fa-solid fa-user-shield"></i> Manage Admin
+        </a>
+        <a href="#" data-section="stats">
+            <i class="fa-solid fa-chart-line"></i> Statistics
+        </a>
+        <a href="#" data-section="settings">
+            <i class="fa-solid fa-gear"></i> Settings
+        </a>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+        <!-- Header -->
+        <div class="header">
+            <h2 id="page-title">Dashboard</h2>
+            <div class="admin-info">
+                <span>Hi, Admin</span>
+                <i class="fa-solid fa-user-circle"></i>
+                <a href="/sources/HTML/SignIn.html" class="logout-from-dashboard">
+                    <i class="fa-solid fa-power-off"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Dashboard content -->
+            <div id="dashboard" class="section active">
+                <!-- Cards -->
+                <div class="cards">
+                    <div class="card"><br /><span>Total Users</span></div>
+                    <div class="card"><br /><span>Total Songs</span></div>
+                    <div class="card"><br /><span>Total Artists</span></div>
+                    <div class="card"><br /><span>Total Playlists</span></div>
+                </div>
+
+                <!-- Chart -->
+                <div class="charts">
+                    <div class="chart">
+                        <h3>New Users</h3>
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                    <div class="chart">
+                        <h3>Music Genres</h3>
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="lists">
+                    <div class="list">
+                        <h3>Top 5 Artists</h3>
+                        <ol></ol>
+                    </div>
+                    <div class="list">
+                        <h3>Top 5 Songs</h3>
+                        <ol></ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manage User -->
+            <div id="users" class="section">
+                <div class="content-header">
+                    <button style="width: fit-content" class="add-btn">
+                        <i class="fa-solid fa-plus"></i> Add User
+                    </button>
+                </div>
+
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Mail</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>001</td>
+                            <td>Lê Đình Bảo</td>
+                            <td>dinhbaor123@gmail.com</td>
+                            <td>User</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>002</td>
+                            <td>Huỳnh Đình Thạch</td>
+                            <td>dinhthach11@gmail.com</td>
+                            <td>User</td>
+                            <td><span class="status inactive">Inactive</span></td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>003</td>
+                            <td>Nguyễn Vũ Cường</td>
+                            <td>vucuongnguyen@gmail.com</td>
+                            <td>User</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <!-- Manage Services -->
+            <!-- <div id="services" class="section">
+                <div class="content-header">
+                    <button style="width: fit-content" class="add-btn">
+                        <i class="fa-solid fa-plus"></i> Add Services
+                    </button>
+                </div>
+
+                <table class="services-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td> Free</td>
+                            <td>Ad-supported</td>
+                            <td>$0.00</td>
+                            <td>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Premium</td>
+                            <td>Ad-free</td>
+                            <td>$9.99</td>
+                            <td>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Family</td>
+                            <td>Up to 6 accounts</td>
+                            <td>$14.99</td>
+                            <td>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+
+            <!-- Manage Admin -->
+            <div id="admins" class="section">
+                <div class="content-header">
+                    <button style="width: fit-content" class="add-btn">
+                        <i class="fa-solid fa-plus"></i> Add Admin
+                    </button>
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email / Phone number</th>
+                            <th>Role</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bao</td>
+                            <td>Dinh</td>
+                            <td>dinhbao123@gmail.com</td>
+                            <td>admin</td>
+                            <td><button class="edit-btn">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>Thach</td>
+                            <td>Dinh</td>
+                            <td>dinhthach11@gmail.com</td>
+                            <td>admin</td>
+                            <td><button class="edit-btn">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <!-- <td><button class="edit-btn">Edit</button></td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Statistics -->
+            <div id="stats" class="section">
+                <div class="stats-container">
+                    <div class="S-cards">
+                        <div class="S-card">
+                            <h3>Total Users</h3>
+                            <p class="big-number">1.500.000</p>
+                            <span class="growth">+15% this month</span>
+                        </div>
+
+                        <div class="S-card">
+                            <h3>Total Songs</h3>
+                            <p class="big-number">60.100</p>
+                            <span class="growth">+5.320 uploaded</span>
+                        </div>
+
+                        <div class="S-card">
+                            <h3>Total plays</h3>
+                            <p class="big-number">81.201.583</p>
+                            <span class="growth">+20% this month</span>
+                        </div>
+                    </div>
+
+                    <div class="S-charts">
+                        <div class="chart-box">
+                            <h3>Daily Plays Last 30 Days</h3>
+                            <canvas id="S-lineChart"></canvas>
+                        </div>
+                        <div class="chart-box">
+                            <h3>Gneres Popularity</h3>
+                            <canvas id="circleChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-box">
+                    <h3>Top 5 most played songs</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Song title</th>
+                                <th>Artist</th>
+                                <th>Played</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Phép Màu</td>
+                                <td>MAYDAYS</td>
+                                <td>3.200.180</td>
+                            </tr>
+                            <tr>
+                                <td>Kho Báu</td>
+                                <td>Rhymastic</td>
+                                <td>3.000.019</td>
+                            </tr>
+                            <tr>
+                                <td>Còn Gì Đẹp Hơn(Mưa Đỏ)</td>
+                                <td>Nguyễn Hùng</td>
+                                <td>2,907.100</td>
+                            </tr>
+                            <tr>
+                                <td>Mất Kết Nối</td>
+                                <td>Dương Domic</td>
+                                <td>2.539.112</td>
+                            </tr>
+                            <tr>
+                                <td>Nỗi Đau Giữa Hòa Bình</td>
+                                <td>Hòa Minzy x Nguyễn Văn Chung</td>
+                                <td>2.341.901</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="settings" class="section">
+
+                <h3 data-translate="account_settings">Cài đặt Tài khoản (Account Settings)</h3>
+                <div class="setting-group">
+                    <div class="setting-item">
+                        <label data-translate="change_username">Thay đổi Tên người dùng</label>
+                        <input type="text" placeholder="Nhập tên mới" data-placeholder="enter_new_name">
+                        <button data-translate="save">Lưu</button>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="change_email">Thay đổi Email</label>
+                        <input type="email" placeholder="Nhập email mới" data-placeholder="enter_new_email">
+                        <button data-translate="save">Lưu</button>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="update_password">Cập nhật Mật khẩu</label>
+                        <input type="password" placeholder="Mật khẩu mới" data-placeholder="new_password">
+                        <button data-translate="change_password">Đổi mật khẩu</button>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="avatar">Ảnh đại diện</label>
+                        <input type="file">
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="subscription_plan">Gói dịch vụ</label>
+                        <select>
+                            <option>Basic</option>
+                            <option>Premium</option>
+                            <option>VIP</option>
+                        </select>
+                        <button data-translate="update_payment">Cập nhật thanh toán</button>
+                        <button data-translate="cancel_plan">Hủy/Thay đổi gói</button>
+                    </div>
+                </div>
+
+                <h3 data-translate="playback_settings">Cài đặt Phát nhạc (Playback Settings)</h3>
+                <div class="setting-group">
+                    <div class="setting-item">
+                        <label data-translate="stream_quality">Chất lượng phát trực tuyến</label>
+                        <select>
+                            <option>Thấp (Low)</option>
+                            <option selected>Tiêu chuẩn (Standard)</option>
+                            <option>Cao (High)</option>
+                            <option>Lossless (Premium)</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="autoplay">Tự động Phát</label>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="gapless_playback">Phát lại không ngắt quãng</label>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="normalize_volume">Âm lượng Bình thường hóa</label>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <h3 data-translate="appearance_settings">Cài đặt Giao diện & Hiển thị (Appearance & Display)</h3>
+                <div class="setting-group">
+                    <div class="setting-item">
+                        <label data-translate="theme">Giao diện</label>
+                        <select>
+                            <option value="dark">Tối (Dark)</option>
+                            <option value="light">Sáng (Light)</option>
+                            <option value="system">Tự động (System Default)</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="language">Ngôn ngữ</label>
+                        <select id="languageSelect">
+                            <option value="vi">Tiếng Việt</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="show_lyrics">Hiển thị Lời bài hát</label>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="lyrics_font_size">Cỡ chữ Lời bài hát</label>
+                        <input type="number" min="12" max="32" value="16"> px
+                    </div>
+                </div>
+
+                <h3 data-translate="privacy_settings">Cài đặt Riêng tư (Privacy Settings)</h3>
+                <div class="setting-group">
+                    <div class="setting-item">
+                        <label data-translate="public_activity">Hoạt động Công khai</label>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="allow_others_playlist">Cho phép người khác xem playlist của tôi</label>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="block_users">Chặn người dùng</label>
+                        <button data-translate="manage_list">Quản lý danh sách</button>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="download_data">Tải xuống dữ liệu cá nhân</label>
+                        <button data-translate="export_data">Xuất dữ liệu</button>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="delete_account">Xóa toàn bộ tài khoản</label>
+                        <button class="danger" data-translate="delete">Xóa</button>
+                    </div>
+                </div>
+
+                <h3 data-translate="notifications">Thông báo (Notifications)</h3>
+                <div class="setting-group">
+                    <div class="setting-item">
+                        <label data-translate="general_notifications">Thông báo Chung</label>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="new_album">Album mới</label>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="suggested_playlist">Danh sách phát được đề xuất mới</label>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label data-translate="special_offers">Ưu đãi đặc biệt qua Email</label>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/sources/Scripts/dashboard.js"></script>
+    <script src="/Thachj/javascript/user_management.js"></script>
+    <script src="/Thachj/javascript/service_management.js"></script>
+    <script src="/Thachj/javascript/statistics.js"></script>
+    <script src="/Thachj/javascript/settings.js"></script>
+</body>
+
+</html>

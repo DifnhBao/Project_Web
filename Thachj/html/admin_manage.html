@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Management</title>
+    <link rel="stylesheet" href="\Thachj\css\admin_manage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2 class="logo">Admin Management</h2>
+            <ul class="menu">
+
+                <a href="/Thachj/html/dashboard.html"><i class="fa fa-home"></i> Dashboard</a>
+                <a href="#"><i class="fa fa-users"></i> User Management</a>
+                <a href="#"><i class="fa fa-music"></i> Music Management</a>
+                <a href="#"><i class="fa fa-user"></i> Artist Management</a>
+                <a href="#"><i class="fa fa-list"></i> Playlist Management</a>
+                <a href="#"><i class="fa fa-chart-bar"></i> Analytics & Reports</a>
+                <a href="#"><i class="fa fa-cog"></i> System Settings</a>
+
+                <!-- <li><i class="fa-solid fa-house"></i> Dashboard</li>
+                <li><i class="fa-solid fa-user"></i> User Management</li>
+                <li><i class="fa-solid fa-music"></i> Artist Management</li>
+                <li><i class="fa-solid fa-box"></i> Service Management</li>
+                <li><i class="fa-solid fa-chart-line"></i> Statistics & Reports</li>
+                <li><i class="fa-solid fa-gear"></i> System Settings</li> -->
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <span></span>
+                <div class="user-info">
+                    <span>Hi, Admin</span>
+                    <i class="fa-solid fa-user-circle"></i>
+                </div>
+            </header>
+
+            <section class="content">
+                <div class="content-header">
+                    <h1>Admin Management</h1>
+                    <button style="width:fit-content;" class="add-btn"><i class="fa-solid fa-plus"></i> Add
+                        Admin</button>
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>DinhBao</td>
+                            <td>dinhbao123@gmail.com</td>
+                            <td>admin</td>
+                            <td><button class="edit-btn">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>DinhThach</td>
+                            <td>dinhthach11@gmail.com</td>
+                            <td>admin</td>
+                            <td><button class="edit-btn">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><button class="edit-btn">Edit</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>
