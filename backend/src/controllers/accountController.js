@@ -153,6 +153,25 @@ export const updateProfile = async (req, res) => {
   }
 };
 
+export const adminUpdateUserProfile = async (req, res) => {
+  const { roleType } = req.user;
+  if (roleType !== "admin") {
+    return res.status(403).json({ message: "Không có quyền cập nhật hồ sơ." });
+  }
+
+  const { userId } = req.params;
+  const { firstName, lastName, gender, dateOfBirth, phone, address } = req.body;
+
+  await db.query(
+    "UPDATE user_profile SET first_name=?, last_name=?, gender=?, date_of_birth=?, phone=?, address=? WHERE user_id=?",
+    [firstName, lastName, gender, dateOfBirth, phone, address, userId]
+  );
+
+  return res
+    .status(200)
+    .json({ message: "Cập nhật hồ sơ người dùng thành công!" });
+};
+
 // Dọn dẹp refresh token hết hạn
 // export const cleanExpiredRefreshToken = async () => {
 //   try {

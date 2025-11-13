@@ -23,4 +23,21 @@ export interface Artist {
   tracks: Track[];
 }
 
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  role: string;
+  activity_status: string;
+}
+
+export interface UserProfileData {
+  firstName: string;
+  lastName: string;
+  gender: string;
+  dateOfBirth: string;
+  phone: string;
+  address: string;
+}
+
 export type SelectedItem = Playlist | Artist;

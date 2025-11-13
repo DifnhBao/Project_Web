@@ -1,41 +1,16 @@
 "use client";
 
 import styles from "@/app/styles/AdminPage/ManageUser.module.css";
-import { useEffect, useState } from "react";
-import { refreshTokenByAdmin, getUsers } from "@/app/utils/authApi";
-import { deleteAccount } from "@/app/utils/accountApi";
-
-interface User {
-  id: number;
-  username: string;
-  email: string;
-  role: string;
-  activity_status: string;
-}
+import { useUsers } from "@/app/hooks/useUsers";
+import { useModal } from "@/app/context/ModalContext";
 
 export default function ManageUser() {
-  const [users, setUsers] = useState<User[]>([]);
+  const { users, isLoading, error, deleteUser } = useUsers();
+  const { openModal } = useModal();
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        // Gọi API cần xác thực
-        const res = await getUsers();
-        if (!res.ok) {
-          throw new Error("Không thể tải danh sách user");
-        }
-        const data = await res.json();
-
-        setUsers(data);
-      } catch (error) {
-        console.error("Lỗi khi tải user:", error);
-      }
-    };
-    fetchUsers();
-  }, []);
-
-  if (users.length === 0) return null;
-  console.log("user:", users);
+  if (isLoading) return <p>Đang tải...</p>;
+  if (error) return <p>Lỗi tải danh sách user!</p>;
+  if (!users || users.length === 0) return null;
 
   return (
     <div id="users" className={styles.section}>
@@ -74,12 +49,15 @@ export default function ManageUser() {
                 </span>
               </div>
               <div className={styles.rowOption}>
-                <button className={styles.edit}>Edit</button>
+                <button
+                  className={styles.edit}
+                  onClick={() => openModal("edit-user-profile", user)}
+                >
+                  Edit
+                </button>
                 <button
                   className={styles.delete}
-                  onClick={() => {
-                    deleteAccount(user.id);
-                  }}
+                  onClick={() => deleteUser(user.id)}
                 >
                   Delete
                 </button>

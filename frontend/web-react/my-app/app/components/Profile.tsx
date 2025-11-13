@@ -1,10 +1,19 @@
 "use client";
-import { useState } from "react";
-import { addNewProfile, updateProfile } from "../utils/accountApi";
+
 import { useProfileForm } from "../hooks/useProfileForm";
+import { UserProfileData } from "../types/music";
+import { formatDateForInput } from "../utils/dateHelper";
 import "@/app/styles/Profile.css";
 
-const Profile = () => {
+const Profile = ({
+  initialData,
+  mode = "user",
+  userId,
+}: {
+  initialData: UserProfileData;
+  mode?: "user" | "admin";
+  userId?: number;
+}) => {
   const {
     formData,
     note,
@@ -12,7 +21,7 @@ const Profile = () => {
     handleChange,
     handleReset,
     handleSubmit,
-  } = useProfileForm();
+  } = useProfileForm(initialData, mode, userId);
 
   return (
     <div className="profile_card" role="region" aria-labelledby="form-title">
@@ -107,7 +116,7 @@ const Profile = () => {
             id="dateOfBirth"
             name="dateOfBirth"
             type="date"
-            value={formData.dateOfBirth}
+            value={formatDateForInput(formData.dateOfBirth)}
             onChange={handleChange}
             required
           />

@@ -37,3 +37,20 @@ export const getAllAdmins = async (req, res) => {
     return res.status(500).json({ message: "Lỗi hệ thống" });
   }
 };
+
+export const getUserProfile = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const sql =
+      "SELECT first_name, last_name, gender, date_of_birth, address, phone FROM user_profile WHERE user_id = ?";
+    const [results] = await db.query(sql, [userId]);
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Không tìm thấy user." });
+    }
+
+    return res.status(200).json(results);
+  } catch (error) {
+    console.error("Lỗi khi lấy thông tin người dùng: ", error);
+    return res.status(500).json({ message: "Lối hệ thống." });
+  }
+};

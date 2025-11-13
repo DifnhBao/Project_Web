@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useModal } from "@/app/context/ModalContext";
 import { addNewAdmin } from "@/app/utils/authApi";
 import { mutate } from "swr";
-import "@/app/styles/auth.css";
-// import "@/app/styles/AdminPage/addAdmin.css";
+// import "@/app/styles/auth.css";
+import "@/app/styles/AdminPage/addAdmin.css";
 
 export default function AddNewAdmin() {
   const [username, setUsername] = useState("");

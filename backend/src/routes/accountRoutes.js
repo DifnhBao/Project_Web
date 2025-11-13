@@ -3,6 +3,7 @@ import {
   deleteAccount,
   addNewProfile,
   updateProfile,
+  adminUpdateUserProfile,
 } from "../controllers/accountController.js";
 import { verifyToken } from "../middleware/authMiddleware.js";
 
@@ -13,5 +14,11 @@ router.delete("/account/:id", verifyToken("admin"), deleteAccount);
 router.post("/profile", verifyToken(), addNewProfile);
 // cập nhật thông tin cá nhân
 router.patch("/profile", verifyToken(), updateProfile);
+// admin cập nhật thông tin người dùng
+router.patch(
+  "/admin-update/profile/:userId",
+  verifyToken("admin"),
+  adminUpdateUserProfile
+);
 
 export default router;

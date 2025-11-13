@@ -1,9 +1,9 @@
 /* ===== Container chính ===== */
 .auth-container {
-  background-color: #ffffff;
+  background-color: #212121;
   border-radius: 16px;
   padding: 2rem 2.5rem;
-  width: 420px;
+  width: 450px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   margin: 0 auto;
   display: flex;
@@ -16,13 +16,16 @@
 .auth-container img {
   width: 14em;
   margin-bottom: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ===== Tiêu đề ===== */
 .auth-container h1 {
   text-align: center;
-  color: #111827;
-  font-size: 1.5rem;
+  color: #fff;
+  font-size: 2rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
 }
@@ -31,7 +34,7 @@
 .form_label {
   font-size: 0.95rem;
   font-weight: 500;
-  color: #374151;
+  color: #fff;
   margin-bottom: 0.3rem;
   display: block;
 }
@@ -39,11 +42,12 @@
 /* ===== Input ===== */
 .auth-container input {
   width: 100%;
+  height: 75%;
   padding: 0.7rem 1rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  background-color: #f9fafb;
-  color: #111827;
+  border-radius: 5px;
+  background-color: #373737;
+  border: none;
+  color: #fff;
   font-size: 0.95rem;
   margin-bottom: 1.2rem;
   outline: none;
@@ -157,8 +161,9 @@ input:checked + .slider:before {
 }
 
 .switch-form {
-  color: #111827;
+  color: #fff;
   margin-top: 20px;
+  text-align: center;
 }
 
 .create {

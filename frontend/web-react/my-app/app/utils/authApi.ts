@@ -1,3 +1,4 @@
+export const URL = "http://localhost:5000";
 // USER PAGE
 
 // Đăng kí cho user
@@ -6,7 +7,7 @@ export async function registerUser(
   email: string,
   password: string
 ) {
-  return await fetch("http://localhost:5000/auth/register", {
+  return await fetch(URL + "/auth/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, email, password }),
@@ -15,7 +16,7 @@ export async function registerUser(
 
 // Đăng nhập cho user page
 export async function loginUser(email: string, password: string) {
-  return await fetch("http://localhost:5000/auth/login", {
+  return await fetch(URL + "/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -24,7 +25,7 @@ export async function loginUser(email: string, password: string) {
 }
 
 export async function logoutUser() {
-  return await fetch("http://localhost:5000/auth/logout", {
+  return await fetch(URL + "/auth/logout", {
     method: "POST",
     credentials: "include",
   });
@@ -32,7 +33,7 @@ export async function logoutUser() {
 
 // API xác thực user vừa đăng nhập và lưu thông tin đăng nhập
 export async function fetchCurrentUser() {
-  return await fetch("http://localhost:5000/auth/me", {
+  return await fetch(URL + "/auth/me", {
     credentials: "include",
   });
 }
@@ -45,7 +46,7 @@ export async function registerAdmin(
   email: string,
   password: string
 ) {
-  return await fetch("http://localhost:5000/auth-admin/register-admin", {
+  return await fetch(URL + "/auth-admin/register-admin", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, email, password }),
@@ -54,7 +55,7 @@ export async function registerAdmin(
 
 // Đăng nhập
 export async function loginAdmin(email: string, password: string) {
-  return await fetch("http://localhost:5000/auth-admin/login-admin", {
+  return await fetch(URL + "/auth-admin/login-admin", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -64,7 +65,7 @@ export async function loginAdmin(email: string, password: string) {
 
 // Đăng xuất
 export async function logoutAdmin() {
-  return await fetch("http://localhost:5000/auth-admin/logout-admin", {
+  return await fetch(URL + "/auth-admin/logout-admin", {
     method: "POST",
     credentials: "include",
   });
@@ -72,14 +73,14 @@ export async function logoutAdmin() {
 
 // API Xác thực admin vừa đăng nhập và lưu thông tin đăng nhập
 export async function fetchCurrentAdmin() {
-  return await fetch("http://localhost:5000/auth-admin/me", {
+  return await fetch(URL + "/auth-admin/me", {
     credentials: "include",
   });
 }
 
 // API refresh access token
 export async function refreshTokenByAdmin() {
-  return await fetch("http://localhost:5000/auth-admin/refresh", {
+  return await fetch(URL + "/auth-admin/refresh", {
     method: "POST",
     credentials: "include", // gửi cookie kèm theo
   });
@@ -127,27 +128,24 @@ export async function fetchWithAutoRefresh(
 
 // Accept role admin or reject
 export async function AcceptOrReject(id: number, status: string) {
-  return await fetchWithAutoRefresh(
-    `http://localhost:5000/auth-admin/approve-admin/${id}`,
-    {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-      credentials: "include",
-    }
-  );
+  return await fetchWithAutoRefresh(URL + `/auth-admin/approve-admin/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status }),
+    credentials: "include",
+  });
 }
 
 //API Lấy danh sách user
 export async function getUsers() {
-  return await fetchWithAutoRefresh("http://localhost:5000/users/all-users", {
+  return await fetchWithAutoRefresh(URL + "/users/all-users", {
     method: "GET",
   });
 }
 
 // API Lấy danh sách admin
 export async function getAdmins() {
-  return await fetchWithAutoRefresh("http://localhost:5000/users/all-admins", {
+  return await fetchWithAutoRefresh(URL + "/users/all-admins", {
     method: "GET",
   });
 }
@@ -158,12 +156,9 @@ export async function addNewAdmin(
   email: string,
   password: string
 ) {
-  return await fetchWithAutoRefresh(
-    "http://localhost:5000/auth-admin/add-new-admin",
-    {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
-    }
-  );
+  return await fetchWithAutoRefresh(URL + "/auth-admin/add-new-admin", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, email, password }),
+  });
 }

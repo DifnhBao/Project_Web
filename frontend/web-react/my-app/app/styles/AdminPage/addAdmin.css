@@ -1,9 +1,8 @@
 .auth-container {
-  background-color: #ffffff;
+  background-color: #fff;
   border-radius: 16px;
   padding: 2rem 2.5rem;
-  width: 100%;
-  max-width: 420px;
+  width: 500px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   margin: 0 auto;
   display: flex;
@@ -11,7 +10,6 @@
   align-items: stretch;
   transition: all 0.25s ease;
 }
-
 .auth-container h1 {
   text-align: center;
   color: #111827;
@@ -104,6 +102,3 @@
   }
 }
 
-.auth-container {
-  animation: fadeIn 0.3s ease;
-}

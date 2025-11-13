@@ -2,14 +2,7 @@
 import useSWR, { mutate } from "swr";
 import { getUsers } from "@/app/utils/authApi";
 import { deleteAccount } from "@/app/utils/accountApi";
-
-export interface User {
-  id: number;
-  username: string;
-  email: string;
-  role: string;
-  activity_status: string;
-}
+import { User } from "../types/music";
 
 // Fetcher dùng chung
 const fetcher = async () => {

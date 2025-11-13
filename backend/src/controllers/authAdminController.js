@@ -137,6 +137,12 @@ export const loginAdmin = async (req, res) => {
 
     const admin = rows[0];
 
+    if (!(admin.role === "admin" || admin.role === "super_admin")) {
+      return res
+        .status(403)
+        .json({ message: "Bạn không có quyền đăng nhập trang admin." });
+    }
+
     // Kiểm tra trạng thái tài khoản admin
     if (admin.account_status === "pending") {
       return res

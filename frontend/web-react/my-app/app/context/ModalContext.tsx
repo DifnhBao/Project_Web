@@ -2,6 +2,7 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import Modal from "@/app/components/Modal";
 import Profile from "@/app/components/Profile";
+import EditUserProfile from "../components/EditUserProfile";
 import dynamic from "next/dynamic";
 
 // Dynamic import cho user
@@ -31,11 +32,13 @@ type ModalType =
   | "signin-admin"
   | "register-admin"
   | "add-new-admin"
+  | "edit-user-profile"
   | null;
 
 interface ModalContextType {
-  openModal: (type: Exclude<ModalType, null>) => void;
+  openModal: (type: Exclude<ModalType, null>, data?: any) => void;
   closeModal: () => void;
+  modalData: any;
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
@@ -43,9 +46,11 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<ModalType>(null);
+  const [modalData, setModalData] = useState<any>(null);
 
-  const openModal = (type: Exclude<ModalType, null>) => {
+  const openModal = (type: Exclude<ModalType, null>, data?: any) => {
     setModalContent(type);
+    setModalData(data || null);
     setIsOpen(true);
   };
 
@@ -57,7 +62,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   const renderModalContent = () => {
     switch (modalContent) {
       case "profile":
-        return <Profile />;
+        return <Profile initialData={modalData} />;
       case "signin":
         return <SignInPage />;
       case "register":
@@ -68,13 +73,15 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         return <RegisterAdminPage />;
       case "add-new-admin":
         return <AddNewAdmin />;
+      case "edit-user-profile":
+        return <EditUserProfile userData={modalData} />;
       default:
         return null;
     }
   };
 
   return (
-    <ModalContext.Provider value={{ openModal, closeModal }}>
+    <ModalContext.Provider value={{ openModal, closeModal, modalData }}>
       {children}
       <Modal isOpen={isOpen} onClose={closeModal}>
         {renderModalContent()}
