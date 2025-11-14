@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 
 import authRoutes from "./routes/authRoutes.js";
 import authAdminRoutes from "./routes/authAdminRoutes.js";
+import refreshTokenRoutes from "./routes/refreshTokenRoutes.js";
 import userRoutes from "./routes/getUserRoutes.js";
 import accountRoutes from "./routes/accountRoutes.js";
 // import { cleanExpiredRefreshToken } from "./controllers/accountController.js";
@@ -26,6 +27,7 @@ app.use(
 // Sử dụng routes
 app.use("/auth", authRoutes);
 app.use("/auth-admin", authAdminRoutes);
+app.use("/refresh", refreshTokenRoutes);
 app.use("/users", userRoutes);
 app.use("/acc", accountRoutes);
 

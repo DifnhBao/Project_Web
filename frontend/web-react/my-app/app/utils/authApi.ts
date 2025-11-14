@@ -1,3 +1,5 @@
+import { fetchWithAutoRefresh } from "./refreshToken";
+
 export const URL = "http://localhost:5000";
 // USER PAGE
 
@@ -78,54 +80,6 @@ export async function fetchCurrentAdmin() {
   });
 }
 
-// API refresh access token
-export async function refreshTokenByAdmin() {
-  return await fetch(URL + "/auth-admin/refresh", {
-    method: "POST",
-    credentials: "include", // gửi cookie kèm theo
-  });
-}
-
-// Fetch API bất kì cần access token
-export async function fetchWithAutoRefresh(
-  url: string,
-  options: RequestInit = {},
-  retry: boolean = true
-) {
-  try {
-    // Gọi API chính
-    let res = await fetch(url, {
-      ...options,
-      credentials: "include",
-    });
-
-    // Nếu token hết hạn -> gọi API refresh
-    if (res.status === 401) {
-      console.warn("Access token có thể đã hết hạn, đang thử refresh...");
-
-      const refreshRes = await refreshTokenByAdmin();
-      console.log("refreshRes: ", refreshRes);
-
-      if (refreshRes.ok && retry) {
-        console.log("Refresh token thành công, thử gọi lại request ban đầu...");
-        // Gọi lại request ban đầu 1 lần duy nhất
-        res = await fetch(url, {
-          ...options,
-          credentials: "include",
-        });
-        console.log("res: ", res);
-      } else {
-        console.error("Không thể refresh token, yêu cầu đăng nhập lại.");
-      }
-    }
-
-    return res;
-  } catch (error) {
-    console.error("Lỗi trong fetchWithAutoRefresh:", error);
-    throw error;
-  }
-}
-
 // Accept role admin or reject
 export async function AcceptOrReject(id: number, status: string) {
   return await fetchWithAutoRefresh(URL + `/auth-admin/approve-admin/${id}`, {
@@ -133,6 +87,7 @@ export async function AcceptOrReject(id: number, status: string) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ status }),
     credentials: "include",
+    role: "admin",
   });
 }
 
@@ -140,6 +95,7 @@ export async function AcceptOrReject(id: number, status: string) {
 export async function getUsers() {
   return await fetchWithAutoRefresh(URL + "/users/all-users", {
     method: "GET",
+    role: "admin",
   });
 }
 
@@ -147,6 +103,7 @@ export async function getUsers() {
 export async function getAdmins() {
   return await fetchWithAutoRefresh(URL + "/users/all-admins", {
     method: "GET",
+    role: "admin",
   });
 }
 
@@ -160,5 +117,6 @@ export async function addNewAdmin(
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, email, password }),
+    role: "admin",
   });
 }

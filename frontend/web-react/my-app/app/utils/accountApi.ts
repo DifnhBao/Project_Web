@@ -1,9 +1,11 @@
-import { fetchWithAutoRefresh, URL } from "./authApi";
+import { fetchWithAutoRefresh } from "./refreshToken";
+import { URL } from "./authApi";
 
 // admin xóa tài khoản
 export async function deleteAccount(id: number) {
   return await fetchWithAutoRefresh(URL + `/acc/account/${id}`, {
     method: "DELETE",
+    role: "admin",
   });
 }
 
@@ -29,6 +31,7 @@ export async function updateProfile(formData: object) {
 export async function getUserProfile(userId: number) {
   return await fetchWithAutoRefresh(URL + `/users/user-profile/${userId}`, {
     method: "GET",
+    role: "admin",
   });
 }
 
@@ -38,6 +41,7 @@ export async function adminUpdateUserProfile(userId: number, formData: object) {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(formData),
+    role: "admin",
   });
 }
 

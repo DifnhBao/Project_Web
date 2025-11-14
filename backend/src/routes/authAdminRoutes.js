@@ -5,10 +5,8 @@ import {
   registerAdmin,
   loginAdmin,
   logoutAmin,
-  refreshAccessTokenWithAdmin,
   addNewAdmin,
 } from "../controllers/authAdminController.js";
-
 import { verifyToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -19,8 +17,6 @@ router.post("/register-admin", registerAdmin);
 router.post("/login-admin", loginAdmin);
 // 4. Đăng xuất
 router.post("/logout-admin", logoutAmin);
-
-router.post("/refresh", refreshAccessTokenWithAdmin);
 
 // private
 router.get("/me", verifyToken("admin"), me);
