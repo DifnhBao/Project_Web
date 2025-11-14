@@ -29,7 +29,7 @@ export default function EditUserProfile({ userData }: { userData: User }) {
     fetchProfile();
   }, [userData]);
 
-  if (!formData) return <p>Đang tải...</p>;
+  if (!formData) return <p>Người dùng chưa cập nhật thông tin cá nhân.</p>;
 
   return <Profile initialData={formData} mode="admin" userId={userData.id} />;
 }

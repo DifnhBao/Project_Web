@@ -44,7 +44,7 @@
   outline: 1px solid #06b6d4;
 }
 
-.header-right {
+.auth-box {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -54,7 +54,8 @@
 .sign-in,
 .register {
   border: none;
-  border-radius: 25px;
+  border-radius: 50px;
+  font-size: 14px;
   height: 40px;
   width: 120px;
   font-weight: bold;
@@ -62,6 +63,7 @@
 
 .sign-in {
   background: none;
+  color: #fff;
 }
 
 .sign-in a {
@@ -84,28 +86,101 @@
   cursor: pointer;
 }
 
-.profile {
+.user-area {
+  position: relative;
+  display: inline-block;
+}
+
+.user-greeting {
+  display: flex;
+  align-items: center; /* CĂN GIỮA THEO CHIỀU DỌC */
+  gap: 10px; /* khoảng cách chữ <-> avatar */
+  font-size: 16px;
+}
+
+.user-area .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  color: white;
+}
+
+.user-menu {
+  position: absolute;
+  right: 15;
+  top: 70px;
+  width: 220px;
+  background: #292929;
+  border-radius: 16px;
+  padding: 15px;
+  color: white;
+  font-size: 13px;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+  animation: fadeIn 0.15s ease-out;
+  z-index: 999;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ffffff14;
+}
+
+.user-info p {
+  margin-top: 5px;
+  font-size: 11px;
+  color: #8f8f8f;
+}
+
+.user-info .avatar {
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  margin-left: 10px;
+  object-fit: cover;
+}
+
+.user-info p {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.logout-btn {
+  width: 100%;
+  background: none;
   border: none;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #333;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  color: white;
+  font-weight: 400;
   cursor: pointer;
-  transition: all 0.3s ease;
+  text-align: left;
 }
 
-.profile:hover {
-  background-color: #e0dfdf;
+.logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-.profile i {
-  font-size: 18px; /* chỉnh kích thước icon */
-  color: rgb(88 196 220);
+.logout-btn i {
+  margin-right: 10px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 1024px) {
