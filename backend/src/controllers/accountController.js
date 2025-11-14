@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import db from "../config/db.js";
 import dotenv from "dotenv";
 
@@ -170,6 +171,41 @@ export const adminUpdateUserProfile = async (req, res) => {
   return res
     .status(200)
     .json({ message: "Cập nhật hồ sơ người dùng thành công!" });
+};
+
+export const changePassword = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const { oldPassword, confirmPW } = req.body;
+
+    const sql = "SELECT hashed_password FROM users WHERE id = ?";
+    const [rows] = await db.query(sql, [id]);
+    if (rows.length === 0)
+      return res.status(401).json({ message: "Không tìm thấy người dùng." });
+
+    const user = rows[0];
+
+    const isPasswordValid = bcrypt.compareSync(
+      oldPassword,
+      user.hashed_password
+    );
+
+    if (!isPasswordValid)
+      return res.status(401).json({ message: "Mật khẩu không chính xác." });
+
+    const newPassword = bcrypt.hashSync(confirmPW, 10);
+
+    const updateNewPasswordSql =
+      "UPDATE users SET hashed_password = ? WHERE id = ?";
+    await db.query(updateNewPasswordSql, [newPassword, id]);
+
+    return res.status(200).json({
+      message: "Thay đổi mật khẩu thành công.",
+    });
+  } catch (error) {
+    console.error("Lỗi khi thay đổi mật khẩu: ", error);
+    return res.status(500).json({ message: "Lỗi hệ thống." });
+  }
 };
 
 // Dọn dẹp refresh token hết hạn

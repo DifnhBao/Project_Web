@@ -96,17 +96,14 @@ export const login = async (req, res) => {
 
     const user = rows[0];
 
-    if ( user.role !== "user") {
+    if (user.role !== "user") {
       return res
         .status(403)
         .json({ message: "Không thể đăng nhập trang user." });
     }
 
     // Kiểm tra password
-    const isPasswordValid = await bcrypt.compareSync(
-      password,
-      user.hashed_password
-    );
+    const isPasswordValid = bcrypt.compareSync(password, user.hashed_password);
 
     if (!isPasswordValid)
       return res

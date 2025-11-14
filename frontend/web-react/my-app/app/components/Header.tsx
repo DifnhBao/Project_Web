@@ -74,7 +74,7 @@ export default function Header() {
 
                 <button
                   className="logout-btn"
-                  onClick={() => openModal("profile")}
+                  onClick={() => openModal("change-password")}
                 >
                   <i className="fa-solid fa-key"></i>
                   Thay đổi mật khẩu

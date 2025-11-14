@@ -3,6 +3,7 @@ import { createContext, useContext, useState, ReactNode } from "react";
 import Modal from "@/app/components/Modal";
 import Profile from "@/app/components/Profile";
 import EditUserProfile from "../components/EditUserProfile";
+import ChangePassword from "../components/ChangePassword";
 import dynamic from "next/dynamic";
 
 // Dynamic import cho user
@@ -33,6 +34,7 @@ type ModalType =
   | "register-admin"
   | "add-new-admin"
   | "edit-user-profile"
+  | "change-password"
   | null;
 
 interface ModalContextType {
@@ -75,6 +77,9 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         return <AddNewAdmin />;
       case "edit-user-profile":
         return <EditUserProfile userData={modalData} />;
+      case "change-password":
+        return <ChangePassword />;
+
       default:
         return null;
     }

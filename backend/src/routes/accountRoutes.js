@@ -4,6 +4,7 @@ import {
   addNewProfile,
   updateProfile,
   adminUpdateUserProfile,
+  changePassword,
 } from "../controllers/accountController.js";
 import { verifyToken } from "../middleware/authMiddleware.js";
 
@@ -20,5 +21,6 @@ router.patch(
   verifyToken("admin"),
   adminUpdateUserProfile
 );
+router.patch("/password/change", verifyToken(), changePassword);
 
 export default router;
