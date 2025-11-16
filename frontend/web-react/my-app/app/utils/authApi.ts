@@ -35,7 +35,7 @@ export async function logoutUser() {
 
 // API xác thực user vừa đăng nhập và lưu thông tin đăng nhập
 export async function fetchCurrentUser() {
-  return await fetch(URL + "/auth/me", {
+  return await fetchWithAutoRefresh(URL + "/auth/me", {
     credentials: "include",
   });
 }
@@ -75,8 +75,9 @@ export async function logoutAdmin() {
 
 // API Xác thực admin vừa đăng nhập và lưu thông tin đăng nhập
 export async function fetchCurrentAdmin() {
-  return await fetch(URL + "/auth-admin/me", {
+  return await fetchWithAutoRefresh(URL + "/auth-admin/me", {
     credentials: "include",
+    role: "admin",
   });
 }
 

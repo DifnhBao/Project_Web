@@ -28,7 +28,8 @@ const FeaturedPlaylists: React.FC<Props> = ({ selected, onSelect, onBack }) => {
   return (
     <div className="explore-container">
       <h2 className="title">Recommended for you</h2>
-      <TrackSection tracks={tracks} />
+      <TrackSection />
+      {/* <TrackSection tracks={tracks} /> */}
 
       <h2 className="title">Featured Playlists</h2>
       <PlaylistSection

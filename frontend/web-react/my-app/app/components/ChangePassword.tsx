@@ -22,7 +22,7 @@ export default function ChangePassword() {
   };
 
   return (
-    <div className="auth-container register-page">
+    <div className="container">
       <h1>Change your password</h1>
       <form onSubmit={handleChangePassword}>
         <label htmlFor="password" className="form_label">

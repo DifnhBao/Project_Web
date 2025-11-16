@@ -8,6 +8,7 @@ import authAdminRoutes from "./routes/authAdminRoutes.js";
 import refreshTokenRoutes from "./routes/refreshTokenRoutes.js";
 import userRoutes from "./routes/getUserRoutes.js";
 import accountRoutes from "./routes/accountRoutes.js";
+import songsRoutes from "./routes/songsRoutes.js";
 // import { cleanExpiredRefreshToken } from "./controllers/accountController.js";
 import "./config/db.js";
 
@@ -30,6 +31,7 @@ app.use("/auth-admin", authAdminRoutes);
 app.use("/refresh", refreshTokenRoutes);
 app.use("/users", userRoutes);
 app.use("/acc", accountRoutes);
+app.use("/songs", songsRoutes);
 
 // Chạy server
 const PORT = process.env.PORT || 5000;

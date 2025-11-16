@@ -12,12 +12,8 @@ const REFRESH_TOKEN_TTL = 14 * 24 * 60 * 60 * 1000;
 export const me = async (req, res) => {
   try {
     // Lấy token từ cookie trước, nếu không có thì lấy từ header Authorization
-    const token =
-      req.cookies?.accessToken ||
-      (req.headers.authorization && req.headers.authorization.split(" ")[1]);
-    if (!token) {
-      return res.status(401).json({ message: "Chưa đăng nhập." });
-    }
+    const token = req.cookies?.accessToken;
+    if (!token) return res.status(401).json({ message: "Chưa đăng nhập." });
 
     jwt.verify(
       token,
@@ -33,14 +29,14 @@ export const me = async (req, res) => {
         // tìm user
         const sql = "SELECT id, username, email, role FROM users WHERE id = ?";
         const [rows] = await db.query(sql, [decodedUser.Id]);
-        if (!rows || rows.length === 0)
+        if (!rows.length)
           return res.status(404).json({ message: "Không tìm thấy user." });
 
         const user = rows[0];
 
         // Lấy thêm profile (nếu có)
         const [profiles] = await db.query(
-          "SELECT first_name, last_name, gender, date_of_birth, phone, address FROM user_profile WHERE user_id = ?",
+          "SELECT * FROM user_profile WHERE user_id = ?",
           [user.id]
         );
 

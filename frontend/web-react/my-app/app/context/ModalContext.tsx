@@ -4,6 +4,8 @@ import Modal from "@/app/components/Modal";
 import Profile from "@/app/components/Profile";
 import EditUserProfile from "../components/EditUserProfile";
 import ChangePassword from "../components/ChangePassword";
+import SongFormModal from "../components/AdminPage/SongFormModal";
+
 import dynamic from "next/dynamic";
 
 // Dynamic import cho user
@@ -35,6 +37,7 @@ type ModalType =
   | "add-new-admin"
   | "edit-user-profile"
   | "change-password"
+  | "song-form"
   | null;
 
 interface ModalContextType {
@@ -79,7 +82,10 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         return <EditUserProfile userData={modalData} />;
       case "change-password":
         return <ChangePassword />;
-
+      case "song-form":
+        return (
+          <SongFormModal song={modalData.song} onSave={modalData.onSave} />
+        );
       default:
         return null;
     }

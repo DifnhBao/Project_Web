@@ -69,7 +69,12 @@ export default function ManageAdmin() {
                   </>
                 ) : (
                   <>
-                    <button className={stylesUser.edit}>Edit</button>
+                    <button
+                      className={stylesUser.edit}
+                      onClick={() => openModal("change-password")}
+                    >
+                      Edit
+                    </button>
                     <button
                       className={stylesUser.delete}
                       onClick={() => deleteAdmin(admin.id)}

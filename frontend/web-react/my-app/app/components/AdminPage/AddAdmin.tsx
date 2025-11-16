@@ -33,7 +33,7 @@ export default function AddNewAdmin() {
   };
 
   return (
-    <div className="auth-container">
+    <div className="container">
       <h1>Add a new administrator</h1>
       <form onSubmit={handleAddNewAdmin}>
         <label htmlFor="username" className="form_label">

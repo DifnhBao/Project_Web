@@ -1,5 +1,6 @@
 export interface Track {
-  id: string;
+  id: number;
+  jamendo_id: number;
   title: string;
   artist: string;
   image: string;

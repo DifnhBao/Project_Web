@@ -1,13 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 import { fetchCurrentUser } from "../utils/authApi";
-
-interface User {
-  id: number;
-  username: string;
-  email: string;
-  role: string;
-}
+import { User } from "../types/music";
 
 interface UserContextType {
   user: User | null;

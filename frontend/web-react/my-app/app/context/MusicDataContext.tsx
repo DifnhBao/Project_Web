@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import {
   fetchPlaylists,
   fetchArtists,
-  fetchPopularTracks,
+  // fetchPopularTracks,
 } from "@/app/utils/jamendo";
 import type { Track, Playlist, Artist } from "@/app/types/music";
 
@@ -21,7 +21,7 @@ const MusicDataContext = createContext<MusicDataContextType | undefined>(
 );
 
 export function MusicDataProvider({ children }: { children: React.ReactNode }) {
-  const [tracks, setTracks] = useState<Track[]>();
+  // const [tracks, setTracks] = useState<Track[]>();
   const [playlists, setPlaylists] = useState<Playlist[]>();
   const [artists, setArtists] = useState<Artist[]>();
   const [isLoading, setIsLoading] = useState(true);
@@ -32,13 +32,14 @@ export function MusicDataProvider({ children }: { children: React.ReactNode }) {
       try {
         setIsLoading(true);
 
-        const [tracksData, playlistsData, artistsData] = await Promise.all([
-          fetchPopularTracks(),
+        // const [tracksData, playlistsData, artistsData] = await Promise.all([
+        const [playlistsData, artistsData] = await Promise.all([
+          // fetchPopularTracks(),
           fetchPlaylists(),
           fetchArtists(),
         ]);
 
-        setTracks(tracksData);
+        // setTracks(tracksData);
         setPlaylists(playlistsData);
         setArtists(artistsData);
       } catch (err) {
@@ -51,10 +52,11 @@ export function MusicDataProvider({ children }: { children: React.ReactNode }) {
     loadAllData();
   }, []);
 
-  const loaded = !!(tracks && playlists && artists);
+  // const loaded = !!(tracks && playlists && artists);
+  const loaded = !!(playlists && artists);
 
   const data: MusicDataContextType = {
-    tracks,
+    // tracks,
     playlists,
     artists,
     loaded,

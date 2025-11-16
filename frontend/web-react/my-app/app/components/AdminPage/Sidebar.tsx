@@ -12,11 +12,11 @@ export default function Sidebar() {
         <Link href="/administrator/ManageAdmin">
           <i className="fa-solid fa-user-shield"></i> Manage Admin
         </Link>
+        <Link href="/administrator/ManageSong">
+          <i className="fa-solid fa-list"></i> Manage Song
+        </Link>
         <Link href="/administrator/Statistics">
           <i className="fa-solid fa-chart-line"></i> Statistics
-        </Link>
-        <Link href="#">
-          <i className="fa-solid fa-gear"></i> Settings
         </Link>
       </nav>
     </div>

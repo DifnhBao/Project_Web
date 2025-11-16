@@ -24,42 +24,42 @@ async function fetchWithRetry(url: string, retries = 3) {
 }
 
 //Lấy bài hát phổ biến
-export async function fetchPopularTracks(limit = 20): Promise<Track[]> {
-  let tracks: Track[] = [];
+// export async function fetchPopularTracks(limit = 20): Promise<Track[]> {
+//   let tracks: Track[] = [];
 
-  const randomOffset = Math.floor(Math.random() * 100);
-  const url = `https://api.jamendo.com/v3.0/tracks/?client_id=${JAMENDO_CLIENT_ID}&format=json&limit=${limit}&order=popularity_total_desc&offset=${randomOffset}`;
+//   const randomOffset = Math.floor(Math.random() * 100);
+//   const url = `https://api.jamendo.com/v3.0/tracks/?client_id=${JAMENDO_CLIENT_ID}&format=json&limit=${limit}&order=popularity_total_desc&offset=${randomOffset}`;
 
-  const data = await fetchWithRetry(url);
+//   const data = await fetchWithRetry(url);
 
-  if (data?.results?.length) {
-    tracks = data.results.map(
-      (track: any): Track => ({
-        id: track.id,
-        title: track.name,
-        artist: track.artist_name,
-        image: track.album_image,
-        audio: track.audio,
-      })
-    );
-  }
+//   if (data?.results?.length) {
+//     tracks = data.results.map(
+//       (track: any): Track => ({
+//         id: track.id,
+//         title: track.name,
+//         artist: track.artist_name,
+//         image: track.album_image,
+//         audio: track.audio,
+//       })
+//     );
+//   }
 
-  // Nếu vẫn rỗng thì trả fallback
-  if (tracks.length === 0) {
-    console.warn("Không thể lấy tracks, trả về dữ liệu fallback");
-    tracks = [
-      {
-        id: "fallback",
-        title: "No track available",
-        artist: "Unknown artist",
-        image: "/images/default-cover.jpg",
-        audio: "",
-      },
-    ];
-  }
+//   // Nếu vẫn rỗng thì trả fallback
+//   if (tracks.length === 0) {
+//     console.warn("Không thể lấy tracks, trả về dữ liệu fallback");
+//     tracks = [
+//       {
+//         id: "fallback",
+//         title: "No track available",
+//         artist: "Unknown artist",
+//         image: "/images/default-cover.jpg",
+//         audio: "",
+//       },
+//     ];
+//   }
 
-  return tracks;
-}
+//   return tracks;
+// }
 
 // Lấy playlist có kèm danh sách bài hát
 export async function fetchPlaylists(limit = 20): Promise<Playlist[]> {
