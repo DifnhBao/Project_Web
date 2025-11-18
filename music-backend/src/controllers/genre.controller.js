@@ -25,7 +25,34 @@ const createGenre = async (req, res, next) => {
     }
 };
 
+const updateGenre = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const updatedGenre = await genreService.updateGenre(id, req.body);
+
+        res.status(200).json({
+            message: 'Đã cập nhật thể loại thành công.',
+            data: updatedGenre,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const deleteGenre = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const result = await genreService.deleteGenre(id);
+
+        res.status(200).json(result);
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getAllGenres,
     createGenre,
+    updateGenre,
+    deleteGenre,
 }

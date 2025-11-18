@@ -19,4 +19,19 @@ router.get(
     albumController.getAllAlbums,
 );
 
+router.put(
+    '/:id',
+    protect,
+    isAdmin,
+    albumController.updateAlbum,
+);
+
+router.delete(
+    '/:id',
+    protect,
+    isAdmin,
+    albumController.deleteAlbum,
+);
+
+
 module.exports = router;

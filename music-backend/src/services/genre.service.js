@@ -25,7 +25,32 @@ const createGenre = async (genreData) => {
     return newGenre;
 }
 
+
+const updateGenre = async (genreId, updateData) => {
+    const { name, description } = updateData;
+    const genre = await Genre.findByPk(genreId);
+
+    if (!genre) throw new Error('Không tìm thấy thể loại này.');
+
+    genre.name = name || genre.name;
+    genre.description = description || genre.description;
+
+    await genre.save();
+    return genre;
+};
+
+const deleteGenre = async (genreId) => {
+    const genre = await Genre.findByPk(genreId);
+    if (!genre) throw new Error('Không tìm thấy thể loại.');
+    await genre.destroy();
+    return {
+        message: 'Đã xóa thể loại này.'
+    };
+};
+
 module.exports = {
     getAllGenres,
     createGenre,
+    updateGenre,
+    deleteGenre,
 };
