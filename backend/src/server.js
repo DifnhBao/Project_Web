@@ -9,6 +9,7 @@ import refreshTokenRoutes from "./routes/refreshTokenRoutes.js";
 import userRoutes from "./routes/getUserRoutes.js";
 import accountRoutes from "./routes/accountRoutes.js";
 import songsRoutes from "./routes/songsRoutes.js";
+import mixesRoutes from "./routes/mixesRoutes.js";
 // import { cleanExpiredRefreshToken } from "./controllers/accountController.js";
 import "./config/db.js";
 
@@ -25,6 +26,18 @@ app.use(
   })
 );
 
+// health
+app.get("/", (req, res) => res.json({ ok: true }));
+// check DB connection
+app.get("/api/health/db", async (req, res) => {
+  try {
+    const [rows] = await pool.query("SELECT 1 AS ok");
+    res.json({ ok: rows[0].ok === 1 });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
 // Sử dụng routes
 app.use("/auth", authRoutes);
 app.use("/auth-admin", authAdminRoutes);
@@ -32,6 +45,7 @@ app.use("/refresh", refreshTokenRoutes);
 app.use("/users", userRoutes);
 app.use("/acc", accountRoutes);
 app.use("/songs", songsRoutes);
+app.use("/mixes", mixesRoutes);
 
 // Chạy server
 const PORT = process.env.PORT || 5000;

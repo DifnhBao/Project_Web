@@ -11,6 +11,20 @@ export async function fetchSongs() {
     image: song.image_url,
     audio: song.audio_url,
     duration: song.duration,
+    
+  }));
+}
+
+export async function fetchDailySongs() {
+  const res = await axiosClient.get("songs/daily-song");
+  return res.data.map((song: any) => ({
+    id: song.id,
+    jamendo_id: song.jamendo_id,
+    title: song.title,
+    artist: song.artist_name,
+    image: song.image_url,
+    audio: song.audio_url,
+    duration: song.duration,
   }));
 }
 

@@ -5,15 +5,15 @@ export interface Track {
   artist: string;
   image: string;
   audio: string;
+  duration: number;
 }
 
 export interface Playlist {
   id: string;
-  name: string;
-  description: string;
-  user: string;
+  title: string;
+  subtitle: string;
+  artists: string;
   coverImage: string;
-  trackCount: number;
   tracks: Track[];
 }
 

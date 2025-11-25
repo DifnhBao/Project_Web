@@ -3,6 +3,7 @@
 import "@/app/styles/feature-playlists.css";
 import "@/app/styles/library.css";
 import { useMusicData } from "@/app/context/MusicDataContext";
+import { useUser } from "@/app/context/UserContext";
 import type { SelectedItem } from "@/app/types/music";
 
 import DetailView from "./DetailView";
@@ -17,28 +18,22 @@ interface Props {
 }
 
 const FeaturedPlaylists: React.FC<Props> = ({ selected, onSelect, onBack }) => {
-  const { tracks, playlists, artists, loaded } = useMusicData();
-
-  if (!loaded) return <div className="loading">Đang tải dữ liệu...</div>;
-
+  const { user } = useUser();
+  console.log("User:", user);
   // Nếu có selected thì hiển thị DetailView
   if (selected)
     return <DetailView data={selected} onBack={onBack ?? (() => {})} />;
 
   return (
     <div className="explore-container">
-      <h2 className="title">Recommended for you</h2>
+      <h2 className="title">Made For {user ? user.username : "Guest"}</h2>
       <TrackSection />
-      {/* <TrackSection tracks={tracks} /> */}
 
-      <h2 className="title">Featured Playlists</h2>
-      <PlaylistSection
-        playlists={playlists}
-        onSelect={(pl) => onSelect?.(pl)}
-      />
+      <h2 className="title">Daily Mix</h2>
+      <PlaylistSection onSelect={(pl) => onSelect?.(pl)} />
 
       <h2 className="title">Top Artists</h2>
-      <ArtistSection artists={artists} onSelect={(ar) => onSelect?.(ar)} />
+      {/* <ArtistSection artists={artists} onSelect={(ar) => onSelect?.(ar)} /> */}
     </div>
   );
 };

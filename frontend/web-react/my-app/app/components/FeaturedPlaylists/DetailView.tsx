@@ -12,15 +12,23 @@ interface Props {
 const DetailView: React.FC<Props> = ({ data, onBack }) => {
   const { playlist, setPlaylist, currentIndex, setIndex } = usePlayer();
 
-  const isPlaylist =
-    (data as Playlist).tracks !== undefined && "description" in data;
+  const isPlaylist = data.tracks !== undefined && "description";
 
-  const title = data.name;
+  const title = isPlaylist ? (data as Playlist).title : "";
   const cover = isPlaylist
     ? (data as Playlist).coverImage
     : (data as Artist).image;
 
-  const tracks = data.tracks || [];
+  const tracks =
+    data.tracks.map((song: any) => ({
+      id: song.id,
+      jamendo_id: song.jamendo_id,
+      title: song.title,
+      artist: song.artist_name,
+      image: song.image_url,
+      audio: song.audio_url,
+      duration: song.duration,
+    })) || [];
 
   const handlePlaySong = (index: number) => {
     if (playlist !== tracks) {
@@ -31,14 +39,13 @@ const DetailView: React.FC<Props> = ({ data, onBack }) => {
 
   return (
     <>
-      <button onClick={onBack} className="back-button">
-        ← Back
-      </button>
-
       <div
         className="playlist-detail"
         style={{ backgroundImage: `url(${cover})` }}
       >
+        <button onClick={onBack} className="back-button">
+          ← Back
+        </button>
         <div className="overlay"></div>
 
         <div className="playlist-header">
@@ -55,7 +62,9 @@ const DetailView: React.FC<Props> = ({ data, onBack }) => {
               <h1 className="playlist-title">{title}</h1>
 
               {isPlaylist && (
-                <div className="playlist-artists">Nhiều nghệ sĩ</div>
+                <div className="playlist-artists">
+                  {(data as Playlist).artists}
+                </div>
               )}
 
               <div className="playlist-actions">
@@ -100,7 +109,7 @@ const DetailView: React.FC<Props> = ({ data, onBack }) => {
                   <span>{song.title}</span>
                 </div>
                 <div className="col_artist">{song.artist}</div>
-                <div className="col_duration">3:45</div>
+                <div className="col_duration">{song.duration}</div>
               </div>
             ))}
           </div>

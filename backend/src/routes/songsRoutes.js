@@ -1,14 +1,17 @@
 import express from "express";
+import { verifyToken } from "../middleware/authMiddleware.js";
 import {
   importSongs,
   listSongs,
+  randomSongs,
   detailSong,
   removeSong,
 } from "../controllers/songsController.js";
 
 const router = express.Router();
 
-router.get("/list", listSongs);
+router.get("/list", verifyToken("admin"), listSongs);
+router.get("/daily-song", randomSongs);
 router.get("/detail/:id", detailSong);
 
 router.post("/import", importSongs);

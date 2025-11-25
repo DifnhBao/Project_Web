@@ -29,7 +29,25 @@ export default function EditUserProfile({ userData }: { userData: User }) {
     fetchProfile();
   }, [userData]);
 
-  if (!formData) return <p>Người dùng chưa cập nhật thông tin cá nhân.</p>;
+  if (!formData)
+    return (
+      <div
+        style={{
+          width: "420px",
+          height: "120px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          background: "#fff",
+          color: "black",
+          borderRadius: "10px",
+          padding: "0 30px",
+          fontWeight: "600",
+        }}
+      >
+        Người dùng chưa cập nhật thông tin cá nhân.
+      </div>
+    );
 
   return <Profile initialData={formData} mode="admin" userId={userData.id} />;
 }

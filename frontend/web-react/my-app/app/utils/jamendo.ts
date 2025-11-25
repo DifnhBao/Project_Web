@@ -62,74 +62,74 @@ async function fetchWithRetry(url: string, retries = 3) {
 // }
 
 // Lấy playlist có kèm danh sách bài hát
-export async function fetchPlaylists(limit = 20): Promise<Playlist[]> {
-  const randomOffset = Math.floor(Math.random() * 80);
-  const url = `https://api.jamendo.com/v3.0/playlists/?client_id=${JAMENDO_CLIENT_ID}&format=json&limit=${limit}&offset=${randomOffset}`;
+// export async function fetchPlaylists(limit = 20): Promise<Playlist[]> {
+//   const randomOffset = Math.floor(Math.random() * 80);
+//   const url = `https://api.jamendo.com/v3.0/playlists/?client_id=${JAMENDO_CLIENT_ID}&format=json&limit=${limit}&offset=${randomOffset}`;
 
-  const data = await fetchWithRetry(url);
-  const results = data?.results || [];
+//   const data = await fetchWithRetry(url);
+//   const results = data?.results || [];
 
-  const playlistsWithTracks = await Promise.all(
-    results.map(async (pl: any): Promise<Playlist> => {
-      let coverImage = pl.image || "/images/default-cover.jpg";
-      let tracks: Track[] = [];
+//   const playlistsWithTracks = await Promise.all(
+//     results.map(async (pl: any): Promise<Playlist> => {
+//       let coverImage = pl.image || "/images/default-cover.jpg";
+//       let tracks: Track[] = [];
 
-      try {
-        const tracksUrl = `https://api.jamendo.com/v3.0/playlists/tracks/?client_id=${JAMENDO_CLIENT_ID}&id=${pl.id}&limit=10`;
-        const tracksData = await fetchWithRetry(tracksUrl);
-        const fetchedTracks = tracksData?.results?.[0]?.tracks || [];
+//       try {
+//         const tracksUrl = `https://api.jamendo.com/v3.0/playlists/tracks/?client_id=${JAMENDO_CLIENT_ID}&id=${pl.id}&limit=10`;
+//         const tracksData = await fetchWithRetry(tracksUrl);
+//         const fetchedTracks = tracksData?.results?.[0]?.tracks || [];
 
-        tracks = fetchedTracks.map(
-          (t: any): Track => ({
-            id: t.id,
-            title: t.name,
-            artist: t.artist_name,
-            image: t.album_image,
-            audio: t.audio,
-          })
-        );
+//         tracks = fetchedTracks.map(
+//           (t: any): Track => ({
+//             id: t.id,
+//             title: t.name,
+//             artist: t.artist_name,
+//             image: t.album_image,
+//             audio: t.audio,
+//           })
+//         );
 
-        if (tracks.length > 0 && tracks[0].image) {
-          coverImage = tracks[0].image;
-        }
-      } catch (e) {
-        console.warn(`Không lấy được bài hát cho playlist "${pl.name}"`);
-      }
+//         if (tracks.length > 0 && tracks[0].image) {
+//           coverImage = tracks[0].image;
+//         }
+//       } catch (e) {
+//         console.warn(`Không lấy được bài hát cho playlist "${pl.name}"`);
+//       }
 
-      return {
-        id: pl.id,
-        name: pl.name,
-        description: pl.description || "No description",
-        user: pl.user_name,
-        coverImage,
-        trackCount: tracks.length,
-        tracks,
-      };
-    })
-  );
+//       return {
+//         id: pl.id,
+//         name: pl.name,
+//         description: pl.description || "No description",
+//         user: pl.user_name,
+//         coverImage,
+//         trackCount: tracks.length,
+//         tracks,
+//       };
+//     })
+//   );
 
-  // Giữ lại playlist có ít nhất 1 track
-  const filteredPlaylists = playlistsWithTracks.filter(
-    (pl) => pl.tracks.length > 0
-  );
+//   // Giữ lại playlist có ít nhất 1 track
+//   const filteredPlaylists = playlistsWithTracks.filter(
+//     (pl) => pl.tracks.length > 0
+//   );
 
-  // Fallback nếu rỗng
-  if (filteredPlaylists.length === 0) {
-    return [
-      {
-        id: "fallback",
-        name: "No playlists found",
-        description: "No description",
-        user: "Unknown",
-        coverImage: "/images/default-cover.jpg",
-        trackCount: 0,
-        tracks: [],
-      },
-    ];
-  }
+//   // Fallback nếu rỗng
+//   if (filteredPlaylists.length === 0) {
+//     return [
+//       {
+//         id: "fallback",
+//         name: "No playlists found",
+//         description: "No description",
+//         user: "Unknown",
+//         coverImage: "/images/default-cover.jpg",
+//         trackCount: 0,
+//         tracks: [],
+//       },
+//     ];
+//   }
 
-  return filteredPlaylists;
-}
+//   return filteredPlaylists;
+// }
 
 // Lấy danh sách nghệ sĩ có bài hát
 export async function fetchArtists(limit = 10): Promise<Artist[]> {

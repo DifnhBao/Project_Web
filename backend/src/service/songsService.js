@@ -29,6 +29,13 @@ export async function getAllSongs() {
   return rows;
 }
 
+export async function getRandomSongs(quantity = 12) {
+  const [rows] = await db.query("SELECT * FROM songs ORDER BY RAND() LIMIT ?", [
+    quantity,
+  ]);
+  return rows;
+}
+
 export async function getSongById(id) {
   const [rows] = await db.query("SELECT * FROM songs WHERE id = ?", [id]);
   return rows[0];

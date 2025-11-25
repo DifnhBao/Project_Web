@@ -1,27 +1,26 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import styles from "@/app/styles/AdminPage/ManageSong.module.css";
 import { useModal } from "@/app/context/ModalContext";
+import { fetchSongs } from "@/app/services/songsService";
 
 export default function SongManagement() {
   const { openModal } = useModal();
-
   const [songs, setSongs] = useState([
     {
       id: 1,
       title: "Phép Màu",
       artist: "MAYDAYS",
+      image: "https://example.com/image1.jpg",
       genre: "Pop",
       duration: "03:52",
     },
-    {
-      id: 2,
-      title: "Kho Báu",
-      artist: "Rhymastic",
-      genre: "Rap",
-      duration: "04:21",
-    },
   ]);
+
+  useEffect(() => {
+    fetchSongs().then(setSongs);
+  }, []);
 
   const openAddModal = () => {
     openModal("song-form", {
@@ -61,6 +60,7 @@ export default function SongManagement() {
           <tr>
             <th>Title</th>
             <th>Artist</th>
+            <th>Image</th>
             <th>Genre</th>
             <th>Duration</th>
             <th>Actions</th>
@@ -72,6 +72,7 @@ export default function SongManagement() {
             <tr key={song.id}>
               <td>{song.title}</td>
               <td>{song.artist}</td>
+              <td>{song.image}</td>
               <td>{song.genre}</td>
               <td>{song.duration}</td>
               <td>

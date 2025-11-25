@@ -25,8 +25,9 @@
   border-radius: 4px;
 }
 
-.card {
+.scroll-row .card {
   flex: 0 0 260px;
+  width: 260px;
   padding: 10px;
   border-radius: 8px;
   cursor: pointer;

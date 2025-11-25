@@ -1,6 +1,7 @@
 import {
   insertOrUpdateSong,
   getAllSongs,
+  getRandomSongs,
   getSongById,
   deleteSong,
 } from "../service/songsService.js";
@@ -32,6 +33,11 @@ export const importSongs = async (req, res) => {
 
 export const listSongs = async (req, res) => {
   const songs = await getAllSongs();
+  res.json(songs);
+};
+
+export const randomSongs = async (req, res) => {
+  const songs = await getRandomSongs();
   res.json(songs);
 };
 
