@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { usePlayer } from "@/app/context/PlayerContext";
+import PopUp from "../PopUp";
+import "@/app/styles/PlayerBar.css";
 
 const Player: React.FC = () => {
   const {
@@ -20,6 +22,7 @@ const Player: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   // Lấy bài hiện tại
   const currentSong = playlist[currentIndex];
@@ -140,9 +143,32 @@ const Player: React.FC = () => {
           ></i>
         </button>
 
-        <button className="icon-btn expand-icon">
+        <button
+          className="icon-btn expand-icon"
+          onClick={() => setShowUserMenu(!showUserMenu)}
+        >
           <i className="fa-solid fa-ellipsis"></i>
         </button>
+        {showUserMenu && (
+          <PopUp show={showUserMenu} onClose={() => setShowUserMenu(false)}>
+            <div className="Other-options-popup">
+              <button>
+                <i className="fa-regular fa-heart"></i>
+                <span>Thêm vào yêu thích</span>
+              </button>
+
+              <button>
+                <i className="fa-solid fa-circle-plus"></i>
+                <span>Thêm vào playlist</span>
+              </button>
+
+              <button>
+                <i className="fa-regular fa-flag"></i>
+                <span>Báo cáo</span>
+              </button>
+            </div>
+          </PopUp>
+        )}
       </div>
 
       <div className="player-center">

@@ -26,17 +26,17 @@ app.use(
   })
 );
 
-// health
-app.get("/", (req, res) => res.json({ ok: true }));
-// check DB connection
-app.get("/api/health/db", async (req, res) => {
-  try {
-    const [rows] = await pool.query("SELECT 1 AS ok");
-    res.json({ ok: rows[0].ok === 1 });
-  } catch (e) {
-    res.status(500).json({ ok: false, error: e.message });
-  }
-});
+// // health
+// app.get("/", (req, res) => res.json({ ok: true }));
+// // check DB connection
+// app.get("/api/health/db", async (req, res) => {
+//   try {
+//     const [rows] = await pool.query("SELECT 1 AS ok");
+//     res.json({ ok: rows[0].ok === 1 });
+//   } catch (e) {
+//     res.status(500).json({ ok: false, error: e.message });
+//   }
+// });
 
 // Sử dụng routes
 app.use("/auth", authRoutes);
@@ -50,3 +50,5 @@ app.use("/mixes", mixesRoutes);
 // Chạy server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server chạy tại http://localhost:${PORT}`));
+
+console.log("Các route đã nạp:", app._router?.stack?.length);

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useModal } from "@/app/context/ModalContext";
 import { useUser } from "@/app/context/UserContext";
 import { logoutUser } from "../utils/authApi";
+import PopUp from "./PopUp";
 
 export default function Header() {
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -12,17 +13,6 @@ export default function Header() {
   const [q, setQ] = useState("");
   const { user, loading, setUser } = useUser();
   const router = useRouter();
-
-  const menuRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setShowUserMenu(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   return (
     <header className="header">
@@ -51,47 +41,45 @@ export default function Header() {
               />
             </button>
             {showUserMenu && (
-              <div className="user-menu" ref={menuRef}>
-                <div className="user-info">
-                  <img
-                    src="/images/Avatar/avt01.png"
-                    alt="Avatar"
-                    className="avatar"
-                  />
-                  <div>
-                    <strong>{user.username}</strong>
-                    <p>Thành viên Miễn phí</p>
+              <PopUp show={showUserMenu} onClose={() => setShowUserMenu(false)}>
+                <div className="user-popup">
+                  <div className="user-info">
+                    <img src="/images/Avatar/avt01.png" className="avatar" />
+                    <div>
+                      <strong>{user.username}</strong>
+                      <p>Thành viên Miễn phí</p>
+                    </div>
                   </div>
+
+                  <button
+                    className="logout-btn"
+                    onClick={() => openModal("profile")}
+                  >
+                    <i className="fa-regular fa-user"></i>
+                    Xem hồ sơ
+                  </button>
+
+                  <button
+                    className="logout-btn"
+                    onClick={() => openModal("change-password")}
+                  >
+                    <i className="fa-solid fa-key"></i>
+                    Thay đổi mật khẩu
+                  </button>
+
+                  <button
+                    className="logout-btn"
+                    onClick={async () => {
+                      await logoutUser();
+                      setUser(null);
+                      router.replace("/explore");
+                    }}
+                  >
+                    <i className="fa-solid fa-arrow-right-from-bracket"></i>
+                    Đăng xuất
+                  </button>
                 </div>
-
-                <button
-                  className="logout-btn"
-                  onClick={() => openModal("profile")}
-                >
-                  <i className="fa-regular fa-user"></i>
-                  Xem hồ sơ
-                </button>
-
-                <button
-                  className="logout-btn"
-                  onClick={() => openModal("change-password")}
-                >
-                  <i className="fa-solid fa-key"></i>
-                  Thay đổi mật khẩu
-                </button>
-
-                <button
-                  className="logout-btn"
-                  onClick={async () => {
-                    await logoutUser();
-                    setUser(null);
-                    router.replace("/explore");
-                  }}
-                >
-                  <i className="fa-solid fa-arrow-right-from-bracket"></i>
-                  Đăng xuất
-                </button>
-              </div>
+              </PopUp>
             )}
           </div>
         ) : (

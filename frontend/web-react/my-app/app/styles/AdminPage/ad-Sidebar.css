@@ -24,6 +24,7 @@
   text-decoration: none;
   padding: 8px 20px;
   border-radius: 6px;
+  height: 45px;
   transition: background 0.25s, color 0.25s;
 }
 
@@ -32,7 +33,10 @@
 }
 
 /* Hover và active */
-.sidebar a:hover,
+.sidebar a:hover {
+  color: rgb(108, 176, 191);
+}
+
 .sidebar a.active {
   background: rgba(88, 196, 220, 0.15);
   color: rgb(88, 196, 220);
