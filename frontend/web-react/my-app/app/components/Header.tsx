@@ -1,11 +1,13 @@
 "use client";
 import "@/app/styles/header-bar.css";
 import { useState, useRef, useEffect } from "react";
+import { HiOutlineUpload } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/app/context/ModalContext";
 import { useUser } from "@/app/context/UserContext";
 import { logoutUser } from "../utils/authApi";
 import PopUp from "./PopUp";
+import SearchBarComponent from "./SearchBar/SearchBarComponent";
 
 export default function Header() {
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -16,15 +18,8 @@ export default function Header() {
 
   return (
     <header className="header">
-      <div className="search-box">
-        <i className="fa-solid fa-magnifying-glass i-search" />
-        <input
-          className="input-text"
-          placeholder="Bạn muốn phát nội dung gì?"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-        />
-      </div>
+      <SearchBarComponent />
+      <HiOutlineUpload id="upload-icon" />
 
       <div className="user-area">
         {user ? (
