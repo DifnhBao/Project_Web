@@ -1,4 +1,5 @@
 const { Song, Artist, Album, Genre } = require('../models');
+const { Op } = require('sequelize');
 const cloudinary = require('cloudinary').v2;
 
 /* --- CHỨC NĂNG CHO USER --- */
@@ -20,21 +21,33 @@ const createSong = async (songData, audioUrl) => {
 };
 
 // Lấy tất cả bài hát
-const getAllSongs = async () => {
+const getAllSongs = async (keyword) => {
+    let condition = { is_visible: true };
+
+    if (keyword) {
+        condition = {
+            ...condition, // giữ nguyên điều kiện của condition
+            title: {
+                [Op.like]: `%${keyword}%`
+            }
+        };
+    }
+
+    // gọi db
     const songs = await Song.findAll({
-
-        where: { is_visible: true },
-
-        // Tự join trên DB
+        where: condition,
         include: [
             {
                 model: Artist,
                 attributes: ['name', 'image'],
             },
+
             {
-                model: Album,
+                model: Album
+                ,
                 attributes: ['title', 'cover_image'],
             },
+
             {
                 model: Genre,
                 attributes: ['name'],
@@ -44,8 +57,9 @@ const getAllSongs = async () => {
             exclude: ['artist_id', 'album_id', 'genre_id'],
         }
     });
+
     return songs;
-}
+};
 
 // Lấy một bài hát
 const getSongById = async (songId) => {

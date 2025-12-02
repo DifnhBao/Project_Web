@@ -40,10 +40,13 @@ const createSong = async (req, res, next) => {
 
 const getAllSongs = async (req, res, next) => {
     try {
-        const allSongs = await songService.getAllSongs();
+        // Lấy từ khóa từ url
+        const { search } = req.query;
+        const allSongs = await songService.getAllSongs(search);
+
         res.status(200).json({
-            message: 'Lấy danh sách bài hát thành công!',
-            data: allSongs,
+            message: 'Lấy bài hát thành công.',
+            data: allSongs
         });
     } catch (error) {
         next(error);
