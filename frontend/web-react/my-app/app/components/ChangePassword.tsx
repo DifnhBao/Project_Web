@@ -25,33 +25,33 @@ export default function ChangePassword() {
     <div className="container">
       <h1>Change your password</h1>
       <form onSubmit={handleChangePassword}>
-        <label htmlFor="password" className="form_label">
+        {/* <label htmlFor="password" className="form_label">
           Old Password
-        </label>
+        </label> */}
         <input
           id="old-password"
           type="password"
-          placeholder="At least 8 characters, letters & numbers"
+          placeholder="Old Password"
           value={oldPassword}
           onChange={(e) => setOldPassword(e.target.value)}
           required
         />
 
-        <label htmlFor="password" className="form_label">
+        {/* <label htmlFor="password" className="form_label">
           New Password
-        </label>
+        </label> */}
         <input
           id="new-password"
           type="password"
-          placeholder="At least 8 characters, letters & numbers"
+          placeholder="New Password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
           required
         />
 
-        <label htmlFor="confirm_password" className="form_label">
+        {/* <label htmlFor="confirm_password" className="form_label">
           Password Confirmation
-        </label>
+        </label> */}
         <input
           id="confirm_password"
           type="password"

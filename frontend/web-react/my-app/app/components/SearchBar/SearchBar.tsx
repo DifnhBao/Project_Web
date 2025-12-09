@@ -1,23 +1,21 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
+import { fetchSongs } from "@/app/services/songsService";
 import "./SearchBar.css";
-
-export interface User {
-  id: number;
-  name: string;
-  email?: string;
-  username?: string;
-}
+import { Track } from "@/app/types/music";
 
 interface SearchBarProps {
-  setResults: (results: User[]) => void;
+  setResults: (results: Track[]) => void;
+  setSearchTerm: (searchTerm: string) => void;
 }
 
-const SearchBar = ({ setResults }: SearchBarProps) => {
+const SearchBar = ({ setResults, setSearchTerm }: SearchBarProps) => {
   const [input, setInput] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
+  // Cập nhật dữ liệu ô input
   useEffect(() => {
     const handler = setTimeout(() => {
       const value = input.trim();
@@ -33,29 +31,39 @@ const SearchBar = ({ setResults }: SearchBarProps) => {
     return () => clearTimeout(handler);
   }, [input]);
 
+  // Gọi api lấy data
   const fetchData = async (value: string) => {
     const currentValue = value;
 
-    const response = await fetch("https://jsonplaceholder.typicode.com/users");
-    const users: User[] = await response.json();
+    try {
+      const Tracks = await fetchSongs();
+      console.log(Tracks);
 
-    if (currentValue !== input.trim()) return;
+      console.log("Fetched Tracks:", Tracks);
 
-    const results = users.filter((user) =>
-      user.name.toLowerCase().includes(value.toLowerCase())
-    );
+      if (currentValue !== input.trim()) return;
 
-    setResults(results);
+      const results = Tracks.filter((track: Track) =>
+        track.title.toLowerCase().includes(value.toLowerCase())
+      );
+
+      setResults(results);
+    } catch (e) {
+      console.error("Fetch error:", e);
+    }
   };
 
+  // Xử lí dữ liệu hiển thị trong result khi nhập input
   const handleChange = (value: string) => {
     setInput(value);
+    setSearchTerm(value);
   };
 
   return (
     <div className="input-wrapper">
-      <FaSearch id="search-icon" />
+      <FaSearch id="search-icon" onClick={() => inputRef.current?.focus()} />
       <input
+        ref={inputRef}
         placeholder="Bạn muốn phát nội dung gì?"
         value={input}
         onChange={(e) => handleChange(e.target.value)}

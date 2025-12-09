@@ -4,21 +4,16 @@ import { useState } from "react";
 import SearchBar from "./SearchBar";
 import SearchResultsList from "./SearchResultsList";
 import "./SearchBarComponent.css";
-
-export interface User {
-  id: number;
-  name: string;
-  email?: string;
-  username?: string;
-}
+import { Track } from "@/app/types/music";
 
 export default function SearchBarComponent() {
-  const [results, setResults] = useState<User[]>([]);
+  const [results, setResults] = useState<Track[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   return (
     <div className="search-bar-container">
-      <SearchBar setResults={setResults} />
-      <SearchResultsList results={results} />
+      <SearchBar setResults={setResults} setSearchTerm={setSearchTerm} />
+      <SearchResultsList results={results} searchTerm={searchTerm} />
     </div>
   );
 }

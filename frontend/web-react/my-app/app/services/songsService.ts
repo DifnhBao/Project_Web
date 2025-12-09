@@ -11,7 +11,6 @@ export async function fetchSongs() {
     image: song.image_url,
     audio: song.audio_url,
     duration: song.duration,
-    
   }));
 }
 

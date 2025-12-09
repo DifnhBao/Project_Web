@@ -3,23 +3,18 @@
 import React from "react";
 import "./SearchResultsList.css";
 import SearchResult from "./SearchResult";
-
-export interface User {
-  id: number;
-  name: string;
-  email?: string;
-  username?: string;
-}
+import { Track } from "@/app/types/music";
 
 interface SearchResultsListProps {
-  results: User[];
+  results: Track[];
+  searchTerm: string;
 }
 
-const SearchResultsList = ({ results }: SearchResultsListProps) => {
+const SearchResultsList = ({ results, searchTerm }: SearchResultsListProps) => {
   return (
     <div className="results-list">
-      {results.map((user) => (
-        <SearchResult key={user.id} result={user} />
+      {results.map((track) => (
+        <SearchResult key={track.id} result={track} searchTerm={searchTerm} />
       ))}
     </div>
   );

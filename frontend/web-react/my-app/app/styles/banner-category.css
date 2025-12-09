@@ -5,8 +5,6 @@
 
 .banner-row {
   display: flex;
-  overflow-x: auto;
-  scroll-behavior: smooth;
   gap: 10px;
 }
 
@@ -36,29 +34,31 @@
 }
 
 .banner-btn {
+  display: flex;
+  justify-content: center;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  color: white;
-  font-size: 20px;
-  border-radius: 50%;
   width: 40px;
   height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 20px;
   cursor: pointer;
 }
 
 .banner-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--background-color);
 }
 
 .banner-btn.left {
-  left: -8px;
+  left: -20px;
 }
 
 .banner-btn.right {
-  right: -8px;
+  right: -20px;
 }
 
 /* === Category Grid === */

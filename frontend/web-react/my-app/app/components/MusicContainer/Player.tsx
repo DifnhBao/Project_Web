@@ -209,6 +209,7 @@ const Player: React.FC = () => {
           <i className={`fa-solid ${getVolumeIcon()}`}></i>
         </button>
         <input
+          className="seek-volume"
           type="range"
           value={volume}
           min={0}

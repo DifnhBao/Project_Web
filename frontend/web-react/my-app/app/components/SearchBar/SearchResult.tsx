@@ -2,25 +2,36 @@
 
 import React from "react";
 import "./SearchResult.css";
-
-export interface User {
-  id: number;
-  name: string;
-  email?: string;
-  username?: string;
-}
+import { Track } from "@/app/types/music";
 
 interface SearchResultProps {
-  result: User;
+  result: Track;
+  searchTerm: string;
 }
 
-const SearchResult = ({ result }: SearchResultProps) => {
+const SearchResult = ({ result, searchTerm }: SearchResultProps) => {
+  const highlight = (text: string, term: string) => {
+    if (!term) return text;
+
+    const regex = new RegExp(`(${term})`, "gi");
+    const parts = text.split(regex);
+
+    return parts.map((part, i) =>
+      regex.test(part) ? (
+        <span key={i} className="highlight">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  };
   return (
     <div
       className="search-result"
-      onClick={() => alert(`You clicked on ${result.name}`)}
+      onClick={() => alert(`You clicked on ${result.title}`)}
     >
-      {result.name}
+      {highlight(result.title, searchTerm)}
     </div>
   );
 };

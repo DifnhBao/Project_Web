@@ -1,14 +1,14 @@
 .input-wrapper {
   width: 100%;
-  border-radius: 40px;
-  height: 2.5rem;
+  border-radius: 46px;
+  height: 3rem;
   padding: 0 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   display: flex;
   justify-content: flex-start;
   align-items: center;
   transition: 0.15s ease-in-out;
-  background-color: #ffffff29;
+  background-color: #27292a;
 }
 
 .input-wrapper:hover {

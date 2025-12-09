@@ -8,6 +8,11 @@
 
 .search-result:hover {
   background-color: #ffffff29;
-  color: white;
+  /* color: var(--button); */
   cursor: pointer;
+}
+
+.highlight {
+  color: var(--button);
+  font-weight: 600;
 }

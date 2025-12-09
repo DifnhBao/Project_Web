@@ -9,20 +9,29 @@ h2 {
   font-size: 24px;
   font-weight: 700;
   line-height: 32px;
+  color: var(--button);
 }
 
 .new-playlist-btn {
-  background-color: #ffffff29;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
-  cursor: pointer;
+  font-size: 14px;
+  color: #ec6090;
+  background-color: transparent;
+  border: 1px solid #ec6090;
+  padding: 12px 30px;
+  display: inline-block;
+  border-radius: 25px;
+  font-weight: 400;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
 }
 
 .new-playlist-btn:hover {
-  background-color: rgb(88 196 220);
-  color: white;
+  border-color: #fff;
+  background-color: #fff;
+  color: #e75e8d;
 }
 
 .playlist-grid {

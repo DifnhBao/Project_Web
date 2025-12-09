@@ -1,10 +1,3 @@
-:root {
-  --bg: #0f1724;
-  --card: #111827;
-  --accent: #06b6d4;
-  --text: #e6eef6;
-}
-
 .profile_card {
   background-color: #212121;
   border-radius: 16px;
@@ -60,11 +53,12 @@ select {
   outline: none;
   font-size: 14px;
 }
+
 input:focus,
 textarea:focus,
 select:focus {
-  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.08);
-  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(252, 107, 143, 0.15);
+  border-color: var(--button);
 }
 
 .name-row {
@@ -112,14 +106,14 @@ button {
 }
 
 .btn-primary {
-  background: var(--accent);
-  color: #00262b;
+  background: var(--button);
+  color: white;
 }
 
 .btn-secondary {
   background: transparent;
-  color: #a8c0c9;
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  color: white;
+  border: 1px solid var(--button);
 }
 
 .note {
@@ -166,12 +160,12 @@ button {
 
 /* Khi hover */
 .radio-group input[type="radio"]:hover {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+  border-color: var(--button);
+  box-shadow: 0 0 0 3px rgba(252, 107, 143, 0.15);
 }
 
 /* Khi được chọn */
 .radio-group input[type="radio"]:checked {
-  border-color: var(--accent);
-  background-color: var(--accent);
+  border-color: var(--button);
+  background-color: var(--button);
 }

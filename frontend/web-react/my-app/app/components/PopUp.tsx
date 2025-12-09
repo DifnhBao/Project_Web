@@ -23,5 +23,9 @@ export default function UserMenuPopup({ show, onClose, children }: PopUpProps) {
 
   if (!show) return null;
 
-  return <div ref={popupRef}>{children}</div>;
+  return (
+    <div className="popup-overlay">
+      <div ref={popupRef}>{children}</div>
+    </div>
+  );
 }

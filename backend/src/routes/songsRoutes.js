@@ -10,7 +10,7 @@ import {
 
 const router = express.Router();
 
-router.get("/list", verifyToken("admin"), listSongs);
+router.get("/list", listSongs);
 router.get("/daily-song", randomSongs);
 router.get("/detail/:id", detailSong);
 

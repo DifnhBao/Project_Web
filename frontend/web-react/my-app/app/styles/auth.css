@@ -55,16 +55,16 @@
 }
 
 .auth-container input:focus {
-  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.08);
-  outline: 1px solid #06b6d4;
+  box-shadow: 0 0 0 4px rgba(243, 152, 176, 0.25);
+  outline: 1px solid var(--button);
 }
 
 /* ===== Button ===== */
 .auth-container button {
   width: 100%;
   height: 45px;
-  background-color: rgba(88, 175, 223, 0.1);
-  color: rgb(88, 196, 220);
+  background-color: var(--button);
+  color: white;
   padding: 0.75rem;
   cursor: pointer;
   border: none;
@@ -74,8 +74,8 @@
 }
 
 .auth-container button:hover {
-  background-color: rgb(88, 196, 220);
-  color: #fff;
+  background-color: white;
+  color: var(--button);
 }
 
 .auth-container button:active {
@@ -128,7 +128,7 @@
 }
 
 input:checked + .slider {
-  background-color: rgb(88, 196, 220);
+  background-color: var(--button);
 }
 
 input:checked + .slider:before {
@@ -151,7 +151,7 @@ input:checked + .slider:before {
 }
 
 .fogot-password a {
-  color: #374151;
+  color: var(--color-text-not-select);
   font-size: 13px;
   text-decoration: none;
 }
@@ -166,9 +166,9 @@ input:checked + .slider:before {
   text-align: center;
 }
 
-.create {
+.switch-form .create {
   text-decoration: none;
-  color: rgb(88, 196, 220);
+  color: var(--button);
   cursor: pointer;
   font-weight: 400;
 }

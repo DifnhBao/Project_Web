@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import "../styles/myplaylists.css";
+import "@/app/styles/myplaylists.css";
 
 interface Playlist {
   title: string;

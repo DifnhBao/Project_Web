@@ -2,6 +2,7 @@ h2 {
   font-size: 24px;
   font-weight: 700;
   line-height: 32px;
+  color: var(--button);
 }
 
 .table {
@@ -37,13 +38,13 @@ h2 {
 
 .row:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: rgb(88 196 220);
+  color: var(--button);
   border-radius: 6px;
 }
 
 .row.active {
   background: rgba(88, 196, 220, 0.2);
-  color: rgb(88 196 220);
+  color: var(--button);
   border-radius: 6px;
   font-weight: 600;
 }

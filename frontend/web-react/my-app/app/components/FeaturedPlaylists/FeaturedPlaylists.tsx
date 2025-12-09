@@ -10,6 +10,7 @@ import DetailView from "./DetailView";
 import TrackSection from "./TrackSection";
 import PlaylistSection from "./PlaylistSection";
 import ArtistSection from "./ArtistSection";
+import MyPlaylistGrid from "../MusicContainer/MyPlaylistGrid";
 
 interface Props {
   selected?: SelectedItem | null;
@@ -19,8 +20,7 @@ interface Props {
 
 const FeaturedPlaylists: React.FC<Props> = ({ selected, onSelect, onBack }) => {
   const { user } = useUser();
-  console.log("User:", user);
-  // Nếu có selected thì hiển thị DetailView
+
   if (selected)
     return <DetailView data={selected} onBack={onBack ?? (() => {})} />;
 

@@ -8,7 +8,15 @@
 :root {
   --sidebar-width: 250px;
   --sidebar-min: 60px;
-  --background-color: linear-gradient(0, #080811, #153837);
+  --background-color: #1e1e1e;
+  --color-main: #27292a;
+
+  --color-card: #27292a;
+  --card-hover: #1f242b;
+  --button: #e75e8d;
+  --color-text-select: #e75e8d;
+  --color-text-not-select: #666;
+  --color-text:   ;
 }
 
 /* Ẩn thanh cuộn  */
@@ -21,42 +29,87 @@ html::-webkit-scrollbar {
 
 body {
   height: 100vh;
-  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Poppins", sans-serif;
   background: var(--background-color);
-  color: white;
-  font-weight: 600;
+  color: var(--color-text);
+  font-weight: 400;
 }
 
 .discovery-container {
-  text-align: center;
+  /* text-align: center;
   color: white;
   padding: 80px 0;
   background: #111;
-  min-height: 100vh;
+  min-height: 100vh; */
+  /* margin-top: 110px; */
+  background-color: #27292a;
+  padding: 0 60px;
+  /* border-radius: 23px; */
 }
 
-.discovery-container img {
-  width: 70px;
+.main-banner {
+  background-image: url(/images/Members/banner-bg.jpg);
+  background-position: center center;
+  background-size: cover;
+  min-height: 380px;
+  border-radius: 23px;
+  padding: 80px 60px;
 }
 
-.discovery-container h1 {
-  font-size: 54px;
-  color: #49c5b6;
-  font-weight: 700;
-  margin-bottom: 20px;
+.main-banner h6 {
+  font-size: 20px;
+  color: #fff;
+  font-weight: 400;
+  margin-bottom: 25px;
+}
+
+.main-banner h4 {
+  font-size: 45px;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+}
+
+.main-banner h4 em {
+  font-style: normal;
+  color: #ec6090;
+}
+
+.main-button a {
+  font-size: 14px;
+  color: #fff;
+  background-color: #e75e8d;
+  padding: 12px 30px;
+  display: inline-block;
+  border-radius: 25px;
+  font-weight: 400;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
   cursor: pointer;
 }
 
-.discovery-container .desc {
+.main-button a:hover {
+  background-color: #fff;
+  color: #e75e8d;
+}
+
+.discovery-container img {
+  width: 100px;
+}
+
+/* .discovery-container .desc {
   color: #bbb;
   font-size: 18px;
   margin-bottom: 70px;
-}
+} */
 
 .cards-row {
   display: flex;
   justify-content: center;
   gap: 40px;
+  margin-top: 50px;
 }
 
 .card {
@@ -93,79 +146,21 @@ body {
   object-fit: cover;
 }
 
-/* ========== SIDEBAR ========== */
-.menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: var(--sidebar-width);
-  min-height: 100vh;
-  height: auto;
-  color: white;
-  transition: width 0.3s ease;
-  overflow: hidden;
-  background: #ffffff0a;
-}
-
-.menu .logo {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.menu img {
-  display: block;
-  margin: 0 auto;
-  margin-top: 20px;
-  max-width: 250px;
-  height: auto;
-}
-
-.menu nav {
-  display: flex;
-  flex-direction: column;
-}
-
-.menu nav a {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #b3b3b3;
-  font-size: 16px;
-  padding: 12px 20px;
-  text-decoration: none;
-  transition: 0.3s;
-  border-radius: 20px;
-  margin: 4px 8px;
-}
-
-.menu nav a i {
-  font-size: 18px;
-}
-
-.menu nav a:hover {
-  color: white;
-}
-
-.menu nav a.active {
-  background-color: #ffffff29;
-  color: white;
-}
-
 /* ========== MAIN CONTENT ========== */
 .main {
-  position: relative;
-  margin: 0;
-  margin-top: 70px;
-  margin-bottom: 100px;
+  /* position: relative; */
+  position: fixed;
+  top: 100px;
+  bottom: 100px;
+  left: 150px;
+  right: 150px;
   padding: 20px 2vw;
-  overflow-y: scroll;
+  overflow-y: auto;
   scrollbar-width: none;
-  height: calc(100vh - 170px);
-
-  /*tránh đè và lệch khi sidebar đổi width */
-  width: calc(100% - var(--sidebar-width));
-  margin-left: var(--sidebar-width);
+  /* height: calc(100vh - 170px); */
   transition: margin-left 0.3s ease, width 0.3s ease;
+  background-color: var(--color-main);
+  border-radius: 23px;
 }
 
 .main::-webkit-scrollbar {
@@ -175,7 +170,7 @@ body {
 .main .greeting-text {
   font-size: 34px;
   font-weight: bold;
-  color: #fff;
+  color: var(--button);
 }
 
 /* ========== FOOTER ========== */
