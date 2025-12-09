@@ -57,7 +57,9 @@ const changeUserPassword = async (req, res, next) => {
 const promoteUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const updateUser = await userService.promoteUserToAdmin(id);
+        const requesterId = req.user.user_id;
+
+        const updateUser = await userService.promoteUserToAdmin(id, requesterId);
 
         res.status(200).json({
             message: `Đã nâng quyền Admin cho user ${updateUser.username}!!!`,
@@ -101,8 +103,9 @@ const updateUserById = async (req, res, next) => {
     try {
         const { id } = req.params;  // Lay ID tu URL
         const updateData = req.body;
+        const requesterId = req.user.user_id;
 
-        const updatedUser = await userService.updateUserById(id, updateData);
+        const updatedUser = await userService.updateUserById(id, updateData, requesterId);
         res.status(200).json({
             message: 'Admin cập nhật thông tin user thành công.',
             data: updatedUser
@@ -116,7 +119,9 @@ const updateUserById = async (req, res, next) => {
 const deleteUserById = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const result = await userService.deleteUserById(id);
+        const requesterId = req.user.user_id;  //ID nguoi tao lenh
+
+        const result = await userService.deleteUserById(id, requesterId);
         res.status(200).json(result);
     } catch (error) {
         next(error);
@@ -127,12 +132,13 @@ const resetUserPassword = async (req, res, next) => {
     try {
         const { id } = req.params;
         const { newPassword } = req.body;
+        const requesterId = req.user.user_id;
 
         if (!newPassword) {
             throw new Error('Vui lòng nhập mật khẩu mới.');
         }
 
-        const result = await userService.resetUserPassword(id, newPassword);
+        const result = await userService.resetUserPassword(id, newPassword, requesterId);
         res.status(200).json(result);
     } catch (error) {
         next(error);

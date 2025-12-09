@@ -4,9 +4,25 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
+
+// Hàm tạo TOKEN
+const generateTokens = (payLoad) => {
+    // Access token hiệu lực 30p
+    const accessToken = jwt.sign(payLoad, JWT_SECRET, { expiresIn: '30m' });
+
+    // Refresh token 7 ngày
+    const refreshToken = jwt.sign(payLoad, JWT_REFRESH_SECRET, { expiresIn: '7d' });
+
+    return {
+        accessToken,
+        refreshToken
+    };
+};
+
 
 const registerUser = async (userData) => {
-    const { email, password, username, full_name, birthday, gender, address } = userData;
+    const { email, password, username } = userData;
 
     // Kiểm tra trùng email
     const existingUser = await User.findOne({
@@ -28,20 +44,18 @@ const registerUser = async (userData) => {
         email,
         password,
         username,
-        full_name,
-        birthday,
-        gender,
-        address,
     });
 
-    const token = jwt.sign(
-        { userId: newUser.user_id, email: newUser.email },
-        JWT_SECRET,
-        { expiresIn: '3d' },
-    );
+    const tokens = generateTokens({
+        userId: newUser.user_id,
+        email: newUser.email
+    });
+
+    newUser.refreshToken = tokens.refreshToken;
+    await newUser.save();
 
     newUser.password = undefined;
-    return { user: newUser, token };
+    return { user: newUser, ...tokens };
 }
 
 
@@ -58,16 +72,62 @@ const loginUser = async (userData) => {
         throw new Error('Email hoặc mật khẩu không đúng');
     }
 
-    const token = jwt.sign(
+    // tạo 2 token mới
+    const tokens = generateTokens({
+        userId: user.user_id,
+        email: user.email
+    });
+
+    user.refresh_token = tokens.refreshToken;
+    await user.save();
+
+    user.password = undefined;
+    return { user: user, ...tokens };
+};
+
+
+// Xin token mới (Refresh Token)
+const refreshToken = async (refreshTokenFromClient) => {
+    if (!refreshTokenFromClient) throw new Error('Chưa gửi Refresh Token');
+
+    // check token có hợp lệ không
+    let decoded;
+    try {
+        decoded = jwt.verify(refreshTokenFromClient, JWT_REFRESH_SECRET);
+    } catch (error) {
+        throw new Error('Refresh Token hết hạn hoặc không hợp lệ.');
+    }
+
+    // check token trùng với của user trong DB không
+    const user = await User.findByPk(decoded.userId);
+    if (!user || user.refresh_token !== refreshTokenFromClient) {
+        throw new Error('Refresh Token không khớp (Có thể đã đăng xuất).');
+    }
+
+    // Check xong, cấp lại Access token
+    const newAccessToken = jwt.sign(
         { userId: user.user_id, email: user.email },
         JWT_SECRET,
-        { expiresIn: '3d' },
-    )
-    user.password = undefined;
-    return { user: user, token };
-}
+        { expiresIn: '30m' }
+    );
+
+    return { accessToken: newAccessToken };
+};
+
+
+// Log out
+const logoutUser = async (userId) => {
+    const user = await User.findByPk(userId);
+    if (user) {
+        user.refresh_token = null;
+        await user.save();
+    }
+    return { message: 'Log out successfully.' };
+};
 
 module.exports = {
     registerUser,
     loginUser,
+    refreshToken,
+    logoutUser,
 }

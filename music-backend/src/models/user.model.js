@@ -25,11 +25,11 @@ const User = sequelize.define('User', {
     },
     full_name: {
         type: DataTypes.STRING(255),
-        allowNull: false,
+        allowNull: true,
     },
     birthday: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
         validate: {
             isDate: true,
         }
@@ -40,7 +40,7 @@ const User = sequelize.define('User', {
     },
     gender: {
         type: DataTypes.STRING(10),
-        allowNull: false,
+        allowNull: true,
         validate: {
             isIn: [['male', 'female', 'other']],
         }
@@ -52,6 +52,10 @@ const User = sequelize.define('User', {
     },
     avatar: {
         type: DataTypes.STRING(255)
+    },
+    refresh_token: {
+        type: DataTypes.TEXT,
+        allowNull: true
     },
     created_at: {
         type: DataTypes.DATE,
