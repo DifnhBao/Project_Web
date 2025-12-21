@@ -4,7 +4,7 @@
 
 /* Nút Add User */
 .add {
-  background-color: rgb(88, 196, 220);
+  background-color: var(--button);
   color: #fff;
   padding: 10px 18px;
   border: none;
@@ -17,7 +17,7 @@
 }
 
 .add:hover {
-  background-color: rgb(0, 161, 197);
+  background-color: rgb(247, 95, 143);
 }
 
 .table {

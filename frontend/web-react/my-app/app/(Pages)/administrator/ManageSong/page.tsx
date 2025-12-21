@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import styles from "@/app/styles/AdminPage/ManageSong.module.css";
 import { useModal } from "@/app/context/ModalContext";
 import { fetchSongs } from "@/app/services/songsService";
+import Pagination from "@/app/components/Pagination";
 
 export default function SongManagement() {
   const { openModal } = useModal();
@@ -93,6 +94,7 @@ export default function SongManagement() {
           ))}
         </tbody>
       </table>
+      <Pagination currentPage={1} totalPages={5} />
     </div>
   );
 }

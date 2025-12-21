@@ -1,9 +1,9 @@
 .container {
-  background-color: var(--background-color);
+  background-color: #ffffff;
   border-radius: 16px;
   padding: 2rem 2.5rem;
   width: 400px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -12,20 +12,15 @@
 }
 .container h1 {
   text-align: center;
-  color: white;
+  color: #111827;
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
 }
 
-/* ----- Label ----- */
-/* .container label {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--color-text-not-select);
-  margin-bottom: 0.3rem;
-  display: block;
-} */
+.container label {
+  color: #9ca3af;
+}
 
 /* ----- Input ----- */
 .container input {
@@ -33,8 +28,8 @@
   padding: 0.7rem 1rem;
   border: none;
   border-radius: 8px;
-  background-color: var(--color-main);
-  color: white;
+  background-color: #ebf2f8;
+  color: #111827;
   font-size: 0.95rem;
   margin-bottom: 1.2rem;
   outline: none;
@@ -46,8 +41,8 @@
 }
 
 .container input:focus {
-  outline: var(--button);
-  box-shadow: 0 0 0 3px rgba(251, 106, 145, 0.25);
+  /* outline: var(--button); */
+  box-shadow: 0 0 0 3px rgba(252, 49, 104, 0.25);
 }
 
 /* ----- Button ----- */
@@ -64,8 +59,8 @@
 }
 
 .container button:hover {
-  background-color: white;
-  color: var(--button);
+  background-color: rgb(246, 112, 154);
+  /* color: var(--button); */
 }
 
 .container button:active {
@@ -73,7 +68,7 @@
 }
 
 /* ----- Optional bottom text ----- */
-.switch-form {
+/* .switch-form {
   text-align: center;
   font-size: 0.9rem;
   color: #6b7280;
@@ -89,7 +84,7 @@
 
 .switch-form .create:hover {
   text-decoration: underline;
-}
+} */
 
 /* ----- Smooth animation ----- */
 @keyframes fadeIn {

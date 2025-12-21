@@ -2,7 +2,7 @@
 .sidebar {
   display: flex;
   align-items: center;
-  justify-content: center; /* căn giữa logo và menu trong header */
+  justify-content: center;
   gap: 30px;
   background: none;
   height: 100%;
@@ -34,10 +34,11 @@
 
 /* Hover và active */
 .sidebar a:hover {
-  color: rgb(108, 176, 191);
+  /* color: rgb(108, 176, 191); */
+  color: var(--button);
 }
 
 .sidebar a.active {
-  background: rgba(88, 196, 220, 0.15);
-  color: rgb(88, 196, 220);
+  background: rgba(252, 99, 132, 0.15);
+  color: var(--button);
 }

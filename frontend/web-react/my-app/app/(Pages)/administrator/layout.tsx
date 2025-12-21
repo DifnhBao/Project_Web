@@ -1,5 +1,6 @@
 "use client";
 
+import "@/app/styles/AdminPage/Admin.css";
 import "@/app/styles/AdminPage/Dashboard.css";
 import Sidebar from "@/app/components/AdminPage/Sidebar";
 import Header from "@/app/components/AdminPage/Header";
@@ -17,7 +18,7 @@ export default function AdminLayout({
       <AdminUserProvider>
         <ModalProvider>
           {/* <Sidebar /> */}
-          <div className="main">
+          <div className="main-page-admin">
             <Header />
             <div className="main_content">{children}</div>
           </div>
