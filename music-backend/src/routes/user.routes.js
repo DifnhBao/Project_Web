@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user.controller');
 
-const { protect, isAdmin } = require('../midlewares/auth.midleware');
+const { protect, isAdmin, protectAdmin } = require('../midlewares/auth.midleware');
 
 /* --- ROUTES FOR USER --- */
 
@@ -27,6 +27,13 @@ router.post(
 
 
 /* --- ROUTES FOR ADMIN --- */
+
+
+router.get(
+    '/admin/me',
+    protectAdmin,
+    userController.getCurrentAdmin
+);
 
 router.post(
     '/:id/promote',

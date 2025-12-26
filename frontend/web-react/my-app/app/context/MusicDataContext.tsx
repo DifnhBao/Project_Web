@@ -32,15 +32,15 @@ export function MusicDataProvider({ children }: { children: React.ReactNode }) {
         setIsLoading(true);
 
         // const [tracksData, playlistsData, artistsData] = await Promise.all([
-        const [playlistsData] = await Promise.all([
-          // fetchPopularTracks(),
-          // fetchPlaylists(),
-          fetchArtists(),
-        ]);
+        // const [playlistsData] = await Promise.all([
+        // fetchPopularTracks(),
+        // fetchPlaylists(),
+        // fetchArtists(),
+        // ]);
 
         // setTracks(tracksData);
         // setPlaylists(playlistsData);
-        setArtists(artistsData);
+        // setArtists(artistsData);
       } catch (err) {
         setError(err);
       } finally {

@@ -7,37 +7,37 @@ interface UserContextType {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   loading: boolean;
+  refreshUser: () => Promise<void>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
 
-  // Khi load app, tự động kiểm tra đăng nhập
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const res = await fetchCurrentUser();
-        if (res.ok) {
-          const data = await res.json();
-          setUser(data.user);
-        } else {
-          setUser(null);
-        }
-      } catch (err) {
-        console.error("Lỗi khi kiểm tra user:", err);
+  const refreshUser = async () => {
+    try {
+      const res = await fetchCurrentUser();
+      if (res.ok) {
+        const { data } = await res.json();
+        setUser(data);
+      } else {
         setUser(null);
-      } finally {
-        setLoading(false);
       }
-    };
-    checkUser();
+    } catch {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    refreshUser();
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser, loading }}>
+    <UserContext.Provider value={{ user, setUser, loading, refreshUser }}>
       {children}
     </UserContext.Provider>
   );

@@ -29,13 +29,7 @@ export default function Pagination({ currentPage, totalPages }: Props) {
     const start = Math.max(1, currentPage - 2);
     const end = Math.min(totalPages, currentPage + 2);
 
-    if (start > 1) pages.push("...");
-
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
-    }
-
-    if (end < totalPages) pages.push("...");
+    for (let i = start; i <= end; i++) pages.push(i);
 
     return pages;
   };
@@ -49,19 +43,15 @@ export default function Pagination({ currentPage, totalPages }: Props) {
         &lt;
       </button>
 
-      {renderPages().map((p, i) =>
-        p === "..." ? (
-          <span key={i}>...</span>
-        ) : (
-          <button
-            key={p}
-            className={p === currentPage ? "active" : ""}
-            onClick={() => goToPage(p)}
-          >
-            {p}
-          </button>
-        )
-      )}
+      {renderPages().map((page, i) => (
+        <button
+          key={page}
+          className={page === currentPage ? "active" : ""}
+          onClick={() => goToPage(page)}
+        >
+          {page}
+        </button>
+      ))}
 
       <button
         disabled={currentPage === totalPages}

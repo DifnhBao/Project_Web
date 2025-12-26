@@ -1,6 +1,6 @@
 import { fetchWithAutoRefresh } from "./refreshToken";
 
-export const URL = "http://localhost:5000";
+export const URL = "http://localhost:5000/api";
 // USER PAGE
 
 // Đăng kí cho user
@@ -17,12 +17,12 @@ export async function registerUser(
 }
 
 // Đăng nhập cho user page
-export async function loginUser(email: string, password: string) {
+export async function loginUser(username: string, password: string) {
   return await fetch(URL + "/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-    credentials: "include", // để nhận cookie refresh token
+    body: JSON.stringify({ username, password }),
+    credentials: "include",
   });
 }
 
@@ -35,7 +35,7 @@ export async function logoutUser() {
 
 // API xác thực user vừa đăng nhập và lưu thông tin đăng nhập
 export async function fetchCurrentUser() {
-  return await fetchWithAutoRefresh(URL + "/auth/me", {
+  return await fetchWithAutoRefresh(URL + "/users/me", {
     credentials: "include",
   });
 }
@@ -56,18 +56,18 @@ export async function registerAdmin(
 }
 
 // Đăng nhập
-export async function loginAdmin(email: string, password: string) {
-  return await fetch(URL + "/auth-admin/login-admin", {
+export async function loginAdmin(username: string, password: string) {
+  return fetch(URL + "/auth/admin/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ username, password }),
     credentials: "include",
   });
 }
 
 // Đăng xuất
 export async function logoutAdmin() {
-  return await fetch(URL + "/auth-admin/logout-admin", {
+  return await fetch(URL + "/auth/admin/logout", {
     method: "POST",
     credentials: "include",
   });
@@ -75,9 +75,8 @@ export async function logoutAdmin() {
 
 // API Xác thực admin vừa đăng nhập và lưu thông tin đăng nhập
 export async function fetchCurrentAdmin() {
-  return await fetchWithAutoRefresh(URL + "/auth-admin/me", {
+  return await fetchWithAutoRefresh(URL + "/users/admin/me", {
     credentials: "include",
-    role: "admin",
   });
 }
 

@@ -1,160 +1,168 @@
-const { User } = require('../models');
-const userService = require('../services/user.service');
-
+const { User } = require("../models");
+const userService = require("../services/user.service");
 
 /* --- Controller for User */
 
 const getUserProfile = async (req, res, next) => {
-    try {
-        const userId = req.user.user_id;
-        const user = await userService.getUserProfile(userId);
+  try {
+    const userId = req.user.user_id;
+    const user = await userService.getUserProfile(userId);
 
-        res.status(200).json({
-            data: user,
-        });
-    } catch (error) {
-        next(error);
-    }
+    res.status(200).json({
+      data: user,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
-
 
 const updateUserProfile = async (req, res, next) => {
-    try {
-        const userId = req.user.user_id;
-        const updateData = req.body;
-        const updatedUser = await userService.updateUserProfile(userId, updateData);
+  try {
+    const userId = req.user.user_id;
+    const updateData = req.body;
+    const updatedUser = await userService.updateUserProfile(userId, updateData);
 
-        res.status(200).json({
-            message: 'Cập nhật thông tin thành công',
-            data: updatedUser,
-        });
-    } catch (error) {
-        next(error);
-    }
+    res.status(200).json({
+      message: "Cập nhật thông tin thành công",
+      data: updatedUser,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
-
 const changeUserPassword = async (req, res, next) => {
-    try {
-        const userId = req.user.user_id;
-        const { oldPassword, newPassword } = req.body;
+  try {
+    const userId = req.user.user_id;
+    const { oldPassword, newPassword } = req.body;
 
-        if (!oldPassword || !newPassword) {
-            throw new Error('Vui lòng cung cấp mật khẩu cũ và mật khẩu mới.');
-        }
-
-        const result = await userService.changeUserPassword(userId, oldPassword, newPassword);
-        res.status(200).json(result);
-    } catch (error) {
-        next(error);
+    if (!oldPassword || !newPassword) {
+      throw new Error("Vui lòng cung cấp mật khẩu cũ và mật khẩu mới.");
     }
-}
 
+    const result = await userService.changeUserPassword(
+      userId,
+      oldPassword,
+      newPassword
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
 
 /* Controller for Admin */
 
+const getCurrentAdmin = async (req, res) => {
+  const adminId = req.admin.userId;
+  const admin = await userService.getCurrentAdmin(adminId);
+  res.json({ admin });
+};
 
 const promoteUser = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const requesterId = req.user.user_id;
+  try {
+    const { id } = req.params;
+    const requesterId = req.user.user_id;
 
-        const updateUser = await userService.promoteUserToAdmin(id, requesterId);
+    const updateUser = await userService.promoteUserToAdmin(id, requesterId);
 
-        res.status(200).json({
-            message: `Đã nâng quyền Admin cho user ${updateUser.username}!!!`,
-            data: updateUser
-        });
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
+    res.status(200).json({
+      message: `Đã nâng quyền Admin cho user ${updateUser.username}!!!`,
+      data: updateUser,
+    });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
-
 
 const demoteAdminToUser = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const requesterId = req.user.user_id;
+  try {
+    const { id } = req.params;
+    const requesterId = req.user.user_id;
 
-        const result = await userService.demoteAdminToUser(id, requesterId);
-        res.status(200).json({
-            message: `Đã hạ quyền tài khoản ${result.username} thành user.`,
-            data: result,
-        });
-    } catch (error) {
-        next(error);
-    }
+    const result = await userService.demoteAdminToUser(id, requesterId);
+    res.status(200).json({
+      message: `Đã hạ quyền tài khoản ${result.username} thành user.`,
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
-
 
 const getAllUsers = async (req, res, next) => {
-    try {
-        const users = await userService.getAllUsers();
-        res.status(200).json({
-            data: users,
-        });
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const users = await userService.getAllUsers();
+    res.status(200).json({
+      data: users,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
-
 
 const updateUserById = async (req, res, next) => {
-    try {
-        const { id } = req.params;  // Lay ID tu URL
-        const updateData = req.body;
-        const requesterId = req.user.user_id;
+  try {
+    const { id } = req.params; // Lay ID tu URL
+    const updateData = req.body;
+    const requesterId = req.user.user_id;
 
-        const updatedUser = await userService.updateUserById(id, updateData, requesterId);
-        res.status(200).json({
-            message: 'Admin cập nhật thông tin user thành công.',
-            data: updatedUser
-        });
-    } catch (error) {
-        next(error);
-    }
+    const updatedUser = await userService.updateUserById(
+      id,
+      updateData,
+      requesterId
+    );
+    res.status(200).json({
+      message: "Admin cập nhật thông tin user thành công.",
+      data: updatedUser,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
-
 const deleteUserById = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const requesterId = req.user.user_id;  //ID nguoi tao lenh
+  try {
+    const { id } = req.params;
+    const requesterId = req.user.user_id; //ID nguoi tao lenh
 
-        const result = await userService.deleteUserById(id, requesterId);
-        res.status(200).json(result);
-    } catch (error) {
-        next(error);
-    }
+    const result = await userService.deleteUserById(id, requesterId);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const resetUserPassword = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const { newPassword } = req.body;
-        const requesterId = req.user.user_id;
+  try {
+    const { id } = req.params;
+    const { newPassword } = req.body;
+    const requesterId = req.user.user_id;
 
-        if (!newPassword) {
-            throw new Error('Vui lòng nhập mật khẩu mới.');
-        }
-
-        const result = await userService.resetUserPassword(id, newPassword, requesterId);
-        res.status(200).json(result);
-    } catch (error) {
-        next(error);
+    if (!newPassword) {
+      throw new Error("Vui lòng nhập mật khẩu mới.");
     }
+
+    const result = await userService.resetUserPassword(
+      id,
+      newPassword,
+      requesterId
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
 };
 
-
-
 module.exports = {
-    getUserProfile,
-    updateUserProfile,
-    changeUserPassword,
-    promoteUser,
-    getAllUsers,
-    updateUserById,
-    deleteUserById,
-    demoteAdminToUser,
-    resetUserPassword,
+  getUserProfile,
+  updateUserProfile,
+  changeUserPassword,
+  promoteUser,
+  getAllUsers,
+  updateUserById,
+  deleteUserById,
+  demoteAdminToUser,
+  resetUserPassword,
+  getCurrentAdmin,
 };
