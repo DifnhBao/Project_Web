@@ -36,13 +36,13 @@ export default function Header() {
         {/* Upload icon */}
         {/* <HiOutlineUpload id="upload-icon" /> */}
         <div className="user-area">
-          {user ? (
+          {loading ? null : user ? (
             <div className="user-greeting">
               <button
                 className="profile-btn"
                 onClick={() => setShowUserMenu(!showUserMenu)}
               >
-                <span>Hi, {user?.username}</span>
+                <span>Hi, {user?.username || "..."}</span>
                 <img
                   src="/images/Avatar/avt01.png"
                   alt="Avatar"

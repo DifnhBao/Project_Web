@@ -10,7 +10,7 @@ export async function refreshTokenByAdmin() {
 
 // API refresh access token user
 export async function refreshTokenByUser() {
-  return await fetch(URL + "/refresh/user-refresh", {
+  return await fetch(URL + "/auth/refresh-token", {
     method: "POST",
     credentials: "include", // gửi cookie kèm theo
   });

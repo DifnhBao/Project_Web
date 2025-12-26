@@ -10,7 +10,7 @@ import "@/app/styles/auth.css";
 export default function SignInAdminPage() {
   const router = useRouter();
   const pathname = usePathname();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { openModal, closeModal } = useModal();
   const { setAdmin } = useAdminUser();
@@ -18,7 +18,7 @@ export default function SignInAdminPage() {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await loginAdmin(email, password);
+      const res = await loginAdmin(username, password);
       const data = await res.json();
       alert(data.message);
 
@@ -56,14 +56,14 @@ export default function SignInAdminPage() {
       <h1>Welcome, administrator</h1>
       <form onSubmit={handleSignIn}>
         <label htmlFor="email" className="form_label">
-          Email
+          Username
         </label>
         <input
-          id="email"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          id="username"
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
         <label htmlFor="password" className="form_label">

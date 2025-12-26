@@ -9,35 +9,37 @@ import "@/app/styles/auth.css";
 
 export default function SignInPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { openModal, closeModal } = useModal();
-  const { setUser } = useUser();
+  const { user, setUser, refreshUser } = useUser();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await loginUser(email, password);
-
+      const res = await loginUser(username, password);
       const data = await res.json();
-      alert(data.message);
 
       if (!res.ok) {
         alert(data.message || "Đăng nhập thất bại!");
         return;
       }
 
+      alert(data.message);
+
       // Lấy thông tin user
-      const meRes = await fetchCurrentUser();
-      if (meRes.ok) {
-        const meData = await meRes.json();
-        setUser(meData.user);
-      }
+      // const meRes = await fetchCurrentUser();
+      // if (meRes.ok) {
+      //   const meData = await meRes.json();
+      //   setUser(meData);
+      // }
+
+      await refreshUser();
 
       // Đóng modal
       closeModal();
       // refresh trang để cập nhật thông tin user
-      router.refresh();
+      // router.refresh();
     } catch (error) {
       console.error("Lỗi đăng nhập:", error);
       alert("Đăng nhập thất bại, vui lòng thử lại!");
@@ -56,15 +58,15 @@ export default function SignInPage() {
 
       <h1>Sign in to Enjoy</h1>
       <form onSubmit={handleSignIn}>
-        <label htmlFor="email" className="form_label">
-          Email
+        <label htmlFor="username" className="form_label">
+          Username
         </label>
         <input
-          id="email"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          id="username"
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
         <label htmlFor="password" className="form_label">

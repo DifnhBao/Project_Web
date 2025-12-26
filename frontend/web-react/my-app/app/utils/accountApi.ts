@@ -20,8 +20,8 @@ export async function addNewProfile(formData: object) {
 
 // cập nhật thông tin người dùng
 export async function updateProfile(formData: object) {
-  return await fetchWithAutoRefresh(URL + "/acc/profile", {
-    method: "PATCH",
+  return await fetchWithAutoRefresh(URL + "/users/me", {
+    method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(formData),
   });
@@ -46,10 +46,10 @@ export async function adminUpdateUserProfile(userId: number, formData: object) {
 }
 
 // thay đổi mật khẩu
-export async function changePassword(oldPassword: string, confirmPW: string) {
-  return await fetchWithAutoRefresh(URL + "/acc/password/change", {
-    method: "PATCH",
+export async function changePassword(oldPassword: string, newPassword: string) {
+  return await fetchWithAutoRefresh(URL + "/users/change-password", {
+    method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ oldPassword, confirmPW }),
+    body: JSON.stringify({ oldPassword, newPassword }),
   });
 }

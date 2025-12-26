@@ -1,27 +1,27 @@
-import type { Playlist, Track, Artist } from "@/app/types/music";
+// import type { Playlist, Track, Artist } from "@/app/types/music";
 
-export const JAMENDO_CLIENT_ID = "0ffcdfae";
+// export const JAMENDO_CLIENT_ID = "0ffcdfae";
 
-//Gọi API có retry ===
-async function fetchWithRetry(url: string, retries = 3) {
-  let attempt = 0;
-  let data = null;
+// //Gọi API có retry ===
+// async function fetchWithRetry(url: string, retries = 3) {
+//   let attempt = 0;
+//   let data = null;
 
-  while (attempt < retries && !data) {
-    try {
-      const res = await fetch(url);
-      const json = await res.json();
-      if (json.results && json.results.length > 0) {
-        data = json;
-      }
-    } catch (err) {
-      console.warn(`Lỗi khi fetch: ${url}`, err);
-    }
-    attempt++;
-  }
+//   while (attempt < retries && !data) {
+//     try {
+//       const res = await fetch(url);
+//       const json = await res.json();
+//       if (json.results && json.results.length > 0) {
+//         data = json;
+//       }
+//     } catch (err) {
+//       console.warn(`Lỗi khi fetch: ${url}`, err);
+//     }
+//     attempt++;
+//   }
 
-  return data;
-}
+//   return data;
+// }
 
 //Lấy bài hát phổ biến
 // export async function fetchPopularTracks(limit = 20): Promise<Track[]> {
