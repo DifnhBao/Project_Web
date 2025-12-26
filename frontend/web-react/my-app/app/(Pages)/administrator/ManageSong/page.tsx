@@ -1,12 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 
 import styles from "@/app/styles/AdminPage/ManageSong.module.css";
 import { useModal } from "@/app/context/ModalContext";
 import { fetchSongs } from "@/app/services/songsService";
 import Pagination from "@/app/components/Pagination";
 
-export default function SongManagement() {
+function SongManagement() {
   const { openModal } = useModal();
   const [songs, setSongs] = useState([
     {
@@ -96,5 +96,13 @@ export default function SongManagement() {
       </table>
       <Pagination currentPage={1} totalPages={5} />
     </div>
+  );
+}
+
+export default function SongManagementPageWrapper() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SongManagement />
+    </Suspense>
   );
 }
