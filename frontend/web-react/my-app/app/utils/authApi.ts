@@ -1,6 +1,6 @@
 import { adminFetch, fetchWithAutoRefresh, userFetch } from "./refreshToken";
 
-export const URL = "http://localhost:5000/api";
+export const URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000") + "/api";
 // USER PAGE
 
 // Đăng kí cho user
