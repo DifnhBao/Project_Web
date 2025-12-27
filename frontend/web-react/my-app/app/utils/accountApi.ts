@@ -1,17 +1,17 @@
 import { fetchWithAutoRefresh } from "./refreshToken";
+import { adminFetch, userFetch } from "./refreshToken";
 import { URL } from "./authApi";
 
 // admin xóa tài khoản
 export async function deleteAccount(id: number) {
-  return await fetchWithAutoRefresh(URL + `/acc/account/${id}`, {
+  return await adminFetch(URL + `/users/${id}`, {
     method: "DELETE",
-    role: "admin",
   });
 }
 
 // Người dùng thêm mới profile
 export async function addNewProfile(formData: object) {
-  return await fetchWithAutoRefresh(URL + "/acc/profile", {
+  return await userFetch(URL + "/acc/profile", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(formData),
@@ -20,7 +20,7 @@ export async function addNewProfile(formData: object) {
 
 // cập nhật thông tin người dùng
 export async function updateProfile(formData: object) {
-  return await fetchWithAutoRefresh(URL + "/users/me", {
+  return await userFetch(URL + "/users/me", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(formData),
@@ -29,25 +29,23 @@ export async function updateProfile(formData: object) {
 
 // lấy thông tin người dùng bằng id
 export async function getUserProfile(userId: number) {
-  return await fetchWithAutoRefresh(URL + `/users/user-profile/${userId}`, {
+  return await adminFetch(URL + `/users/profile/${userId}`, {
     method: "GET",
-    role: "admin",
   });
 }
 
 // admin thay đổi thông tin người dùng
 export async function adminUpdateUserProfile(userId: number, formData: object) {
-  return fetchWithAutoRefresh(URL + `/acc/admin-update/profile/${userId}`, {
-    method: "PATCH",
+  return await adminFetch(URL + `/users/profile/${userId}`, {
+    method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(formData),
-    role: "admin",
   });
 }
 
 // thay đổi mật khẩu
 export async function changePassword(oldPassword: string, newPassword: string) {
-  return await fetchWithAutoRefresh(URL + "/users/change-password", {
+  return await userFetch(URL + "/users/change-password", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ oldPassword, newPassword }),

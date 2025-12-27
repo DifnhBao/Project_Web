@@ -85,28 +85,17 @@ export function useProfileForm(
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("SUBMIT RUN");
     setNote("");
 
-    // Validate
-    // const phonePattern = /^(0|\+84)(\d{9,10})$/;
-    // if (!phonePattern.test(formData.phone.trim())) {
-    //   setNote("Số điện thoại không hợp lệ (bắt đầu bằng 0 hoặc +84).");
-    //   return;
-    // }
-
     // Gọi API
-    const res = await updateProfile(formData);
+    let res;
+    if (mode === "admin" && userId) {
+      // ADMIN sửa USER
+      res = await adminUpdateUserProfile(userId, formData);
+    } else {
+      res = await updateProfile(formData);
+    }
 
-    // if (mode === "admin" && userId) {
-    //   // gọi API riêng cho admin update user
-    //   res = await adminUpdateUserProfile(userId, formData);
-    // } else {
-    //   // user tự cập nhật
-    //   res = existingProfile
-    //     ? await updateProfile(formData)
-    //     : await addNewProfile(formData);
-    // }
     const data = await res.json();
 
     if (!res.ok) {

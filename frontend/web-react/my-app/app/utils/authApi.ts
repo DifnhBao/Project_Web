@@ -1,4 +1,4 @@
-import { fetchWithAutoRefresh } from "./refreshToken";
+import { adminFetch, fetchWithAutoRefresh, userFetch } from "./refreshToken";
 
 export const URL = "http://localhost:5000/api";
 // USER PAGE
@@ -35,9 +35,7 @@ export async function logoutUser() {
 
 // API xác thực user vừa đăng nhập và lưu thông tin đăng nhập
 export async function fetchCurrentUser() {
-  return await fetchWithAutoRefresh(URL + "/users/me", {
-    credentials: "include",
-  });
+  return await userFetch(URL + "/users/me");
 }
 
 // ADMINISTRATOR PAGE
@@ -75,36 +73,26 @@ export async function logoutAdmin() {
 
 // API Xác thực admin vừa đăng nhập và lưu thông tin đăng nhập
 export async function fetchCurrentAdmin() {
-  return await fetchWithAutoRefresh(URL + "/users/admin/me", {
-    credentials: "include",
-  });
+  return await adminFetch(URL + "/users/admin/me");
 }
 
 // Accept role admin or reject
 export async function AcceptOrReject(id: number, status: string) {
-  return await fetchWithAutoRefresh(URL + `/auth-admin/approve-admin/${id}`, {
+  return await adminFetch(URL + `/auth-admin/approve-admin/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ status }),
-    credentials: "include",
-    role: "admin",
   });
 }
 
 //API Lấy danh sách user
 export async function getUsers() {
-  return await fetchWithAutoRefresh(URL + "/users/all-users", {
-    method: "GET",
-    role: "admin",
-  });
+  return await adminFetch(URL + "/users", { method: "GET" });
 }
 
 // API Lấy danh sách admin
 export async function getAdmins() {
-  return await fetchWithAutoRefresh(URL + "/users/all-admins", {
-    method: "GET",
-    role: "admin",
-  });
+  return await adminFetch(URL + "/users/admins", { method: "GET" });
 }
 
 // Thêm admin  mới
@@ -113,10 +101,9 @@ export async function addNewAdmin(
   email: string,
   password: string
 ) {
-  return await fetchWithAutoRefresh(URL + "/auth-admin/add-new-admin", {
-    method: "PUT",
+  return await adminFetch(URL + "/users/admin/new", {
+    method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, email, password }),
-    role: "admin",
   });
 }

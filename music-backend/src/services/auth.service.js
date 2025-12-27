@@ -73,6 +73,13 @@ const loginUser = async (userData) => {
     expires_at: expiresAt,
   });
 
+  await User.update(
+    {
+      activity_status: "online",
+    },
+    { where: { user_id: user.user_id } }
+  );
+
   // ẩn password khi trả về
   user.password = undefined;
 
@@ -123,9 +130,31 @@ const refreshToken = async (refreshTokenFromClient) => {
 
 // Log out
 const logoutUser = async (refreshToken) => {
+  if (!refreshToken) return;
+
+  // 1. Tìm refresh token trong DB
+  const storedToken = await RefreshToken.findOne({
+    where: { token: refreshToken },
+  });
+
+  if (!storedToken) {
+    // token không tồn tại → coi như đã logout
+    return;
+  }
+
+  const userId = storedToken.user_id;
+
+  // 2. Update trạng thái user
+  await User.update(
+    { activity_status: "offline" },
+    { where: { user_id: userId } }
+  );
+
+  // 3. Xóa refresh token
   await RefreshToken.destroy({
     where: { token: refreshToken },
   });
+
   return { message: "Log out successfully." };
 };
 
@@ -171,6 +200,67 @@ const logoutAdmin = async (refreshToken) => {
   return { message: "Log out successfully." };
 };
 
+const refreshAdminToken = async (refreshTokenFromClient) => {
+  if (!refreshTokenFromClient) {
+    throw new Error("Chưa gửi Refresh Token admin");
+  }
+
+  // 1. Verify refresh token
+  let decoded;
+  try {
+    decoded = jwt.verify(refreshTokenFromClient, JWT_REFRESH_SECRET);
+  } catch (error) {
+    throw new Error("Refresh token admin hết hạn hoặc không hợp lệ");
+  }
+
+  // 2. Check scope
+  if (decoded.scope !== "admin") {
+    throw new Error("Refresh token không hợp lệ cho admin");
+  }
+
+  // 3. Check DB
+  const savedToken = await RefreshToken.findOne({
+    where: {
+      token: refreshTokenFromClient,
+      user_id: decoded.userId,
+    },
+  });
+
+  if (!savedToken) {
+    throw new Error("Refresh token admin không tồn tại");
+  }
+
+  // 4. Check hết hạn DB
+  if (new Date(savedToken.expires_at) < new Date()) {
+    await RefreshToken.destroy({
+      where: { token_id: savedToken.token_id },
+    });
+
+    throw new Error("Refresh token admin đã hết hạn");
+  }
+
+  // 5. Check user + role
+  const user = await User.findByPk(savedToken.user_id);
+  if (!user) throw new Error("Không tìm thấy admin");
+
+  if (!["admin", "super_admin"].includes(user.role)) {
+    throw new Error("Không có quyền admin");
+  }
+
+  // 6. Cấp access token mới
+  const accessToken = jwt.sign(
+    {
+      userId: user.user_id,
+      role: user.role,
+      scope: "admin",
+    },
+    JWT_SECRET,
+    { expiresIn: "30m" }
+  );
+
+  return { accessToken };
+};
+
 module.exports = {
   registerUser,
   loginUser,
@@ -178,4 +268,5 @@ module.exports = {
   logoutUser,
   loginAdmin,
   logoutAdmin,
+  refreshAdminToken,
 };

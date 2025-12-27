@@ -11,9 +11,11 @@ import "@/app/styles/AdminPage/ad-Sidebar.css";
 
 export default function Header() {
   const { openModal } = useModal();
-  const { admin, setAdmin } = useAdminUser();
-
+  const { admin, setAdmin, loading } = useAdminUser();
   const router = useRouter();
+
+  if (loading) return null;
+
   const handleLogout = async () => {
     try {
       // Gọi API Logout đến backend

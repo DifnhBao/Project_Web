@@ -64,6 +64,16 @@ const User = sequelize.define(
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
+    activity_status: {
+      type: DataTypes.ENUM("online", "offline"),
+      allowNull: false,
+      defaultValue: "offline",
+    },
+    is_active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
   },
   {
     tableName: "users",

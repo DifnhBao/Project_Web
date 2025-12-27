@@ -6,30 +6,60 @@ import { getUserProfile } from "../utils/accountApi";
 import Profile from "./Profile";
 
 export default function EditUserProfile({ userData }: { userData: User }) {
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState<UserProfileData | null>(null);
 
   useEffect(() => {
     const fetchProfile = async () => {
-      if (!userData?.id) return;
-      const res = await getUserProfile(userData.id);
-      if (!res.ok) return;
-      const data = await res.json();
+      if (!userData?.user_id) return;
 
-      console.log("Ngày sinh từ server:", data[0]?.date_of_birth);
+      setLoading(true);
 
-      setFormData({
-        firstName: data[0]?.first_name || "",
-        lastName: data[0]?.last_name || "",
-        gender: data[0]?.gender || "",
-        dateOfBirth: data[0]?.date_of_birth || "",
-        phone: data[0]?.phone || "",
-        address: data[0]?.address || "",
-      });
+      const res = await getUserProfile(userData.user_id);
+      if (!res.ok) {
+        setFormData(null);
+        setLoading(false);
+        return;
+      }
+
+      const result = await res.json();
+      const u = result.data;
+
+      if (!u) {
+        setFormData(null);
+      } else {
+        // CHỈ set formData khi THỰC SỰ có dữ liệu
+        const hasAnyProfileData =
+          u.first_name ||
+          u.last_name ||
+          u.gender ||
+          u.birthday ||
+          u.phone_number ||
+          u.address;
+
+        if (!hasAnyProfileData) {
+          setFormData(null);
+        } else {
+          setFormData({
+            firstName: u.first_name ?? "",
+            lastName: u.last_name ?? "",
+            gender: u.gender ?? "",
+            dateOfBirth: u.birthday ?? "",
+            phone: u.phone_number ?? "",
+            address: u.address ?? "",
+          });
+        }
+      }
+
+      setLoading(false);
     };
+
     fetchProfile();
   }, [userData]);
 
-  if (!formData)
+  if (loading) return null;
+
+  if (!formData) {
     return (
       <div
         style={{
@@ -48,6 +78,9 @@ export default function EditUserProfile({ userData }: { userData: User }) {
         Người dùng chưa cập nhật thông tin cá nhân.
       </div>
     );
+  }
 
-  return <Profile initialData={formData} mode="admin" userId={userData.id} />;
+  return (
+    <Profile initialData={formData} mode="admin" userId={userData.user_id} />
+  );
 }

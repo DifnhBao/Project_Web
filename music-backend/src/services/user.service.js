@@ -124,34 +124,66 @@ const demoteAdminToUser = async (userIdToDemote, requesterId) => {
   return user;
 };
 
+// Lấy danh sách người dùng
 const getAllUsers = async () => {
   const users = await User.findAll({
-    attributes: { exclude: ["password"] },
+    where: {
+      role: "user",
+    },
+    attributes: {
+      exclude: ["password"],
+    },
   });
+
   return users;
 };
 
-const updateUserById = async (userId, updateData, requesterId) => {
-  const { full_name, birthday, gender, address, role } = updateData;
+// lấy danh sách admin
+const getAdminsAndSuperAdmins = async () => {
+  const admins = await User.findAll({
+    where: {
+      role: ["admin", "super_admin"],
+    },
+    attributes: {
+      exclude: ["password"],
+    },
+    order: [["created_at", "DESC"]],
+  });
+
+  return admins;
+};
+
+// Lấy thông tin user theo ID
+const adminGetUserById = async (userId) => {
+  const user = await User.findByPk(userId, {
+    attributes: { exclude: ["password"] },
+  });
+
+  if (!user) {
+    throw new Error("Không tìm thấy người dùng");
+  }
+
+  return user;
+};
+
+// Cập nhật thông tin user theo ID
+const updateUserById = async (userId, updateData) => {
+  const { firstName, lastName, gender, dateOfBirth, address, phone } =
+    updateData;
 
   const user = await User.findByPk(userId);
   if (!user) throw new Error("Không tìm thấy người dùng.");
 
-  if (user.role === "admin") {
-    if (requesterId !== 2 && requesterId != userId) {
-      throw new Error("Chỉ Super Admin mới được quyền sửa thông tin Admin.");
-    }
+  if (user.role !== "user") {
+    throw new Error("Chỉ được phép chỉnh sửa thông tin người dùng.");
   }
 
-  user.full_name = full_name || user.full_name;
-  user.birthday = birthday || user.birthday;
-  user.gender = gender || user.gender;
-  user.address = address || user.address;
-  user.role = role || user.role;
-
-  if (role && requesterId === 2) {
-    user.role = role;
-  }
+  user.first_name = firstName ?? user.first_name;
+  user.last_name = lastName ?? user.last_name;
+  user.gender = gender ?? user.gender;
+  user.birthday = dateOfBirth ?? user.birthday;
+  user.address = address ?? user.address;
+  user.phone_number = phone ?? user.phone_number;
 
   await user.save();
 
@@ -159,22 +191,41 @@ const updateUserById = async (userId, updateData, requesterId) => {
   return user;
 };
 
-const deleteUserById = async (userIdToDelete, requesterId) => {
+const deleteUserById = async (userIdToDelete, requester) => {
+  const { user_id: requesterId, role: requesterRole } = requester;
+
+  // 1. Không được xóa chính mình
   if (userIdToDelete === requesterId) {
     throw new Error("Bạn không thể tự xóa tài khoản của chính mình.");
   }
 
+  // 2. Kiểm tra user cần xóa
   const user = await User.findByPk(userIdToDelete);
-  if (!user) throw new Error("Người dùng không tồn tại.");
+  if (!user) {
+    throw new Error("Người dùng không tồn tại.");
+  }
 
-  // Quyền phân cấp cho Super Admin
-  if (user.role === "admin") {
-    if (requesterId !== 2) {
-      throw new Error("Bạn không phải Super Admin.");
+  const targetRole = user.role;
+
+  // 3. Phân quyền
+  if (requesterRole === "admin") {
+    if (targetRole !== "user") {
+      throw new Error("Admin chỉ được phép xóa người dùng thường.");
     }
   }
 
+  if (requesterRole === "super_admin") {
+    if (targetRole === "super_admin") {
+      throw new Error(
+        "Super Admin không thể xóa chính mình hoặc Super Admin khác."
+      );
+    }
+    // xóa admin & user OK
+  }
+
+  // 4. Thực hiện xóa
   await user.destroy();
+
   return {
     message: `Đã xóa thành công tài khoản ${user.username}`,
   };
@@ -204,6 +255,31 @@ const resetUserPassword = async (userId, newPassword, requesterId) => {
   };
 };
 
+// Thêm mới tài khoản admin
+const createAdminAccount = async ({ username, email, password }) => {
+  // 1. Check trùng username
+  const existedUser = await User.findOne({
+    where: { username },
+  });
+
+  if (existedUser) {
+    throw new Error("Username đã tồn tại");
+  }
+
+  // 2. Tạo admin
+  const newAdmin = await User.create({
+    username,
+    email,
+    password,
+    role: "admin",
+    // account_status: "actived",
+  });
+
+  newAdmin.password = undefined;
+
+  return { user: newAdmin };
+};
+
 module.exports = {
   getUserProfile,
   updateUserProfile,
@@ -215,4 +291,7 @@ module.exports = {
   demoteAdminToUser,
   resetUserPassword,
   getCurrentAdmin,
+  adminGetUserById,
+  getAdminsAndSuperAdmins,
+  createAdminAccount,
 };

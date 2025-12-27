@@ -52,7 +52,8 @@ const protectAdmin = async (req, res, next) => {
       return res.status(403).json({ message: "Forbidden" });
     }
 
-    req.admin = decoded;
+    req.user = decoded;
+
     next();
   } catch (err) {
     res.status(401).json({ message: "Invalid token" });

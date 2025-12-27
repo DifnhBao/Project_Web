@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { fetchCurrentAdmin } from "../utils/authApi";
 
 interface Admin {
-  id: number;
+  user_id: number;
   username: string;
   email: string;
   role: string;

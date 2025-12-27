@@ -13,30 +13,25 @@ export default function SignInAdminPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { openModal, closeModal } = useModal();
-  const { setAdmin } = useAdminUser();
+  const { admin, setAdmin } = useAdminUser();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const res = await loginAdmin(username, password);
       const data = await res.json();
-      alert(data.message);
 
       if (!res.ok) {
         alert(data.message || "Đăng nhập thất bại!");
         return;
       }
 
-      const meRes = await fetchCurrentAdmin();
-      if (meRes.ok) {
-        const meData = await meRes.json();
-        setAdmin(meData.admin);
-      }
+      alert(data.message);
 
       // Đóng modal
       closeModal();
 
-      router.push("/administrator");
+      router.replace("/administrator");
     } catch (error) {
       console.error("Lỗi đăng nhập:", error);
       alert("Đăng nhập thất bại, vui lòng thử lại!");

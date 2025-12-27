@@ -49,6 +49,12 @@
   gap: 10px;
 }
 
+.header-right span {
+  color: var(--button);
+  font-size: 18px;
+  font-weight: 600;
+}
+
 /* ===== Nút đăng xuất ===== */
 .logout-from-dashboard {
   height: 35px;

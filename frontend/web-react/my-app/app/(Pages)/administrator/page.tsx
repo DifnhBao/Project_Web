@@ -8,13 +8,15 @@ export default function AdminPage() {
   const { admin, loading } = useAdminUser();
   const { openModal, closeModal } = useModal();
 
+  console.log("loading:", loading);
+
   useEffect(() => {
-    if (loading) return;
-    if (!admin) {
+    if (!loading && !admin) {
       openModal("signin-admin");
     }
-    // chỉ đóng modal nếu có admin và modal đang mở signin-admin
   }, [admin, loading]);
+
+  if (loading) return null;
 
   return (
     <h1

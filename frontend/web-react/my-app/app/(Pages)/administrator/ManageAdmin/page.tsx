@@ -37,7 +37,7 @@ export default function ManageAdmin() {
         </div>
         <div className="table_row">
           {admins.map((admin, index) => (
-            <div key={admin.id} className={stylesUser.row}>
+            <div key={admin.userId} className={stylesUser.row}>
               <div>{index + 1}</div>
               <div>{admin.username}</div>
               <div>{admin.email}</div>
@@ -56,13 +56,13 @@ export default function ManageAdmin() {
                   <>
                     <button
                       className={stylesUser.edit}
-                      onClick={() => updateAdminStatus(admin.id, "accept")}
+                      onClick={() => updateAdminStatus(admin.userId, "accept")}
                     >
                       Accept
                     </button>
                     <button
                       className={stylesUser.delete}
-                      onClick={() => updateAdminStatus(admin.id, "reject")}
+                      onClick={() => updateAdminStatus(admin.userId, "reject")}
                     >
                       Reject
                     </button>
@@ -77,7 +77,7 @@ export default function ManageAdmin() {
                     </button>
                     <button
                       className={stylesUser.delete}
-                      onClick={() => deleteAdmin(admin.id)}
+                      onClick={() => deleteAdmin(admin.userId)}
                     >
                       Delete
                     </button>

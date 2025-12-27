@@ -4,7 +4,7 @@ import { getAdmins, AcceptOrReject } from "@/app/utils/authApi";
 import { deleteAccount } from "@/app/utils/accountApi";
 
 export interface Admin {
-  id: number;
+  userId: number;
   username: string;
   email: string;
   role: string;
@@ -15,7 +15,15 @@ export interface Admin {
 const fetcher = async () => {
   const res = await getAdmins();
   if (!res.ok) throw new Error("Không thể tải danh sách admin");
-  return res.json();
+  const result = await res.json();
+  
+  return result.data.map((item: any) => ({
+    userId: item.user_id,
+    username: item.username,
+    email: item.email,
+    role: item.role,
+    account_status: item.account_status,
+  }));
 };
 
 // Hook dùng chung
@@ -32,9 +40,12 @@ export function useAdmins() {
 
       if (res.ok)
         // Optimistic update: cập nhật UI ngay
-        mutate<any[]>(
+        mutate<Admin[]>(
           "admins",
-          (admins) => admins?.map((a) => (a.id === id ? { ...a, status } : a)),
+          (admins) =>
+            admins?.map((a) =>
+              a.userId === id ? { ...a, account_status: status } : a
+            ),
           false
         );
 
@@ -46,9 +57,9 @@ export function useAdmins() {
     }
   };
 
-  const deleteAdmin = async (id: number) => {
+  const deleteAdmin = async (userId: number) => {
     try {
-      const res = await deleteAccount(id);
+      const res = await deleteAccount(userId);
 
       let dataRes;
       try {
@@ -64,7 +75,7 @@ export function useAdmins() {
         // Cập nhật UI nếu thành công
         mutate<any[]>(
           "admins",
-          (admins) => admins?.filter((a) => a.id !== id),
+          (admins) => admins?.filter((a) => a.userId !== userId),
           false
         );
         mutate("admins");

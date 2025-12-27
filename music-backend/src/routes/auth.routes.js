@@ -20,6 +20,6 @@ router.post("/logout", protect, authController.logout);
 // routes/auth.route.js
 router.post("/admin/login", authController.loginAdmin);
 router.post("/admin/logout", authController.logoutAdmin);
-
+router.post("/admin/refresh-token", authController.refreshAdminToken);
 
 module.exports = router;

@@ -32,11 +32,12 @@ export default function ManageUser() {
 
         <div className="table_row">
           {users.map((user, index) => (
-            <div key={user.id} className={styles.row}>
+            <div key={user.userId} className={styles.row}>
               <div>{index + 1}</div>
               <div>{user.username}</div>
               <div>{user.email}</div>
               <div>{user.role}</div>
+
               <div>
                 <span
                   className={
@@ -48,6 +49,7 @@ export default function ManageUser() {
                   {user.activity_status}
                 </span>
               </div>
+
               <div className={styles.rowOption}>
                 <button
                   className={styles.edit}
@@ -55,9 +57,10 @@ export default function ManageUser() {
                 >
                   Edit
                 </button>
+
                 <button
                   className={styles.delete}
-                  onClick={() => deleteUser(user.id)}
+                  onClick={() => deleteUser(user.userId)}
                 >
                   Delete
                 </button>

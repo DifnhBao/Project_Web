@@ -15,7 +15,7 @@ const register = async (req, res, next) => {
       data: result,
     });
   } catch (error) {
-    console.log(error.errors); // log chi tiết
+    console.log(error.errors); 
     res.status(400).json({
       message: error.message,
       errors: error.errors,
@@ -59,7 +59,7 @@ const login = async (req, res, next) => {
 
 const requestRefreshToken = async (req, res, next) => {
   try {
-    const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
+    const refreshToken = req.cookies?.refreshToken;
 
     const result = await authService.refreshToken(refreshToken);
 
@@ -176,6 +176,36 @@ const logoutAdmin = async (req, res) => {
   }
 };
 
+const refreshAdminToken = async (req, res) => {
+  try {
+    const refreshToken = req.cookies?.adminRefreshToken;
+
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Thiếu refresh token admin",
+      });
+    }
+
+    const result = await authService.refreshAdminToken(refreshToken);
+
+    res.cookie("adminAccessToken", result.accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 30 * 60 * 1000, // 30 phút
+    });
+
+    return res.status(200).json({
+      message: "Refresh admin token thành công",
+    });
+  } catch (error) {
+    console.error("Admin refresh token error:", error);
+    return res.status(403).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -183,4 +213,5 @@ module.exports = {
   logout,
   loginAdmin,
   logoutAdmin,
+  refreshAdminToken,
 };
