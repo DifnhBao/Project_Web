@@ -13,6 +13,8 @@ services:
       - "3307:3306" # Map ra port 3307 để không đụng MySQL trên máy thật
     volumes:
       - mysql_data:/var/lib/mysql
+      # Dòng 2 (MỚI): Map file SQL để tự động import
+      - ./music_app_db.sql:/docker-entrypoint-initdb.d/init.sql
 
   # --- BACKEND ---
   backend:
@@ -33,12 +35,22 @@ services:
       
       # Cấu hình Token 
       JWT_SECRET: access_token_secret_ngan_han_xiu_xiu
+      ACCESS_TOKEN_SECRET: access_token_secret_ngan_han_xiu_xiu
+      
       JWT_REFRESH_SECRET: refresh_token_dai_han_bi_mat_sieu_cap
+      REFRESH_TOKEN_SECRET: refresh_token_dai_han_bi_mat_sieu_cap
+      
+      ACCESS_TOKEN_EXPIRES_IN: 15m
+      REFRESH_TOKEN_EXPIRES_IN: 7d
       
       PORT: 5000
+    
+    # --- CẤU HÌNH TỰ ĐỘNG CẬP NHẬT CODE (HOT RELOAD) ---
     volumes:
-      # Map folder upload nhạc ra ngoài 
+      - ./music-backend:/app           
+      - /app/node_modules               
       - ./music-backend/src/public:/app/src/public 
+    command: npm run dev               
 
   # --- FRONTEND ---
   frontend:
@@ -49,6 +61,14 @@ services:
       - "3000:3000"
     depends_on:
       - backend
+    # --- CẤU HÌNH TỰ ĐỘNG CẬP NHẬT CODE (HOT RELOAD) ---
+    environment:
+      - WATCHPACK_POLLING=true          
+    volumes:
+      - ./frontend/web-react/my-app:/app 
+      - /app/node_modules                
+      - /app/.next                      
+    command: npm run dev                
 
 volumes:
   mysql_data:
