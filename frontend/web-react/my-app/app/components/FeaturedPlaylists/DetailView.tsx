@@ -19,13 +19,6 @@ const DetailView: React.FC<Props> = ({ data, onBack }) => {
   const title = data.title;
   const cover = data.coverImages;
 
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, []);
-
   const handlePlaySong = (index: number) => {
     if (tracks.length === 0) return;
 

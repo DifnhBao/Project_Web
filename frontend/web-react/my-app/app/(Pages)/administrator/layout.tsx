@@ -20,7 +20,7 @@ export default function AdminLayout({
           {/* <Sidebar /> */}
           <div className="main-page-admin">
             <Header />
-            <div className="main_content">{children}</div>
+            <div className="main_content" >{children}</div>
           </div>
         </ModalProvider>
       </AdminUserProvider>

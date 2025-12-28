@@ -1,10 +1,10 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 
-const Album = require("./album.model");
+// const Album = require("./album.model");
 const Artist = require("./artist.model");
-const Comment = require("./comment.model");
-const Genre = require("./genre.model");
+// const Comment = require("./comment.model");
+// const Genre = require("./genre.model");
 const Playlist = require("./playlist.model");
 const Song = require("./song.model");
 const User = require("./user.model");
@@ -87,7 +87,6 @@ const Favorites = sequelize.define(
   }
 );
 
-
 User.belongsToMany(Song, {
   through: Favorites,
   foreignKey: "user_id",
@@ -146,10 +145,10 @@ const syncDatabase = async () => {
 module.exports = {
   sequelize,
   syncDatabase,
-  Album,
+  // Album,
   Artist,
-  Comment,
-  Genre,
+  // Comment,
+  // Genre,
   Playlist,
   Song,
   User,
