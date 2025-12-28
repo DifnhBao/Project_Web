@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { usePlayer } from "@/app/context/PlayerContext";
 import PopUp from "../PopUp";
 import "@/app/styles/PlayerBar.css";
+import { likeSong, unlikeSong, getLikeStatus } from "@/app/utils/songApi";
 
 const Player: React.FC = () => {
   const {
@@ -17,6 +18,7 @@ const Player: React.FC = () => {
   } = usePlayer();
 
   const [liked, setLiked] = useState(false);
+  const [likeLoading, setLikeLoading] = useState(false);
   const [volume, setVolume] = useState(50);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -28,7 +30,36 @@ const Player: React.FC = () => {
   const currentSong = playlist[currentIndex];
 
   // Like button
-  const toggleLike = () => setLiked(!liked);
+  const toggleLike = async () => {
+    console.log("curentsong: ", currentSong);
+    if (!currentSong?.trackId || likeLoading) return;
+
+    try {
+      setLikeLoading(true);
+
+      if (liked) {
+        await unlikeSong(currentSong.trackId);
+        setLiked(false);
+      } else {
+        await likeSong(currentSong.trackId);
+        setLiked(true);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLikeLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!currentSong?.trackId) return;
+
+    setLiked(false);
+
+    getLikeStatus(currentSong.trackId)
+      .then((res) => setLiked(res.liked))
+      .catch(() => setLiked(false));
+  }, [currentSong?.trackId]);
 
   // Theo dõi tiến trình phát
   useEffect(() => {
@@ -137,7 +168,11 @@ const Player: React.FC = () => {
           </a>
         </div>
 
-        <button className="icon-btn like-icon" onClick={toggleLike}>
+        <button
+          className={`icon-btn like-icon ${liked ? "liked" : ""}`}
+          onClick={toggleLike}
+          disabled={likeLoading}
+        >
           <i
             className={liked ? "fa-solid fa-heart" : "fa-regular fa-heart"}
           ></i>

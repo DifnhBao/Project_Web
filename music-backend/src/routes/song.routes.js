@@ -2,10 +2,22 @@ const express = require("express");
 const router = express.Router();
 const songController = require("../controllers/song.controller");
 const jamendoController = require("../controllers/jamendo.controller");
-const { protect, isAdmin } = require("../midlewares/auth.midleware");
+const {
+  protect,
+  isAdmin,
+  protectAdmin,
+} = require("../midlewares/auth.midleware");
 const upload = require("../midlewares/upload.midleware");
 
 /* --- ROUTES FOR USER --- */
+// lấy danh sách bài hát yêu thích
+router.get("/me/favorites", protect, songController.getLikedSongs);
+
+router.get("/:id/like-status", protect, songController.getLikeStatus);
+// Like
+router.post("/:id/like", protect, songController.likeSong);
+// Unlike
+router.delete("/:id/like", protect, songController.unlikeSong);
 
 router.get("/", songController.getSongList);
 
@@ -17,16 +29,18 @@ router.get("/", songController.getSongList);
 //   songController.createSong
 // );
 
-router.get("/", songController.getAllSongs);
+router.get("/all", songController.getAllSongs);
 
 router.get("/:id", songController.getSongById);
 
 /* --- ROUTES FOR ADMIN --- */
 
-router.put("/:id", protect, isAdmin, songController.updateSongById);
+// sửa
+router.put("/:id", protectAdmin, songController.updateSongById);
+// xóa
+router.delete("/:id", protectAdmin, songController.deleteSongById);
 
-router.delete("/:id", protect, isAdmin, songController.deleteSongById);
-
+// Ẩn hiện
 router.patch(
   "/:id/toggle-invisibility",
   protect,
@@ -35,6 +49,6 @@ router.patch(
 );
 
 // gọi 1 lần để lấy 200 bài
-router.post("/sync", jamendoController.fetchRandomJamendoTracks);
+// router.post("/sync", jamendoController.fetchRandomJamendoTracks);
 
 module.exports = router;

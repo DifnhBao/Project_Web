@@ -4,28 +4,44 @@ import { useSearchParams } from "next/navigation";
 
 import styles from "@/app/styles/AdminPage/ManageSong.module.css";
 import { useModal } from "@/app/context/ModalContext";
-import { fetchSongs } from "@/app/services/songsService";
+import {
+  fetchSongsForManage,
+  updateSong,
+  deleteSong,
+} from "@/app/utils/songApi";
 import Pagination from "@/app/components/Pagination";
+import { formatDuration, formatDate } from "@/app/utils/dateHelper";
 
 function SongManagement() {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
-
   const { openModal } = useModal();
-  const [songs, setSongs] = useState([
-    {
-      id: 1,
-      title: "Phép Màu",
-      artist: "MAYDAYS",
-      image: "https://example.com/image1.jpg",
-      genre: "Pop",
-      duration: "03:52",
-    },
-  ]);
+  const [songs, setSongs] = useState<any[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchSongs().then(setSongs);
-  }, []);
+    const fetchData = async () => {
+      setLoading(true);
+
+      try {
+        const res = await fetchSongsForManage({
+          page: currentPage,
+          limit: 10,
+          search: "",
+        });
+
+        setSongs(res.data);
+        setTotalPages(res.pagination.totalPages);
+      } catch (error) {
+        console.error("Fetch songs failed:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [currentPage]);
 
   const openAddModal = () => {
     openModal("song-form", {
@@ -39,47 +55,81 @@ function SongManagement() {
   const openEditModal = (song: any) => {
     openModal("song-form", {
       song,
-      onSave: (updatedSong: any) => {
-        setSongs(
-          songs.map((s) => (s.id === song.id ? { ...song, ...updatedSong } : s))
-        );
+      onSave: async (updatedData: any) => {
+        const res = await updateSong(song.song_id, updatedData);
+
+        setSongs(songs.map((s) => (s.song_id === song.song_id ? res.data : s)));
       },
     });
   };
 
-  const handleDelete = (id: any) => {
+  const handleDelete = async (songId: number) => {
     if (!confirm("Bạn có chắc muốn xoá bài hát này?")) return;
-    setSongs(songs.filter((s) => s.id !== id));
+
+    try {
+      setLoading(true);
+
+      await deleteSong(songId);
+
+      // Cập nhật lại UI
+      setSongs((prev) => prev.filter((s) => s.song_id !== songId));
+    } catch (error: any) {
+      alert(error.message || "Xóa bài hát thất bại");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  console.log("Songs:", songs);
 
   return (
     <div className={styles.container}>
       <h2 className={styles.header}>Song Management</h2>
 
-      <button className={styles.addButton} onClick={openAddModal}>
+      {/* <button className={styles.addButton} onClick={openAddModal}>
         + Add New Song
-      </button>
+      </button> */}
 
       <table className={styles.songTable}>
+        <colgroup>
+          <col style={{ width: "20%" }} />
+          <col style={{ width: "12%" }} />
+          <col style={{ width: "8%" }} />
+          <col style={{ width: "8%" }} />
+          <col style={{ width: "10%" }} />
+          <col style={{ width: "8%" }} />
+          <col style={{ width: "8%" }} />
+          <col style={{ width: "12%" }} />
+        </colgroup>
         <thead>
           <tr>
             <th>Title</th>
             <th>Artist</th>
-            <th>Image</th>
             <th>Genre</th>
+            <th>View</th>
+            <th>updated date</th>
             <th>Duration</th>
+            <th>Hide</th>
             <th>Actions</th>
           </tr>
         </thead>
 
         <tbody>
           {songs.map((song) => (
-            <tr key={song.id}>
+            <tr key={song.song_id}>
               <td>{song.title}</td>
-              <td>{song.artist}</td>
-              <td>{song.image}</td>
+              <td>{song?.artists?.name}</td>
               <td>{song.genre}</td>
-              <td>{song.duration}</td>
+              <td>{song.view_count}</td>
+              <td>{formatDate(song.fetched_at)}</td>
+              <td>{formatDuration(song.duration)}</td>
+              <td>
+                {song.is_visible ? (
+                  <button>Hidden</button>
+                ) : (
+                  <button>Visible</button>
+                )}
+              </td>
               <td>
                 <button
                   className={styles.editBtn}
@@ -89,7 +139,7 @@ function SongManagement() {
                 </button>
                 <button
                   className={styles.deleteBtn}
-                  onClick={() => handleDelete(song.id)}
+                  onClick={() => handleDelete(song.song_id)}
                 >
                   Delete
                 </button>
@@ -99,7 +149,7 @@ function SongManagement() {
         </tbody>
       </table>
 
-      <Pagination currentPage={currentPage} totalPages={20} />
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
     </div>
   );
 }

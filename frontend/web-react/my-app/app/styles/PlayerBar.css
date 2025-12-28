@@ -76,7 +76,16 @@
 /* Nút trái tim (like) */
 .like-icon i {
   font-size: 22px;
-  color: var(--button);
+  color: #bdbdbd;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.like-icon.liked i {
+  color: #e74c3c; /* đỏ */
+}
+
+.like-icon:active i {
+  transform: scale(0.9);
 }
 
 /* Nút 3 chấm ngang */

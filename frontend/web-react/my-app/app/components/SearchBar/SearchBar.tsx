@@ -38,7 +38,6 @@ const SearchBar = ({ setResults, setSearchTerm }: SearchBarProps) => {
     try {
       const Tracks = await fetchSongs();
       console.log(Tracks);
-
       console.log("Fetched Tracks:", Tracks);
 
       if (currentValue !== input.trim()) return;

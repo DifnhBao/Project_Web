@@ -1,6 +1,16 @@
-const { Song, Artist, Album, Genre } = require("../models");
+const {
+  User,
+  Song,
+  Artist,
+  Album,
+  Genre,
+  Favorites,
+  PlaylistSongs,
+  sequelize,
+} = require("../models");
 const { Op } = require("sequelize");
 const cloudinary = require("cloudinary").v2;
+// const sequelize = require("../config/db");
 
 /* --- CHỨC NĂNG CHO USER --- */
 
@@ -21,43 +31,42 @@ const createSong = async (songData, audioUrl) => {
 };
 
 // Lấy tất cả bài hát
-const getAllSongs = async (keyword) => {
-  let condition = { is_visible: true };
+const getAllSongs = async ({ page, limit, search }) => {
+  const offset = (page - 1) * limit;
 
-  if (keyword) {
-    condition = {
-      ...condition, // giữ nguyên điều kiện của condition
-      title: {
-        [Op.like]: `%${keyword}%`,
-      },
+  const whereCondition = {
+    is_visible: true,
+  };
+
+  if (search) {
+    whereCondition.title = {
+      [Op.like]: `%${search}%`,
     };
   }
 
-  // gọi db
-  const songs = await Song.findAll({
-    where: condition,
+  const { rows, count } = await Song.findAndCountAll({
+    where: whereCondition,
+    limit,
+    offset,
+    order: [["song_id", "DESC"]],
     include: [
       {
         model: Artist,
-        attributes: ["name", "image"],
-      },
-
-      {
-        model: Album,
-        attributes: ["title", "cover_image"],
-      },
-
-      {
-        model: Genre,
-        attributes: ["name"],
+        as: "artists",
+        attributes: ["artist_id", "name", "image_url"],
       },
     ],
-    attributes: {
-      exclude: ["artist_id", "album_id", "genre_id"],
-    },
   });
 
-  return songs;
+  return {
+    data: rows,
+    pagination: {
+      totalItems: count,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+      limit,
+    },
+  };
 };
 
 // Lấy một bài hát
@@ -100,40 +109,84 @@ async function getSongs({ page = 1, limit = 20 }) {
 /* --- CHỨC NĂNG CHO ADMIN */
 
 const updateSongById = async (songId, updateData) => {
-  const { title, artist_id, album_id, genre_id, duration } = updateData;
+  const { title, artist, genre } = updateData;
 
+  // 1. CHỈ UPDATE KHI SONG ĐÃ TỒN TẠI
   const song = await Song.findByPk(songId);
-  if (!song) throw new Error("Không tìm thấy bài hát.");
+  if (!song) {
+    throw new Error("Bài hát không tồn tại trong hệ thống.");
+  }
 
-  song.title = title || song.title;
-  song.artist_id = artist_id || song.artist_id;
-  song.album_id = album_id || song.album_id;
-  song.genre_id = genre_id || song.genre_id;
-  song.duration = duration || song.duration;
+  let artistId = song.artist_id;
 
-  await song.save();
-  return song;
+  // 2. Nếu admin đổi tên nghệ sĩ
+  if (artist && artist.trim() !== "") {
+    const artistName = artist.trim();
+
+    let artistRecord = await Artist.findOne({
+      where: { name: artistName },
+    });
+
+    // 3. Artist chưa có → tạo mới (CHO PHÉP)
+    if (!artistRecord) {
+      artistRecord = await Artist.create({
+        name: artistName,
+        jamendo_id: `manual_${Date.now()}`, // bắt buộc vì schema
+        image_url: null,
+      });
+    }
+
+    artistId = artistRecord.artist_id;
+  }
+
+  // 4. UPDATE SONG (KHÔNG TẠO MỚI)
+  await song.update({
+    title: title ?? song.title,
+    genre: genre ?? song.genre,
+    artist_id: artistId,
+  });
+
+  // 5. Trả về dữ liệu đầy đủ (đúng alias)
+  return await Song.findByPk(song.song_id, {
+    include: [
+      {
+        model: Artist,
+        as: "artists",
+        attributes: ["artist_id", "name", "image_url"],
+      },
+    ],
+  });
 };
 
 const deleteSongById = async (songId) => {
-  const song = await Song.findByPk(songId);
-  if (!song) throw new Error("Không tìm thấy bài hát.");
+  return sequelize.transaction(async (t) => {
+    const song = await Song.findOne({
+      where: { song_id: songId },
+      transaction: t,
+    });
 
-  const urlParts = song.audio_url.split("/");
-  const publicIdWithFolder = urlParts
-    .slice(urlParts.indexOf("music-app"))
-    .join("/")
-    .split(".")[0];
+    if (!song) {
+      throw new Error("Không tìm thấy bài hát.");
+    }
 
-  await cloudinary.uploader.destroy(publicIdWithFolder, {
-    resource_type: "video",
+    await Favorites.destroy({
+      where: { song_id: songId },
+      transaction: t,
+    });
+
+    await PlaylistSongs.destroy({
+      where: { song_id: songId },
+      transaction: t,
+    });
+
+    await song.destroy({ transaction: t });
+
+    return {
+      message: "Xóa bài hát thành công.",
+      song_id: songId,
+      title: song.title,
+    };
   });
-
-  await song.destroy();
-
-  return {
-    message: `Đã xóa thành công bài hát ${song.title}.`,
-  };
 };
 
 const toggleSongVisibility = async (songId) => {
@@ -150,6 +203,135 @@ const toggleSongVisibility = async (songId) => {
   };
 };
 
+// LIKE SONG
+const likeSong = async (userId, songId) => {
+  // 1. Kiểm tra bài hát tồn tại
+  const song = await Song.findByPk(songId);
+  if (!song) {
+    throw new Error("Không tìm thấy bài hát.");
+  }
+
+  // 2. Kiểm tra đã like chưa
+  const existed = await Favorites.findOne({
+    where: {
+      user_id: userId,
+      song_id: songId,
+    },
+  });
+
+  if (existed) {
+    throw new Error("Bạn đã thích bài hát này rồi.");
+  }
+
+  // 3. Tạo like
+  await Favorites.create({
+    user_id: userId,
+    song_id: songId,
+  });
+
+  return {
+    message: "Đã thích bài hát.",
+    song_id: songId,
+    liked: true,
+  };
+};
+
+// UNLIKE SONG
+const unlikeSong = async (userId, songId) => {
+  // 1. Kiểm tra bài hát tồn tại
+  const song = await Song.findByPk(songId);
+  if (!song) {
+    throw new Error("Không tìm thấy bài hát.");
+  }
+
+  // 2. Kiểm tra đã like chưa
+  const existed = await Favorites.findOne({
+    where: {
+      user_id: userId,
+      song_id: songId,
+    },
+  });
+
+  if (!existed) {
+    throw new Error("Bạn chưa thích bài hát này.");
+  }
+
+  // 3. Xóa like
+  await Favorites.destroy({
+    where: {
+      user_id: userId,
+      song_id: songId,
+    },
+  });
+
+  return {
+    message: "Đã bỏ thích bài hát.",
+    song_id: songId,
+    liked: false,
+  };
+};
+
+const getLikeStatus = async (userId, songId) => {
+  // 1. Kiểm tra bài hát tồn tại
+  const song = await Song.findByPk(songId);
+  if (!song) {
+    throw new Error("Không tìm thấy bài hát.");
+  }
+
+  // 2. Kiểm tra bảng favorites
+  const existed = await Favorites.findOne({
+    where: {
+      user_id: userId,
+      song_id: songId,
+    },
+  });
+
+  return {
+    song_id: songId,
+    liked: !!existed,
+  };
+};
+
+const getLikedSongs = async (userId) => {
+  const user = await User.findByPk(userId, {
+    include: [
+      {
+        model: Song,
+        as: "likedSongs",
+        through: { attributes: [] }, // bỏ bảng favorites
+        include: [
+          {
+            model: Artist,
+            as: "artists",
+            attributes: ["name"],
+          },
+        ],
+      },
+    ],
+    order: [[{ model: Song, as: "likedSongs" }, "fetched_at", "DESC"]],
+  });
+
+  if (!user) {
+    throw new Error("Không tìm thấy user");
+  }
+
+  return user.likedSongs.map((song) => ({
+    // ===== MATCH CHÍNH XÁC Track INTERFACE =====
+    trackId: song.song_id,
+    jamendoId: Number(song.jamendo_id),
+    title: song.title,
+    duration: song.duration,
+    imageUrl: song.image_url,
+    audioUrl: song.audio_url,
+    artistName: song.artists?.name || "Unknown",
+    albumName: song.album_name || null,
+    genre: song.genre,
+    viewCount: song.view_count,
+    isVisible: song.is_visible,
+    fetched_at: song.fetched_at,
+  }));
+};
+
 module.exports = {
   createSong,
   getAllSongs,
@@ -158,4 +340,8 @@ module.exports = {
   deleteSongById,
   toggleSongVisibility,
   getSongs,
+  likeSong,
+  unlikeSong,
+  getLikeStatus,
+  getLikedSongs,
 };

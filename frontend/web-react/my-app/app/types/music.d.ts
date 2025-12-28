@@ -1,11 +1,16 @@
 export interface Track {
   trackId: number;
+  jamendoId: number;
   title: string;
   duration: number;
   imageUrl: string;
   audioUrl: string;
   artistName: string;
   albumName?: string;
+  genre: string;
+  viewCount: number;
+  isVisible: boolean;
+  fetched_at: string;
 }
 
 export interface Playlist {
@@ -30,7 +35,7 @@ export interface DetailViewData {
 
 // User
 export interface User {
-  userId: string;
+  userId: number;
   username: string;
   email: string;
   role: string;

@@ -11,11 +11,11 @@ export default function EditUserProfile({ userData }: { userData: User }) {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      if (!userData?.user_id) return;
+      if (!userData?.userId) return;
 
       setLoading(true);
 
-      const res = await getUserProfile(userData.user_id);
+      const res = await getUserProfile(userData.userId);
       if (!res.ok) {
         setFormData(null);
         setLoading(false);
@@ -81,6 +81,6 @@ export default function EditUserProfile({ userData }: { userData: User }) {
   }
 
   return (
-    <Profile initialData={formData} mode="admin" userId={userData.user_id} />
+    <Profile initialData={formData} mode="admin" userId={userData.userId} />
   );
 }

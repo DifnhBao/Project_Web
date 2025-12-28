@@ -14,7 +14,11 @@ const SearchResultsList = ({ results, searchTerm }: SearchResultsListProps) => {
   return (
     <div className="results-list">
       {results.map((track) => (
-        <SearchResult key={track.id} result={track} searchTerm={searchTerm} />
+        <SearchResult
+          key={track.trackId}
+          result={track}
+          searchTerm={searchTerm}
+        />
       ))}
     </div>
   );

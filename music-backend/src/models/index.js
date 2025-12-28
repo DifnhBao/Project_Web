@@ -61,10 +61,20 @@ const Favorites = sequelize.define(
     user_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
+      references: {
+        model: "users",
+        key: "user_id",
+      },
+      onDelete: "CASCADE",
     },
     song_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
+      references: {
+        model: "songs",
+        key: "song_id",
+      },
+      onDelete: "CASCADE",
     },
     created_at: {
       type: DataTypes.DATE,
@@ -76,6 +86,7 @@ const Favorites = sequelize.define(
     timestamps: false,
   }
 );
+
 
 User.belongsToMany(Song, {
   through: Favorites,

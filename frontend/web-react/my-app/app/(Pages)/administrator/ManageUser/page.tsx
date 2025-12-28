@@ -3,6 +3,7 @@
 import styles from "@/app/styles/AdminPage/ManageUser.module.css";
 import { useUsers } from "@/app/hooks/useUsers";
 import { useModal } from "@/app/context/ModalContext";
+import type { User } from "@/app/types/music";
 
 export default function ManageUser() {
   const { users, isLoading, error, deleteUser } = useUsers();
@@ -11,6 +12,8 @@ export default function ManageUser() {
   if (isLoading) return <p>Đang tải...</p>;
   if (error) return <p>Lỗi tải danh sách user!</p>;
   if (!users || users.length === 0) return null;
+
+  // console.log("users: ", users);
 
   return (
     <div id="users" className={styles.section}>

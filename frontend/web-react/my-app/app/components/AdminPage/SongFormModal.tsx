@@ -16,16 +16,25 @@ export default function SongFormModal({
     title: "",
     artist: "",
     genre: "",
-    duration: "",
   });
 
   // Nếu edit → nạp dữ liệu
   useEffect(() => {
-    if (song) setFormData(song);
+    if (song) {
+      setFormData({
+        title: song.title ?? "",
+        artist: song.artists?.name ?? "",
+        genre: song.genre ?? "",
+      });
+    }
   }, [song]);
 
   const handleSubmit = () => {
-    onSave(formData);
+    onSave({
+      title: formData.title,
+      genre: formData.genre,
+      artistName: formData.artist,
+    });
     closeModal();
   };
 
@@ -52,13 +61,6 @@ export default function SongFormModal({
         placeholder="Genre"
         value={formData.genre}
         onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
-      />
-
-      <input
-        type="text"
-        placeholder="Duration (e.g. 03:52)"
-        value={formData.duration}
-        onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
       />
 
       <div className={styles.modalActions}>
