@@ -21,9 +21,9 @@ router.post("/change-password", protect, userController.changeUserPassword);
 
 router.get("/admin/me", protectAdmin, userController.getCurrentAdmin);
 
-router.post("/:id/promote", protect, isAdmin, userController.promoteUser);
+// router.post("/:id/promote", protect, isAdmin, userController.promoteUser);
 
-router.post("/:id/demote", protect, isAdmin, userController.demoteAdminToUser);
+// router.post("/:id/demote", protect, isAdmin, userController.demoteAdminToUser);
 
 // lấy danh sách user
 router.get("/", protectAdmin, userController.getAllUsers);

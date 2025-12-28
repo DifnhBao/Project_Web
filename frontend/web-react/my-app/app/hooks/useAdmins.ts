@@ -17,7 +17,8 @@ const fetcher = async (): Promise<User[]> => {
     username: item.username,
     email: item.email,
     role: item.role,
-    activity_status: item.activity_status, // chuẩn hóa field
+    activity_status: item.activity_status,
+    account_status: item.is_active,
   }));
 };
 

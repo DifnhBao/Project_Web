@@ -17,11 +17,11 @@ export default function ManageUser() {
 
   return (
     <div id="users" className={styles.section}>
-      <div>
+      {/* <div>
         <button style={{ width: "fit-content" }} className={styles.add}>
           <i className="fa-solid fa-plus"></i> Add User
         </button>
-      </div>
+      </div> */}
 
       <div className={styles.table}>
         <div className={styles.tableHead}>
