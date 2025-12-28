@@ -3,6 +3,7 @@
 import React from "react";
 import "./SearchResult.css";
 import { Track } from "@/app/types/music";
+import { usePlayer } from "@/app/context/PlayerContext";
 
 interface SearchResultProps {
   result: Track;
@@ -10,6 +11,7 @@ interface SearchResultProps {
 }
 
 const SearchResult = ({ result, searchTerm }: SearchResultProps) => {
+  const { setPlaylist } = usePlayer();
   const highlight = (text: string, term: string) => {
     if (!term) return text;
 
@@ -27,10 +29,7 @@ const SearchResult = ({ result, searchTerm }: SearchResultProps) => {
     );
   };
   return (
-    <div
-      className="search-result"
-      onClick={() => alert(`You clicked on ${result.title}`)}
-    >
+    <div className="search-result" onClick={() => setPlaylist([result], 0)}>
       {highlight(result.title, searchTerm)}
     </div>
   );

@@ -1,10 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { usePlayer } from "@/app/context/PlayerContext";
 import PopUp from "../PopUp";
 import "@/app/styles/PlayerBar.css";
-import { likeSong, unlikeSong, getLikeStatus } from "@/app/utils/songApi";
+import {
+  likeSong,
+  unlikeSong,
+  getLikeStatus,
+  increaseSongView,
+} from "@/app/utils/songApi";
 
 const Player: React.FC = () => {
   const {
@@ -25,9 +30,16 @@ const Player: React.FC = () => {
   const [duration, setDuration] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const viewedRef = useRef(false);
+  const trackIdRef = useRef<number | null>(null);
 
   // Lấy bài hiện tại
   const currentSong = playlist[currentIndex];
+
+  useEffect(() => {
+    viewedRef.current = false;
+    trackIdRef.current = currentSong?.trackId ?? null;
+  }, [currentIndex]);
 
   // Like button
   const toggleLike = async () => {
@@ -64,13 +76,20 @@ const Player: React.FC = () => {
   // Theo dõi tiến trình phát
   useEffect(() => {
     const audio = (window as any)._audioRef as HTMLAudioElement;
+    console.log("DEBUG audio ref:", audio);
     if (!audio) return;
 
     const updateProgress = () => {
-      if (audio.duration) {
-        setProgress((audio.currentTime / audio.duration) * 100);
-        setCurrentTime(audio.currentTime);
-        setDuration(audio.duration);
+      if (!audio.duration) return;
+
+      setProgress((audio.currentTime / audio.duration) * 100);
+      setCurrentTime(audio.currentTime);
+      setDuration(audio.duration);
+
+      //TĂNG VIEW SAU 20 GIÂY – CHỈ 1 LẦN
+      if (audio.currentTime >= 20 && !viewedRef.current && trackIdRef.current) {
+        increaseSongView(trackIdRef.current);
+        viewedRef.current = true;
       }
     };
 
@@ -81,7 +100,7 @@ const Player: React.FC = () => {
       audio.removeEventListener("timeupdate", updateProgress);
       audio.removeEventListener("loadedmetadata", updateProgress);
     };
-  }, [playlist, currentIndex]);
+  }, [currentIndex]);
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const audio = (window as any)._audioRef as HTMLAudioElement;

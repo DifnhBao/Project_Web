@@ -6,7 +6,6 @@ import React, {
   useRef,
   useState,
 } from "react";
-
 import type { Track } from "@/app/types/music";
 
 type PlayerContextType = {
@@ -28,20 +27,24 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  /* INIT AUDIO – CHỈ 1 LẦN */
   useEffect(() => {
     audioRef.current = new Audio();
     audioRef.current.volume = 0.5;
     (window as any)._audioRef = audioRef.current;
+
     const a = audioRef.current;
     const onEnded = () => {
       setCurrentIndex((idx) =>
         playlist.length ? (idx + 1) % playlist.length : 0
       );
     };
+
     a.addEventListener("ended", onEnded);
     return () => a.removeEventListener("ended", onEnded);
   }, []);
 
+  /* 🔥 CHỈ LOAD KHI ĐỔI BÀI */
   useEffect(() => {
     if (!audioRef.current) return;
     if (!playlist.length) return;
@@ -50,19 +53,20 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     if (!track?.audioUrl) return;
 
     audioRef.current.src = track.audioUrl;
-    audioRef.current.load();
+    audioRef.current.currentTime = 0;
 
-    if (isPlaying) {
-      audioRef.current
-        .play()
-        .catch((err) => console.error("Audio play failed:", err));
-    }
-  }, [playlist, currentIndex, isPlaying]);
+    audioRef.current
+      .play()
+      .then(() => setIsPlaying(true))
+      .catch(() => setIsPlaying(false));
+  }, [playlist, currentIndex]);
 
+  /* 🔥 PLAY / PAUSE KHÔNG ĐỘNG TỚI SRC */
   useEffect(() => {
     if (!audioRef.current) return;
+
     if (isPlaying) {
-      audioRef.current.play();
+      audioRef.current.play().catch(() => {});
     } else {
       audioRef.current.pause();
     }
@@ -74,17 +78,9 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     setIsPlaying(true);
   };
 
-  const play = () => {
-    if (!audioRef.current) return;
-    audioRef.current.play();
-    setIsPlaying(true);
-  };
-  const pause = () => {
-    if (!audioRef.current) return;
-    audioRef.current.pause();
-    setIsPlaying(false);
-  };
-  const togglePlay = () => (isPlaying ? pause() : play());
+  const play = () => setIsPlaying(true);
+  const pause = () => setIsPlaying(false);
+  const togglePlay = () => setIsPlaying((p) => !p);
 
   return (
     <PlayerContext.Provider

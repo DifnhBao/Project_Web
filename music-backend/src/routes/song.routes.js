@@ -9,7 +9,11 @@ const {
 } = require("../midlewares/auth.midleware");
 const upload = require("../midlewares/upload.midleware");
 
+
+router.get("/search", songController.searchSongs);
+
 /* --- ROUTES FOR USER --- */
+
 // lấy danh sách bài hát yêu thích
 router.get("/me/favorites", protect, songController.getLikedSongs);
 
@@ -21,6 +25,9 @@ router.delete("/:id/like", protect, songController.unlikeSong);
 
 // track list hằng ngày
 router.get("/", songController.getSongList);
+
+// tăng view
+router.post("/:songId/view", songController.increaseView);
 
 // router.post(
 //   "/",

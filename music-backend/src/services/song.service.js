@@ -107,6 +107,21 @@ async function getSongs({ limit = 20 }) {
   return cachedSongs;
 }
 
+const incrementSongView = async (songId) => {
+  const song = await Song.findByPk(songId);
+
+  if (!song) {
+    throw new Error("Song not found");
+  }
+
+  await song.increment("view_count", { by: 1 });
+
+  return {
+    song_id: song.song_id,
+    view_count: song.view_count + 1,
+  };
+};
+
 /* --- CHỨC NĂNG CHO ADMIN */
 
 const updateSongById = async (songId, updateData) => {
@@ -336,6 +351,29 @@ const getLikedSongs = async (userId) => {
   }));
 };
 
+const searchSongs = async (keyword, limit) => {
+  return Song.findAll({
+    where: {
+      is_visible: true,
+      [Op.or]: [
+        { title: { [Op.like]: `%${keyword}%` } },
+        { artist_name: { [Op.like]: `%${keyword}%` } },
+        { album_name: { [Op.like]: `%${keyword}%` } },
+      ],
+    },
+    attributes: [
+      ["song_id", "trackId"],
+      "title",
+      ["audio_url", "audioUrl"],
+      ["image_url", "imageUrl"],
+      "artist_name",
+      "duration",
+    ],
+    order: [["view_count", "DESC"]],
+    limit,
+  });
+};
+
 module.exports = {
   createSong,
   getAllSongs,
@@ -348,4 +386,6 @@ module.exports = {
   unlikeSong,
   getLikeStatus,
   getLikedSongs,
+  incrementSongView,
+  searchSongs,
 };

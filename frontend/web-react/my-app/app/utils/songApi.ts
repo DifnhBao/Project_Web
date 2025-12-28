@@ -143,3 +143,31 @@ export async function toggleSongVisibility(songId: number) {
 
   return json;
 }
+
+// tăng view
+export async function increaseSongView(songId: number) {
+  await userFetch(`${URL}/songs/${songId}/view`, {
+    method: "POST",
+    credentials: "include",
+  });
+}
+
+// tìm kiếm
+export async function searchSongs(
+  keyword: string,
+  limit = 10
+): Promise<Track[]> {
+  const res = await fetch(
+    `${URL}/songs/search?q=${encodeURIComponent(keyword)}&limit=${limit}`,
+    {
+      credentials: "include",
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Search failed");
+  }
+
+  const json = await res.json();
+  return json.data;
+}

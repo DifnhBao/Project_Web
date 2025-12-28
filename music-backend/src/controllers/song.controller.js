@@ -89,6 +89,25 @@ async function getSongList(req, res) {
   }
 }
 
+const increaseView = async (req, res) => {
+  try {
+    const { songId } = req.params;
+
+    const result = await songService.incrementSongView(songId);
+
+    return res.status(200).json({
+      success: true,
+      message: "View increased",
+      data: result,
+    });
+  } catch (error) {
+    return res.status(404).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 /* --- CONTROLLER FOR ADMIN */
 
 const updateSongById = async (req, res, next) => {
@@ -213,6 +232,22 @@ const getLikedSongs = async (req, res, next) => {
   }
 };
 
+const searchSongs = async (req, res) => {
+  try {
+    const { q = "", limit = 10 } = req.query;
+
+    if (!q.trim()) {
+      return res.json({ data: [] });
+    }
+
+    const songs = await songService.searchSongs(q, Number(limit));
+    res.json({ data: songs });
+  } catch (err) {
+    console.error("Search error:", err);
+    res.status(500).json({ message: "Search failed" });
+  }
+};
+
 module.exports = {
   createSong,
   getAllSongs,
@@ -225,4 +260,6 @@ module.exports = {
   unlikeSong,
   getLikeStatus,
   getLikedSongs,
+  increaseView,
+  searchSongs,
 };
