@@ -24,6 +24,7 @@ const DetailView: React.FC<Props> = ({ data, onBack }) => {
 
     setPlaylist(tracks, index);
   };
+  
 
   return (
     <div

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { usePlayer } from "@/app/context/PlayerContext";
 import PopUp from "../PopUp";
 import "@/app/styles/PlayerBar.css";
@@ -33,12 +34,25 @@ const Player: React.FC = () => {
   const viewedRef = useRef(false);
   const trackIdRef = useRef<number | null>(null);
 
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   // Lấy bài hiện tại
   const currentSong = playlist[currentIndex];
 
   useEffect(() => {
+    if (!currentSong?.trackId) return;
+
     viewedRef.current = false;
-    trackIdRef.current = currentSong?.trackId ?? null;
+    trackIdRef.current = currentSong.trackId;
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("track", String(currentSong.trackId));
+
+    router.replace(`${pathname}?${params.toString()}`, {
+      scroll: false,
+    });
   }, [currentIndex]);
 
   // Like button

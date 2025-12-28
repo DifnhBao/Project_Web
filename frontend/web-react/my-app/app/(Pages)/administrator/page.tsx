@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useModal } from "@/app/context/ModalContext";
 import { useAdminUser } from "@/app/context/AdminUserContext";
 
 export default function AdminPage() {
   const { admin, loading } = useAdminUser();
   const { openModal, closeModal } = useModal();
-
-  console.log("loading:", loading);
+  const router = useRouter();
 
   useEffect(() => {
     if (!loading && !admin) {
