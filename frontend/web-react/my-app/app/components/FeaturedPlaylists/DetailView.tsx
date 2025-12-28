@@ -1,9 +1,11 @@
 "use client";
 
 import React from "react";
+import { useEffect } from "react";
 import type { DetailViewData } from "@/app/types/music";
 import { usePlayer } from "@/app/context/PlayerContext";
 import PlaylistCover from "@/app/components/FeaturedPlaylists/PlaylistCover";
+import { formatDuration } from "@/app/utils/dateHelper";
 
 interface Props {
   data: DetailViewData;
@@ -16,6 +18,13 @@ const DetailView: React.FC<Props> = ({ data, onBack }) => {
   const tracks = data.tracks;
   const title = data.title;
   const cover = data.coverImages;
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   const handlePlaySong = (index: number) => {
     if (tracks.length === 0) return;
@@ -106,7 +115,9 @@ const DetailView: React.FC<Props> = ({ data, onBack }) => {
                 </div>
 
                 <div className="col_artist">{song.artistName}</div>
-                <div className="col_duration">{song.duration}</div>
+                <div className="col_duration">
+                  {formatDuration(song.duration)}
+                </div>
               </div>
             );
           })}

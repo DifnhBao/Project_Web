@@ -33,6 +33,8 @@ export interface DetailViewData {
   tracks: Track[];
 }
 
+export type SelectedItem = DetailViewData;
+
 // User
 export interface User {
   userId: number;

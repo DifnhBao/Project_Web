@@ -10,7 +10,7 @@ const {
 } = require("../models");
 const { Op } = require("sequelize");
 const cloudinary = require("cloudinary").v2;
-// const sequelize = require("../config/db");
+const { Sequelize } = require("sequelize");
 
 /* --- CHỨC NĂNG CHO USER --- */
 
@@ -34,10 +34,6 @@ const createSong = async (songData, audioUrl) => {
 const getAllSongs = async ({ page, limit, search }) => {
   const offset = (page - 1) * limit;
 
-  const whereCondition = {
-    is_visible: true,
-  };
-
   if (search) {
     whereCondition.title = {
       [Op.like]: `%${search}%`,
@@ -45,7 +41,6 @@ const getAllSongs = async ({ page, limit, search }) => {
   }
 
   const { rows, count } = await Song.findAndCountAll({
-    where: whereCondition,
     limit,
     offset,
     order: [["song_id", "DESC"]],
@@ -86,24 +81,30 @@ const getSongById = async (songId) => {
   return song;
 };
 
-async function getSongs({ page = 1, limit = 20 }) {
-  const offset = (page - 1) * limit;
+let cachedSongs = null;
+let cacheExpiredAt = 0;
+async function getSongs({ limit = 20 }) {
+  if (cachedSongs && Date.now() < cacheExpiredAt) {
+    return cachedSongs;
+  }
 
-  const { rows, count } = await Song.findAndCountAll({
+  const songs = await Song.findAll({
     where: {
       is_visible: true,
     },
-    order: [["fetched_at", "DESC"]],
+    order: Sequelize.literal("RAND()"),
     limit: Number(limit),
-    offset: Number(offset),
   });
 
-  return {
-    page: Number(page),
+  cachedSongs = {
     limit: Number(limit),
-    total: count,
-    songs: rows,
+    total: songs.length,
+    songs,
   };
+
+  cacheExpiredAt = Date.now() + 1000 * 60 * 30;
+
+  return cachedSongs;
 }
 
 /* --- CHỨC NĂNG CHO ADMIN */
@@ -189,17 +190,17 @@ const deleteSongById = async (songId) => {
   });
 };
 
-const toggleSongVisibility = async (songId) => {
+const toggleSongVisibility = async (songId, adminUser) => {
   const song = await Song.findByPk(songId);
-  if (!song) throw new Error("Không tìm thấy bài hát.");
+  if (!song) throw new Error("Không tìm thấy bài hát");
 
-  // Ẩn/Hiện bài hát
   song.is_visible = !song.is_visible;
   await song.save();
 
-  const status = song.is_visible ? "Hiện" : "Ẩn";
   return {
-    message: `Đã đổi trạng thái bài hát thành ${status}.`,
+    songId: song.song_id,
+    isVisible: song.is_visible,
+    message: song.is_visible ? "Bài hát đã được HIỂN thị" : "Bài hát đã bị ẨN",
   };
 };
 
@@ -298,7 +299,11 @@ const getLikedSongs = async (userId) => {
       {
         model: Song,
         as: "likedSongs",
-        through: { attributes: [] }, // bỏ bảng favorites
+        through: { attributes: [] },
+        where: {
+          is_visible: true,
+        },
+        required: false, // tránh lỗi nếu user chưa like bài nào
         include: [
           {
             model: Artist,
@@ -316,7 +321,6 @@ const getLikedSongs = async (userId) => {
   }
 
   return user.likedSongs.map((song) => ({
-    // ===== MATCH CHÍNH XÁC Track INTERFACE =====
     trackId: song.song_id,
     jamendoId: Number(song.jamendo_id),
     title: song.title,

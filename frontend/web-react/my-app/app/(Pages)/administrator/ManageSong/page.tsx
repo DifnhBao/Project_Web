@@ -8,6 +8,7 @@ import {
   fetchSongsForManage,
   updateSong,
   deleteSong,
+  toggleSongVisibility,
 } from "@/app/utils/songApi";
 import Pagination from "@/app/components/Pagination";
 import { formatDuration, formatDate } from "@/app/utils/dateHelper";
@@ -80,7 +81,24 @@ function SongManagement() {
     }
   };
 
-  console.log("Songs:", songs);
+  const handleToggleVisibility = async (songId: number) => {
+    console.log("Toggling visibility for song ID:", songId);
+    try {
+      setLoading(true);
+
+      const res = await toggleSongVisibility(songId);
+
+      setSongs((prev) =>
+        prev.map((s) =>
+          s.song_id === songId ? { ...s, is_visible: res.isVisible } : s
+        )
+      );
+    } catch (error: any) {
+      alert(error.message || "Không thể thay đổi trạng thái bài hát");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -124,11 +142,15 @@ function SongManagement() {
               <td>{formatDate(song.fetched_at)}</td>
               <td>{formatDuration(song.duration)}</td>
               <td>
-                {song.is_visible ? (
-                  <button>Hidden</button>
-                ) : (
-                  <button>Visible</button>
-                )}
+                <button
+                  className={` ${
+                    song.is_visible ? styles.visibilityBtn : styles.hidden
+                  }`}
+                  onClick={() => handleToggleVisibility(song.song_id)}
+                  disabled={loading}
+                >
+                  {song.is_visible ? "Hidden" : "Visible"}
+                </button>
               </td>
               <td>
                 <button

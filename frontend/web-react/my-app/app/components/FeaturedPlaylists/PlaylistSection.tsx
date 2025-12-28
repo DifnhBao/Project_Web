@@ -25,7 +25,7 @@ const PlaylistSection: React.FC<Props> = ({ onSelect }) => {
     onSelect(detail);
   };
 
-  if (loading) return <p>Đang tải playlist...</p>;
+  if (loading) return <p>...</p>;
 
   return (
     <HorizontalScroll>
@@ -37,7 +37,7 @@ const PlaylistSection: React.FC<Props> = ({ onSelect }) => {
               key={mix.playlistId}
               onClick={() => handleSelect(mix)}
             >
-              <PlaylistCover images={mix.coverImages ?? []} size={200} />
+              <PlaylistCover images={mix.coverImages ?? []} size={230} />
               {/* <img src={mix.image} alt={mix.name} /> */}
               <h3>{mix.name}</h3>
             </div>

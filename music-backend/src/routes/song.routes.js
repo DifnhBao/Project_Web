@@ -19,6 +19,7 @@ router.post("/:id/like", protect, songController.likeSong);
 // Unlike
 router.delete("/:id/like", protect, songController.unlikeSong);
 
+// track list hằng ngày
 router.get("/", songController.getSongList);
 
 // router.post(
@@ -29,11 +30,11 @@ router.get("/", songController.getSongList);
 //   songController.createSong
 // );
 
-router.get("/all", songController.getAllSongs);
-
-router.get("/:id", songController.getSongById);
-
 /* --- ROUTES FOR ADMIN --- */
+
+// manage song
+router.get("/all", protectAdmin, songController.getAllSongs);
+// router.get("/:id", songController.getSongById);
 
 // sửa
 router.put("/:id", protectAdmin, songController.updateSongById);
@@ -43,8 +44,7 @@ router.delete("/:id", protectAdmin, songController.deleteSongById);
 // Ẩn hiện
 router.patch(
   "/:id/toggle-invisibility",
-  protect,
-  isAdmin,
+  protectAdmin,
   songController.toggleSongVisibility
 );
 

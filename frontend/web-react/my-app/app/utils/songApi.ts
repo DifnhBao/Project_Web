@@ -2,15 +2,19 @@ import { URL } from "./authApi";
 import { Track } from "../types/music";
 import { adminFetch, userFetch } from "./refreshToken";
 
-export async function fetchDailySongs(): Promise<Track[]> {
-  const res = await fetch(`${URL}/songs?page=1&limit=20`);
+export async function fetchDailySongs(limit = 20): Promise<Track[]> {
+  const res = await fetch(`${URL}/songs?limit=${limit}`);
+
   if (!res.ok) {
     throw new Error("Failed to fetch songs");
   }
 
   const data = await res.json();
 
-  // MAP từ backend → frontend
+  if (!data.songs || !Array.isArray(data.songs)) {
+    return [];
+  }
+
   return data.songs.map(
     (song: any): Track => ({
       trackId: song.song_id,
@@ -19,17 +23,17 @@ export async function fetchDailySongs(): Promise<Track[]> {
       duration: song.duration,
       imageUrl: song.image_url,
       audioUrl: song.audio_url,
-      artistName: song.artist_name,
-      albumName: song.album_name,
-      genre: song.genre,
-      viewCount: song.view_count,
+      artistName: song.artist_name ?? song.artists?.name ?? "Unknown Artist",
+      albumName: song.album_name ?? null,
+      genre: song.genre ?? "Other",
+      viewCount: song.view_count ?? 0,
       isVisible: song.is_visible,
       fetched_at: song.fetched_at,
     })
   );
 }
 
-// lấy tất cả bài hát có phân trang
+// lấy tất cả bài hát có phân trang cho trang quản trị
 export async function fetchSongsForManage({
   page = 1,
   limit = 10,
@@ -122,4 +126,20 @@ export async function fetchLikedSongs() {
   }
 
   return json.data;
+}
+
+// ẩn hiện bài hát
+export async function toggleSongVisibility(songId: number) {
+  const res = await userFetch(`${URL}/songs/${songId}/toggle-invisibility`, {
+    method: "PATCH",
+    credentials: "include",
+  });
+
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(json.message || "Toggle visibility failed");
+  }
+
+  return json;
 }

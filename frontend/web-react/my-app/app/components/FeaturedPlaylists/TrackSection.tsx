@@ -11,8 +11,19 @@ const TrackSection = () => {
   const { setPlaylist } = usePlayer();
 
   useEffect(() => {
-    fetchDailySongs().then(setTracks).catch(console.error);
+    const loadSongs = async () => {
+      try {
+        const songs = await fetchDailySongs(20);
+        setTracks(songs);
+      } catch (error) {
+        console.error("Fetch daily songs failed:", error);
+      }
+    };
+
+    loadSongs();
   }, []);
+
+  if (!tracks.length) return null;
 
   return (
     <HorizontalScroll>

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Banner from "@/app/components/Banner";
 import FeaturedPlaylists from "@/app/components/FeaturedPlaylists/FeaturedPlaylists";
-import type { SelectedItem, Playlist } from "@/app/types/music";
+import type { Playlist, DetailViewData } from "@/app/types/music";
 
 import DetailView from "@/app/components/FeaturedPlaylists/DetailView";
 
