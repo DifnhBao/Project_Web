@@ -6,12 +6,13 @@ const {
   protect,
   isAdmin,
   protectAdmin,
+  authorizeRoles,
 } = require("../midlewares/auth.midleware");
 
 /* --- ROUTES FOR USER --- */
 
 router.get("/me", protect, userController.getUserProfile);
-
+// Cập nhật thông tin user
 router.put("/me", protect, userController.updateUserProfile);
 
 router.post("/change-password", protect, userController.changeUserPassword);
@@ -41,8 +42,8 @@ router.post("/admin/new", protectAdmin, userController.addNewAdmin);
 // Reset password
 router.put(
   "/:id/reset-password",
-  protect,
-  isAdmin,
+  protectAdmin,
+  authorizeRoles("super_admin"),
   userController.resetUserPassword
 );
 

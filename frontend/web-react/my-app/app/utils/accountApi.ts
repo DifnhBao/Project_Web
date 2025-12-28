@@ -51,3 +51,14 @@ export async function changePassword(oldPassword: string, newPassword: string) {
     body: JSON.stringify({ oldPassword, newPassword }),
   });
 }
+
+export async function changeAdminPassword(
+  adminId: string,
+  newPassword: string
+) {
+  return await adminFetch(URL + `/users/${adminId}/reset-password`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ newPassword }),
+  });
+}

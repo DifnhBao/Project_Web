@@ -82,8 +82,42 @@
   overflow: hidden;
 }
 
+.playlist-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.playlist-bg > div,
+.playlist-bg > img {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.playlist-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.playlist-bg {
+  animation: fadeIn 0.6s ease;
+}
+
+/* Overlay làm tối + blur */
+.playlist-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.45),
+    rgba(0, 0, 0, 0.85)
+  );
+  backdrop-filter: blur(20px);
+}
+
 /* Lớp phủ mờ đen dần xuống */
-.playlist-detail .overlay {
+/* .playlist-detail .overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -93,7 +127,7 @@
     #000 100%
   );
   z-index: 0;
-}
+} */
 
 /* Đảm bảo nội dung nổi lên trên overlay */
 .playlist-header,

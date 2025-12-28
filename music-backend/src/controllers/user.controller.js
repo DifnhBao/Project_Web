@@ -168,7 +168,7 @@ const resetUserPassword = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { newPassword } = req.body;
-    const requesterId = req.user.user_id;
+    const requester = req.user;
 
     if (!newPassword) {
       throw new Error("Vui lòng nhập mật khẩu mới.");
@@ -177,7 +177,7 @@ const resetUserPassword = async (req, res, next) => {
     const result = await userService.resetUserPassword(
       id,
       newPassword,
-      requesterId
+      requester
     );
     res.status(200).json(result);
   } catch (error) {

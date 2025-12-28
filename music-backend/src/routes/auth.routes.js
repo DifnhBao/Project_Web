@@ -4,6 +4,7 @@ const authController = require("../controllers/auth.controller");
 const { protect } = require("../midlewares/auth.midleware");
 
 // USER PAGE
+
 //route for register
 router.post("/register", authController.register);
 
@@ -17,6 +18,7 @@ router.post("/refresh-token", authController.requestRefreshToken);
 router.post("/logout", protect, authController.logout);
 
 // ADMIN PAGE
+
 // routes/auth.route.js
 router.post("/admin/login", authController.loginAdmin);
 router.post("/admin/logout", authController.logoutAdmin);

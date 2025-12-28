@@ -1,30 +1,45 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-import { fetchDailyMixes } from "@/app/services/mixService";
-import type { Playlist } from "@/app/types/music";
+import { fetchDailyMixes, fetchDailyMixDetail } from "@/app/utils/mixApi";
+import type { Playlist, SelectedItem } from "@/app/types/music";
 import HorizontalScroll from "@/app/components/HorizontalScroll";
+import PlaylistCover from "@/app/components/FeaturedPlaylists/PlaylistCover";
 
 interface Props {
-  onSelect: (playlist: Playlist) => void;
+  onSelect: (item: SelectedItem) => void;
 }
 
 const PlaylistSection: React.FC<Props> = ({ onSelect }) => {
   const [mixes, setMixes] = useState<Playlist[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchDailyMixes().then(setMixes);
+    fetchDailyMixes()
+      .then(setMixes)
+      .finally(() => setLoading(false));
   }, []);
+
+  const handleSelect = async (mix: Playlist) => {
+    const detail = await fetchDailyMixDetail(mix.playlistId);
+    onSelect(detail);
+  };
+
+  if (loading) return <p>Đang tải playlist...</p>;
 
   return (
     <HorizontalScroll>
       <section>
         <div className="scroll-row">
           {mixes.map((mix) => (
-            <div className="card" key={mix.id} onClick={() => onSelect(mix)}>
-              <img src={mix.coverImage} alt={mix.title} />
-              <h3>{mix.title}</h3>
-              <p>{mix.subtitle}</p>
+            <div
+              className="card"
+              key={mix.playlistId}
+              onClick={() => handleSelect(mix)}
+            >
+              <PlaylistCover images={mix.coverImages ?? []} size={200} />
+              {/* <img src={mix.image} alt={mix.name} /> */}
+              <h3>{mix.name}</h3>
             </div>
           ))}
         </div>
@@ -32,5 +47,4 @@ const PlaylistSection: React.FC<Props> = ({ onSelect }) => {
     </HorizontalScroll>
   );
 };
-
 export default PlaylistSection;

@@ -1,31 +1,36 @@
 export interface Track {
-  id: number;
-  jamendo_id: number;
+  trackId: number;
   title: string;
-  artist: string;
-  image: string;
-  audio: string;
   duration: number;
+  imageUrl: string;
+  audioUrl: string;
+  artistName: string;
+  albumName?: string;
 }
 
 export interface Playlist {
-  id: string;
-  title: string;
-  subtitle: string;
-  artists: string;
-  coverImage: string;
+  playlistId: number;
+  name: string;
+  coverImages: string[];
   tracks: Track[];
 }
 
 export interface Artist {
-  id: string;
+  id: number;
   name: string;
   image: string;
+}
+
+export interface DetailViewData {
+  type: "playlist" | "artist";
+  title: string;
+  coverImages: string[];
   tracks: Track[];
 }
 
+// User
 export interface User {
-  userId: number;
+  userId: string;
   username: string;
   email: string;
   role: string;
@@ -40,5 +45,3 @@ export interface UserProfileData {
   phone: string;
   address: string;
 }
-
-export type SelectedItem = Playlist | Artist;

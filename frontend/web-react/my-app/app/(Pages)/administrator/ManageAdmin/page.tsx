@@ -71,7 +71,7 @@ export default function ManageAdmin() {
                   <>
                     <button
                       className={stylesUser.edit}
-                      onClick={() => openModal("change-password")}
+                      onClick={() => openModal("reset-admin-password", admin)}
                     >
                       Edit
                     </button>

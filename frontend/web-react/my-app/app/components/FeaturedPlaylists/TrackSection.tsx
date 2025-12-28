@@ -1,17 +1,17 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-import { fetchDailySongs } from "@/app/services/songsService";
+import { fetchDailySongs } from "@/app/utils/songApi";
 import type { Track } from "@/app/types/music";
 import { usePlayer } from "@/app/context/PlayerContext";
 import HorizontalScroll from "@/app/components/HorizontalScroll";
 
 const TrackSection = () => {
-  const [tracks, setTracks] = useState([]);
+  const [tracks, setTracks] = useState<Track[]>([]);
   const { setPlaylist } = usePlayer();
 
   useEffect(() => {
-    fetchDailySongs().then(setTracks);
+    fetchDailySongs().then(setTracks).catch(console.error);
   }, []);
 
   return (
@@ -20,13 +20,13 @@ const TrackSection = () => {
         <div className="scroll-row">
           {tracks.map((song: Track, index) => (
             <div
-              key={song.jamendo_id}
+              key={song.trackId}
               className="card"
               onClick={() => setPlaylist(tracks, index)}
             >
-              <img src={song.image} alt={song.title} />
+              <img src={song.imageUrl} alt={song.title} />
               <h3>{song.title}</h3>
-              <p>{song.artist}</p>
+              <p>{song.artistName}</p>
             </div>
           ))}
         </div>

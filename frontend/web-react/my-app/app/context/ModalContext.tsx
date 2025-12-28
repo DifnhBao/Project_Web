@@ -28,6 +28,10 @@ const AddNewAdmin = dynamic(
   () => import("@/app/components/AdminPage/AddAdmin")
 );
 
+const ResetAdminPassword = dynamic(
+  () => import("@/app/components/AdminPage/ResetAdminPassword")
+);
+
 type ModalType =
   | "profile"
   | "signin"
@@ -37,6 +41,7 @@ type ModalType =
   | "add-new-admin"
   | "edit-user-profile"
   | "change-password"
+  | "reset-admin-password"
   | "song-form"
   | null;
 
@@ -86,6 +91,8 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         return (
           <SongFormModal song={modalData.song} onSave={modalData.onSave} />
         );
+      case "reset-admin-password":
+        return <ResetAdminPassword admin={modalData} />;
       default:
         return null;
     }

@@ -2,12 +2,13 @@
 import React, { useState, useEffect } from "react";
 import Banner from "@/app/components/Banner";
 import FeaturedPlaylists from "@/app/components/FeaturedPlaylists/FeaturedPlaylists";
-import type { SelectedItem } from "@/app/types/music";
+import type { SelectedItem, Playlist } from "@/app/types/music";
+
+import DetailView from "@/app/components/FeaturedPlaylists/DetailView";
 
 export default function ExplorePage() {
   const [greeting, setGreeting] = useState("");
-  const [selected, setSelected] = useState<SelectedItem | null>(null);
-  const [bgImage, setBgImage] = useState<string>("");
+  const [selected, setSelected] = useState<DetailViewData | null>(null);
 
   useEffect(() => {
     function update() {
@@ -29,31 +30,20 @@ export default function ExplorePage() {
     return () => clearInterval(t);
   }, []);
 
-  if (selected)
-    return (
-      <div id="home" className="home-menu">
-        <FeaturedPlaylists
-          selected={selected}
-          onSelect={(item) => {
-            setSelected(item);
-            const cover =
-              "coverImage" in item ? item.coverImage : (item as any).image;
-            setBgImage(cover);
-          }}
-          onBack={() => {
-            setSelected(null);
-            setBgImage("");
-          }}
-        />
-      </div>
-    );
+  /* 🔥 DETAIL VIEW */
+  if (selected) {
+    return <DetailView data={selected} onBack={() => setSelected(null)} />;
+  }
 
+  /* 🔥 LIST VIEW */
   return (
     <div id="home" className="home-menu">
       <div id="greeting" className="greeting-text">
         {greeting}
       </div>
+
       <Banner />
+
       <FeaturedPlaylists onSelect={setSelected} />
 
       {/* phần footer thông tin công ty */}

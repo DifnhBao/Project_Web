@@ -60,4 +60,18 @@ const protectAdmin = async (req, res, next) => {
   }
 };
 
-module.exports = { protect, isAdmin, protectAdmin };
+const authorizeRoles = (...roles) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({ message: "Can't access!" });
+    }
+
+    next();
+  };
+};
+
+module.exports = { protect, isAdmin, protectAdmin, authorizeRoles };

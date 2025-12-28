@@ -7,18 +7,11 @@ import React, {
   useState,
 } from "react";
 
-type Song = {
-  id: number | string;
-  title: string;
-  artist?: string;
-  image?: string;
-  audio?: string;
-  duration?: number;
-};
+import type { Track } from "@/app/types/music";
 
 type PlayerContextType = {
-  playlist: Song[];
-  setPlaylist: (pl: Song[], startIndex?: number) => void;
+  playlist: Track[];
+  setPlaylist: (pl: Track[], startIndex?: number) => void;
   play: () => void;
   pause: () => void;
   togglePlay: () => void;
@@ -31,7 +24,7 @@ const PlayerContext = createContext<PlayerContextType | null>(null);
 
 export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [playlist, setPlaylistState] = useState<Song[]>([]);
+  const [playlist, setPlaylistState] = useState<Track[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -50,14 +43,21 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    if (!audioRef.current) return;
     if (!playlist.length) return;
-    const s = playlist[currentIndex];
-    if (!s) return;
-    if (!audioRef.current) audioRef.current = new Audio();
-    audioRef.current.src = s.audio || "";
+
+    const track = playlist[currentIndex];
+    if (!track?.audioUrl) return;
+
+    audioRef.current.src = track.audioUrl;
     audioRef.current.load();
-    if (isPlaying) audioRef.current.play();
-  }, [playlist, currentIndex]);
+
+    if (isPlaying) {
+      audioRef.current
+        .play()
+        .catch((err) => console.error("Audio play failed:", err));
+    }
+  }, [playlist, currentIndex, isPlaying]);
 
   useEffect(() => {
     if (!audioRef.current) return;
@@ -68,7 +68,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     }
   }, [isPlaying]);
 
-  const setPlaylist = (pl: Song[], startIndex = 0) => {
+  const setPlaylist = (pl: Track[], startIndex = 0) => {
     setPlaylistState(pl);
     setCurrentIndex(startIndex);
     setIsPlaying(true);

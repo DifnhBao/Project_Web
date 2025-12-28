@@ -12,29 +12,36 @@ const RefreshToken = require("./refresh_token.model");
 
 // MQH 1-N
 
-Artist.hasMany(Album, { foreignKey: "artist_id" });
-Album.belongsTo(Artist, { foreignKey: "artist_id" });
+// Artist.hasMany(Album, { foreignKey: "artist_id" });
+// Album.belongsTo(Artist, { foreignKey: "artist_id" });
 
-Artist.hasMany(Song, { foreignKey: "artist_id" });
-Song.belongsTo(Artist, { foreignKey: "artist_id" });
+Artist.hasMany(Song, {
+  foreignKey: "artist_id",
+  as: "songs",
+});
 
-Album.hasMany(Song, { foreignKey: "album_id" });
-Song.belongsTo(Album, { foreignKey: "album_id" });
+Song.belongsTo(Artist, {
+  foreignKey: "artist_id",
+  as: "artists",
+});
 
-Genre.hasMany(Song, { foreignKey: "genre_id" });
-Song.belongsTo(Genre, { foreignKey: "genre_id" });
+// Album.hasMany(Song, { foreignKey: "album_id" });
+// Song.belongsTo(Album, { foreignKey: "album_id" });
 
-User.hasMany(Playlist, { foreignKey: "user_id" });
-Playlist.belongsTo(User, { foreignKey: "user_id" });
+// Genre.hasMany(Song, { foreignKey: "genre_id" });
+// Song.belongsTo(Genre, { foreignKey: "genre_id" });
 
-User.hasMany(Comment, { foreignKey: "user_id" });
-Comment.belongsTo(User, { foreignKey: "user_id" });
+// User.hasMany(Playlist, { foreignKey: "user_id" });
+// Playlist.belongsTo(User, { foreignKey: "user_id" });
 
-Song.hasMany(Comment, { foreignKey: "song_id" });
-Comment.belongsTo(Song, { foreignKey: "song_id" });
+// User.hasMany(Comment, { foreignKey: "user_id" });
+// Comment.belongsTo(User, { foreignKey: "user_id" });
 
-Comment.hasMany(Comment, { as: "replies", foreignKey: "parent_comment_id" });
-Comment.belongsTo(Comment, { as: "parent", foreignKey: "parent_comment_id" });
+// Song.hasMany(Comment, { foreignKey: "song_id" });
+// Comment.belongsTo(Song, { foreignKey: "song_id" });
+
+// Comment.hasMany(Comment, { as: "replies", foreignKey: "parent_comment_id" });
+// Comment.belongsTo(Comment, { as: "parent", foreignKey: "parent_comment_id" });
 
 User.hasMany(RefreshToken, {
   foreignKey: "user_id",
@@ -81,6 +88,7 @@ Song.belongsToMany(User, {
   as: "likedByUsers",
 });
 
+// Bảng trung gian playlist và song
 const PlaylistSongs = sequelize.define(
   "playlistSongs",
   {

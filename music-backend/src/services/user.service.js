@@ -231,27 +231,49 @@ const deleteUserById = async (userIdToDelete, requester) => {
   };
 };
 
-const resetUserPassword = async (userId, newPassword, requesterId) => {
-  const user = await User.findByPk(userId);
-  if (!user) {
+const resetUserPassword = async (userId, newPassword, requester) => {
+  const targetUser = await User.findByPk(userId);
+  if (!targetUser) {
     throw new Error("Không tìm thấy user này.");
   }
 
-  // Nếu người bị reset pass là admin
-  if (user.role === "admin") {
-    // Người có quyền reset là Super Admin
-    if (requesterId !== 2) {
-      throw new Error("Bạn không phải Super Admin.");
+  const isSelf = targetUser.id === requester.user_id;
+  const requesterRole = requester.role;
+  const targetRole = targetUser.role;
+
+  // ===== SUPER ADMIN =====
+  if (requesterRole === "super_admin") {
+    if (!isSelf && targetRole === "super_admin") {
+      throw new Error("Không thể đặt lại mật khẩu cho Super Admin khác.");
     }
   }
 
-  const salt = await bcrypt.genSalt(10);
-  user.password = await bcrypt.hash(newPassword, salt);
+  // ===== ADMIN =====
+  else if (requesterRole === "admin") {
+    // admin đổi mật khẩu chính mình
+    if (isSelf) {
+      // OK
+    }
+    // admin đổi mật khẩu user thường
+    else if (targetRole === "user") {
+      // OK
+    } else {
+      throw new Error("Admin không có quyền đặt lại mật khẩu cho role này.");
+    }
+  }
 
-  await user.save();
+  // ===== ROLE KHÁC =====
+  else {
+    throw new Error("Bạn không có quyền đặt lại mật khẩu.");
+  }
+
+  // ===== UPDATE PASSWORD =====
+  const salt = await bcrypt.genSalt(10);
+  targetUser.password = await bcrypt.hash(newPassword, salt);
+  await targetUser.save();
 
   return {
-    message: `Đã đặt lại mật khẩu cho user ${user.username} thành công.`,
+    message: `Đã đặt lại mật khẩu cho user ${targetUser.username} thành công.`,
   };
 };
 

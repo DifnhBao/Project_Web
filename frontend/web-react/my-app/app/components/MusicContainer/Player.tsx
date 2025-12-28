@@ -123,7 +123,7 @@ const Player: React.FC = () => {
       <div className="info-player">
         <a className="background-singer">
           <img
-            src={currentSong?.image || "/images/default-song.jpg"}
+            src={currentSong?.imageUrl || "/images/default-song.jpg"}
             alt="Singer"
           />
         </a>
@@ -133,7 +133,7 @@ const Player: React.FC = () => {
             {currentSong?.title || "No song"}
           </a>
           <a href="#" className="artist-name">
-            {currentSong?.artist || "Unknown"}
+            {currentSong?.artistName || "Unknown"}
           </a>
         </div>
 

@@ -1,29 +1,29 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
+// models/Playlist.js
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/db");
 
-const Playlist = sequelize.define('Playlist', {
+const Playlist = sequelize.define(
+  "Playlist",
+  {
     playlist_id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
-    title: {
-        type: DataTypes.STRING(200),
-        allowNull: false
+    name: DataTypes.STRING,
+    type: {
+      type: DataTypes.ENUM("DAILY_MIX", "NORMAL"),
+      defaultValue: "NORMAL",
     },
-    description: {
-        type: DataTypes.TEXT
+    mix_date: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
     },
-    cover_image: {
-        type: DataTypes.STRING(255)
-    },
-    created_at: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
-    },
-}, {
-    tableName: 'playlists',
-    timestamps: false
-});
+  },
+  {
+    tableName: "playlists",
+    timestamps: false,
+  }
+);
 
 module.exports = Playlist;
