@@ -1,6 +1,6 @@
 import type { Playlist, Track, DetailViewData } from "@/app/types/music";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000") + "/api";
 
 export async function fetchDailyMixes(): Promise<Playlist[]> {
   const res = await fetch(`${API_URL}/playlists/daily-mixes`);
