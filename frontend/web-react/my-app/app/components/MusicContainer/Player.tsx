@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, Suspense } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { usePlayer } from "@/app/context/PlayerContext";
 import PopUp from "../PopUp";
@@ -12,7 +12,8 @@ import {
   increaseSongView,
 } from "@/app/utils/songApi";
 
-const Player: React.FC = () => {
+
+const PlayerContent: React.FC = () => {
   const {
     playlist,
     play,
@@ -286,6 +287,15 @@ const Player: React.FC = () => {
         />
       </div>
     </footer>
+  );
+};
+
+// --- PHẦN BỌC SUSPENSE ---
+const Player: React.FC = () => {
+  return (
+    <Suspense fallback={<div className="hidden">Loading Player...</div>}>
+      <PlayerContent />
+    </Suspense>
   );
 };
 
