@@ -14,6 +14,7 @@ export default function ManageAdmin() {
   if (isLoading) return <p>Đang tải...</p>;
   if (error) return <p>Lỗi tải danh sách admin!</p>;
   if (!admins || admins.length === 0) return null;
+  console.log("admins: ", admins);
 
   return (
     <div id="admins" className={stylesUser.section}>
@@ -45,12 +46,12 @@ export default function ManageAdmin() {
               <div>{admin.role}</div>
               <div
                 className={
-                  admin.account_status === "actived"
+                  admin.account_status
                     ? `${styles.status} ${styles.active}`
                     : `${styles.status} ${styles.inactive}`
                 }
               >
-                {admin.account_status}
+                {admin.account_status ? "actived" : "pending"}
               </div>
               <div className={stylesUser.rowOption}>
                 {admin.account_status === "pending" ? (
