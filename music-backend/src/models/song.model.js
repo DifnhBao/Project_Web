@@ -46,14 +46,14 @@ const Song = sequelize.define(
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
-    artist_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: "artists",
-        key: "artist_id",
-      },
-    },
+    // artist_id: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: true,
+    //   references: {
+    //     model: "artists",
+    //     key: "artist_id",
+    //   },
+    // },
     // upload_date: {
     //   type: DataTypes.DATE,
     //   defaultValue: DataTypes.NOW,

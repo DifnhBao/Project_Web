@@ -13,7 +13,7 @@ export default function SignInAdminPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { openModal, closeModal } = useModal();
-  const { admin, setAdmin } = useAdminUser();
+  const { admin, setAdmin, checkAdmin } = useAdminUser();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,11 +27,11 @@ export default function SignInAdminPage() {
       }
 
       alert(data.message);
-
+      await checkAdmin();
       // Đóng modal
       closeModal();
 
-      router.replace("/administrator");
+      router.replace("/administrator/ManageUser");
     } catch (error) {
       console.error("Lỗi đăng nhập:", error);
       alert("Đăng nhập thất bại, vui lòng thử lại!");
@@ -83,7 +83,7 @@ export default function SignInAdminPage() {
           Sign In
         </button>
       </form>
-      <div className="fogot-password">
+      {/* <div className="fogot-password">
         <a href="#">Forgot your password?</a>
       </div>
       <p>
@@ -91,7 +91,7 @@ export default function SignInAdminPage() {
         <a className="create" onClick={() => openModal("register-admin")}>
           Create an account
         </a>
-      </p>
+      </p> */}
     </div>
   );
 }

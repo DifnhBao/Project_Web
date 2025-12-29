@@ -24,7 +24,7 @@ export default function Sidebar() {
           <IoLibraryOutline className="icon" /> Library
         </Link>
         <Link
-          href="/myplaylists"
+          href="#"
           className={pathname.startsWith("/myplaylists") ? "active" : ""}
         >
           <PiPlaylistDuotone className="icon" /> Playlist

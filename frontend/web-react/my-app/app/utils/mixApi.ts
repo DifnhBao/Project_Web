@@ -1,9 +1,13 @@
 import type { Playlist, Track, DetailViewData } from "@/app/types/music";
 
-const API_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000") + "/api";
+const API_URL =
+  (process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000") + "/api";
 
 export async function fetchDailyMixes(): Promise<Playlist[]> {
-  const res = await fetch(`${API_URL}/playlists/daily-mixes`);
+  const res = await fetch(`${API_URL}/playlists/daily-mixes`, {
+    cache: "no-store",
+    next: { revalidate: 0 },
+  });
   const json = await res.json();
 
   return json.data.map((pl: any) => ({
@@ -17,7 +21,10 @@ export async function fetchDailyMixes(): Promise<Playlist[]> {
 export async function fetchDailyMixDetail(
   playlistId: number
 ): Promise<DetailViewData> {
-  const res = await fetch(`${API_URL}/playlists/daily-mix/${playlistId}`);
+  const res = await fetch(`${API_URL}/playlists/daily-mix/${playlistId}`, {
+    cache: "no-store",
+    next: { revalidate: 0 },
+  });
   const json = await res.json();
   const pl = json.data;
 

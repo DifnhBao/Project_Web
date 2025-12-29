@@ -8,7 +8,7 @@ async function getDailyMixList(req, res) {
     const playlists = await Playlist.findAll({
       where: {
         type: "DAILY_MIX",
-        mix_date: today,
+        // mix_date: today,
       },
       attributes: ["playlist_id", "name"],
       include: [

@@ -44,7 +44,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     return () => a.removeEventListener("ended", onEnded);
   }, []);
 
-  /* 🔥 CHỈ LOAD KHI ĐỔI BÀI */
+  /* CHỈ LOAD KHI ĐỔI BÀI */
   useEffect(() => {
     if (!audioRef.current) return;
     if (!playlist.length) return;
@@ -61,7 +61,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
       .catch(() => setIsPlaying(false));
   }, [playlist, currentIndex]);
 
-  /* 🔥 PLAY / PAUSE KHÔNG ĐỘNG TỚI SRC */
+  /* PLAY / PAUSE KHÔNG ĐỘNG TỚI SRC */
   useEffect(() => {
     if (!audioRef.current) return;
 

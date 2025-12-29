@@ -27,13 +27,6 @@ export default function SignInPage() {
 
       alert(data.message);
 
-      // Lấy thông tin user
-      // const meRes = await fetchCurrentUser();
-      // if (meRes.ok) {
-      //   const meData = await meRes.json();
-      //   setUser(meData);
-      // }
-
       await refreshUser();
 
       // Đóng modal

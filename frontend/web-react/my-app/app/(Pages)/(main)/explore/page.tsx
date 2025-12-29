@@ -30,12 +30,12 @@ export default function ExplorePage() {
     return () => clearInterval(t);
   }, []);
 
-  /* 🔥 DETAIL VIEW */
+  /* DETAIL VIEW */
   if (selected) {
     return <DetailView data={selected} onBack={() => setSelected(null)} />;
   }
 
-  /* 🔥 LIST VIEW */
+  /* LIST VIEW */
   return (
     <div id="home" className="home-menu">
       <div id="greeting" className="greeting-text">

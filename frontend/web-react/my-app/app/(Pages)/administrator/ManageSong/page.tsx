@@ -28,7 +28,7 @@ function SongManagement() {
       try {
         const res = await fetchSongsForManage({
           page: currentPage,
-          limit: 10,
+          limit: 20,
           search: "",
         });
 

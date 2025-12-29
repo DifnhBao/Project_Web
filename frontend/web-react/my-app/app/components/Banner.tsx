@@ -34,57 +34,57 @@ function Banner() {
       </div>
 
       {/* Category Section */}
-      <div className="category-grid">
-        <div className="category-card" style={{ backgroundColor: "#b87933" }}>
-          <h3>Indie Việt</h3>
-          <img src="/images/Banner/indieViet.png" alt="" />
-        </div>
+        {/* <div className="category-grid">
+          <div className="category-card" style={{ backgroundColor: "#b87933" }}>
+            <h3>Indie Việt</h3>
+            <img src="/images/Banner/indieViet.png" alt="" />
+          </div>
 
-        <div className="category-card" style={{ backgroundColor: "#d94a5b" }}>
-          <h3>Yêu</h3>
-          <img src="/images/Banner/yeu.png" alt="" />
-        </div>
+          <div className="category-card" style={{ backgroundColor: "#d94a5b" }}>
+            <h3>Yêu</h3>
+            <img src="/images/Banner/yeu.png" alt="" />
+          </div>
 
-        <div className="category-card" style={{ backgroundColor: "#43b144" }}>
-          <h3>Nhạc Dance</h3>
-          <img src="/images/Banner/nhacdance.png" alt="" />
-        </div>
+          <div className="category-card" style={{ backgroundColor: "#43b144" }}>
+            <h3>Nhạc Dance</h3>
+            <img src="/images/Banner/nhacdance.png" alt="" />
+          </div>
 
-        <div className="category-card" style={{ backgroundColor: "#692f98" }}>
-          <h3>Nhạc Pop</h3>
-          <img src="/images/Banner/nhacpop.png" alt="" />
-        </div>
+          <div className="category-card" style={{ backgroundColor: "#692f98" }}>
+            <h3>Nhạc Pop</h3>
+            <img src="/images/Banner/nhacpop.png" alt="" />
+          </div>
 
-        <div className="category-card" style={{ backgroundColor: "#2b7b77" }}>
-          <h3>Ngủ Ngon</h3>
-          <img src="/images/Banner/ngungon.jpg" alt="" />
-        </div>
+          <div className="category-card" style={{ backgroundColor: "#2b7b77" }}>
+            <h3>Ngủ Ngon</h3>
+            <img src="/images/Banner/ngungon.jpg" alt="" />
+          </div>
 
-        <div className="category-card" style={{ backgroundColor: "#e39a78" }}>
-          <h3>Chill</h3>
-          <img src="/images/Banner/chill.png" alt="" />
-        </div>
+          <div className="category-card" style={{ backgroundColor: "#e39a78" }}>
+            <h3>Chill</h3>
+            <img src="/images/Banner/chill.png" alt="" />
+          </div>
 
-        <div className="category-card" style={{ backgroundColor: "#3e3e3e" }}>
-          <h3>Hip-Hop/R&B</h3>
-          <img src="/images/Banner/hip-hop.png" alt="" />
-        </div>
+          <div className="category-card" style={{ backgroundColor: "#3e3e3e" }}>
+            <h3>Hip-Hop/R&B</h3>
+            <img src="/images/Banner/hip-hop.png" alt="" />
+          </div>
 
-        <div className="category-card" style={{ backgroundColor: "#da6c34" }}>
-          <h3>Nhạc Trung</h3>
-          <img src="/images/Banner/nhacTrung.jpg" alt="" />
-        </div>
+          <div className="category-card" style={{ backgroundColor: "#da6c34" }}>
+            <h3>Nhạc Trung</h3>
+            <img src="/images/Banner/nhacTrung.jpg" alt="" />
+          </div>
 
-        <div className="category-card" style={{ backgroundColor: "#345061" }}>
-          <h3>Tập Luyện</h3>
-          <img src="/images/Banner/tapluyen.png" alt="" />
-        </div>
+          <div className="category-card" style={{ backgroundColor: "#345061" }}>
+            <h3>Tập Luyện</h3>
+            <img src="/images/Banner/tapluyen.png" alt="" />
+          </div>
 
-        <div className="category-card" style={{ backgroundColor: "#c38d53" }}>
-          <h3>Acoustic Việt</h3>
-          <img src="/images/Banner/acousticViet.png" alt="" />
-        </div>
-      </div>
+          <div className="category-card" style={{ backgroundColor: "#c38d53" }}>
+            <h3>Acoustic Việt</h3>
+            <img src="/images/Banner/acousticViet.png" alt="" />
+          </div>
+        </div> */}
     </div>
   );
 }

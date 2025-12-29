@@ -13,6 +13,7 @@ interface AdminUserContextType {
   admin: Admin | null;
   setAdmin: React.Dispatch<React.SetStateAction<Admin | null>>;
   loading: boolean;
+  checkAdmin: () => Promise<void>;
 }
 
 const AdminUserContext = createContext<AdminUserContextType | undefined>(
@@ -27,30 +28,30 @@ export const AdminUserProvider = ({
   const [admin, setAdmin] = useState<Admin | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    const checkAdmin = async () => {
-      try {
-        const res = await fetchCurrentAdmin();
+  const checkAdmin = async () => {
+    try {
+      const res = await fetchCurrentAdmin();
 
-        if (res.ok) {
-          const data = await res.json();
-          setAdmin(data.admin);
-        } else {
-          setAdmin(null);
-        }
-      } catch (err) {
-        console.error("Lỗi khi kiểm tra admin:", err);
+      if (res.ok) {
+        const data = await res.json();
+        setAdmin(data.admin);
+      } else {
         setAdmin(null);
-      } finally {
-        setLoading(false);
       }
-    };
+    } catch (err) {
+      console.error("Lỗi khi kiểm tra admin:", err);
+      setAdmin(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     checkAdmin();
   }, []);
 
   return (
-    <AdminUserContext.Provider value={{ admin, setAdmin, loading }}>
+    <AdminUserContext.Provider value={{ admin, setAdmin, loading, checkAdmin }}>
       {children}
     </AdminUserContext.Provider>
   );

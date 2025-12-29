@@ -25,12 +25,12 @@ export default function Sidebar() {
         >
           <i className="fa-solid fa-list"></i> Manage Song
         </Link>
-        <Link
+        {/* <Link
           href="/administrator/Statistics"
           className={pathname === "/administrator/Statistics" ? "active" : ""}
         >
           <i className="fa-solid fa-chart-line"></i> Statistics
-        </Link>
+        </Link> */}
       </nav>
     </div>
   );

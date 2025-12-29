@@ -18,11 +18,14 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://project-web-gamma-neon.vercel.app"
+      "https://project-web-gamma-neon.vercel.app",
     ],
     credentials: true,
   })
 );
+
+app.set("etag", false);
+
 app.use("/api", allRoutes);
 
 app.get("/", (req, res) => {
