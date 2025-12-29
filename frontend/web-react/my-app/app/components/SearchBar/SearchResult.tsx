@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useState } from "react";
 import "./SearchResult.css";
 import { Track } from "@/app/types/music";
 import { usePlayer } from "@/app/context/PlayerContext";
@@ -12,6 +13,8 @@ interface SearchResultProps {
 
 const SearchResult = ({ result, searchTerm }: SearchResultProps) => {
   const { setPlaylist } = usePlayer();
+  const [showResults, setShowResults] = useState(false);
+
   const highlight = (text: string, term: string) => {
     if (!term) return text;
 

@@ -29,13 +29,13 @@ router.get("/", songController.getSongList);
 // tăng view
 router.post("/:songId/view", songController.increaseView);
 
-// router.post(
-//   "/",
-//   protect,
-//   isAdmin,
-//   upload.single("audioFile"),
-//   songController.createSong
-// );
+// admin up nhạc
+router.post(
+  "/",
+  protectAdmin,
+  upload.single("audioFile"),
+  songController.createSong
+);
 
 /* --- ROUTES FOR ADMIN --- */
 

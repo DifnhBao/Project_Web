@@ -11,29 +11,75 @@ cloudinary.config({
 
 /* --- CONTROLLER FOR USER --- */
 
+// const createSong = async (req, res, next) => {
+//   try {
+//     if (!req.file) {
+//       throw new Error("Bạn phải upload một file nhạc!");
+//     }
+
+//     const songData = req.body;
+//     const tempFilePath = req.file.path;
+
+//     const uploadResult = await cloudinary.uploader.upload(tempFilePath, {
+//       folder: "music-app/songs",
+//       resource_type: "video",
+//     });
+
+//     const audioUrl = uploadResult.secure_url;
+
+//     await fs.unlink(tempFilePath);
+
+//     const newSong = await songService.createSong(songData, audioUrl);
+
+//     res.status(201).json({ message: "Upload THÀNH CÔNG!", data: newSong });
+//   } catch (error) {
+//     console.error("LỖI BÊN TRONG SONG CONTROLLER:", error);
+//     next(error);
+//   }
+// };
+
 const createSong = async (req, res, next) => {
   try {
+    // 1. Multer đã xử lý xong file
     if (!req.file) {
-      throw new Error("Bạn phải upload một file nhạc!");
+      return res.status(400).json({
+        message: "Bạn phải upload một file nhạc!",
+      });
     }
 
-    const songData = req.body;
-    const tempFilePath = req.file.path;
+    const { title, artist, genre } = req.body;
 
-    const uploadResult = await cloudinary.uploader.upload(tempFilePath, {
+    if (!title) {
+      return res.status(400).json({
+        message: "Thiếu title",
+      });
+    }
+
+    // 2. Upload Cloudinary
+    const uploadResult = await cloudinary.uploader.upload(req.file.path, {
       folder: "music-app/songs",
       resource_type: "video",
     });
 
     const audioUrl = uploadResult.secure_url;
 
-    await fs.unlink(tempFilePath);
+    // 3. Xóa file tạm
+    await fs.unlink(req.file.path);
 
-    const newSong = await songService.createSong(songData, audioUrl);
+    // 4. Lưu DB
+    const newSong = await songService.createSong({
+      title,
+      artist,
+      genre,
+      audio_url: audioUrl,
+    });
 
-    res.status(201).json({ message: "Upload THÀNH CÔNG!", data: newSong });
+    res.status(201).json({
+      message: "Upload THÀNH CÔNG!",
+      data: newSong,
+    });
   } catch (error) {
-    console.error("LỖI BÊN TRONG SONG CONTROLLER:", error);
+    console.error("LỖI SONG CONTROLLER:", error);
     next(error);
   }
 };

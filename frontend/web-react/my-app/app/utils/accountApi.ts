@@ -53,7 +53,7 @@ export async function changePassword(oldPassword: string, newPassword: string) {
 }
 
 export async function changeAdminPassword(
-  adminId: string,
+  adminId: number,
   newPassword: string
 ) {
   return await adminFetch(URL + `/users/${adminId}/reset-password`, {

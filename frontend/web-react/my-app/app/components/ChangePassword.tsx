@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useModal } from "@/app/context/ModalContext";
 import { changePassword } from "../utils/accountApi";
+import { validatePassword } from "@/app/utils/passwordValidator";
 import "@/app/styles/AdminPage/addAdmin.css";
 
 export default function ChangePassword() {
@@ -11,6 +12,17 @@ export default function ChangePassword() {
 
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (newPassword !== confirmPW) {
+      alert("Mật khẩu xác nhận không khớp");
+      return;
+    }
+
+    const passwordError = validatePassword(confirmPW);
+    if (passwordError) {
+      alert(passwordError);
+      return;
+    }
 
     try {
       const res = await changePassword(oldPassword, confirmPW);

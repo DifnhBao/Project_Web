@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useModal } from "@/app/context/ModalContext";
 import { registerUser } from "@/app/utils/authApi";
+import { validatePassword } from "@/app/utils/passwordValidator";
 import "@/app/styles/auth.css";
 
 export default function RegisterPage() {
@@ -13,6 +14,12 @@ export default function RegisterPage() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      alert(passwordError);
+      return;
+    }
 
     const res = await registerUser(username, email, password);
     const data = await res.json();

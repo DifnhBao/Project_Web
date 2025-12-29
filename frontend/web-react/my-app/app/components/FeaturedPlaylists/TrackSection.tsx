@@ -8,25 +8,53 @@ import HorizontalScroll from "@/app/components/HorizontalScroll";
 
 const TrackSection = () => {
   const [tracks, setTracks] = useState<Track[]>([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const { setPlaylist } = usePlayer();
+  const [hasMore, setHasMore] = useState(true);
+
+  // useEffect(() => {
+  //   const loadSongs = async () => {
+  //     try {
+  //       const songs = await fetchDailySongs(20);
+  //       setTracks(songs);
+  //     } catch (error) {
+  //       console.error("Fetch daily songs failed:", error);
+  //     }
+  //   };
+
+  //   loadSongs();
+  // }, []);
+
+  const loadSongs = async () => {
+    if (loading) return;
+
+    setLoading(true);
+    try {
+      const songs = await fetchDailySongs(20, page);
+
+      if (songs.length === 0) {
+        setHasMore(false);
+        return;
+      }
+
+      setTracks((prev) => [...prev, ...songs]);
+      setPage((p) => p + 1);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const loadSongs = async () => {
-      try {
-        const songs = await fetchDailySongs(20);
-        setTracks(songs);
-      } catch (error) {
-        console.error("Fetch daily songs failed:", error);
-      }
-    };
-
     loadSongs();
   }, []);
 
   if (!tracks.length) return null;
 
   return (
-    <HorizontalScroll>
+    <HorizontalScroll onReachEnd={hasMore ? loadSongs : undefined}>
       <section>
         <div className="scroll-row">
           {tracks.map((song: Track, index) => (

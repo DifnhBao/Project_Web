@@ -7,61 +7,90 @@ export default function SongFormModal({
   song,
   onSave,
 }: {
-  song: any;
-  onSave: any;
+  song: any | null;
+  onSave: (data: any) => Promise<void>;
 }) {
   const { closeModal } = useModal();
+  const isEdit = Boolean(song);
 
-  const [formData, setFormData] = useState({
-    title: "",
-    artist: "",
-    genre: "",
-  });
+  const [title, setTitle] = useState("");
+  const [artist, setArtist] = useState("");
+  const [genre, setGenre] = useState("");
+  const [audioFile, setAudioFile] = useState<File | null>(null);
 
-  // Nếu edit → nạp dữ liệu
   useEffect(() => {
     if (song) {
-      setFormData({
-        title: song.title ?? "",
-        artist: song.artists?.name ?? "",
-        genre: song.genre ?? "",
-      });
+      setTitle(song.title ?? "");
+      setArtist(song.artist_name ?? "");
+      setGenre(song.genre ?? "");
     }
   }, [song]);
 
-  const handleSubmit = () => {
-    onSave({
-      title: formData.title,
-      genre: formData.genre,
-      artistName: formData.artist,
-    });
+  const handleSubmit = async () => {
+    if (!title) {
+      alert("Thiếu title");
+      return;
+    }
+
+    // ADD → FormData (có file)
+    if (!isEdit) {
+      if (!audioFile) {
+        alert("Phải chọn file nhạc");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("artist", artist);
+      formData.append("genre", genre);
+      formData.append("audioFile", audioFile);
+
+      await onSave(formData);
+    }
+
+    // EDIT → JSON (không file)
+    else {
+      await onSave({
+        title,
+        artist,
+        genre,
+      });
+    }
     closeModal();
   };
 
   return (
     <div className={styles.modal}>
-      <h3>{song ? "Edit Song" : "Add New Song"}</h3>
+      <h3>{isEdit ? "Edit Song" : "Add New Song"}</h3>
 
       <input
         type="text"
         placeholder="Song Title"
-        value={formData.title}
-        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
       />
 
       <input
         type="text"
         placeholder="Artist"
-        value={formData.artist}
-        onChange={(e) => setFormData({ ...formData, artist: e.target.value })}
+        value={artist}
+        onChange={(e) => setArtist(e.target.value)}
       />
 
       <input
         type="text"
         placeholder="Genre"
-        value={formData.genre}
-        onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
+        value={genre}
+        onChange={(e) => setGenre(e.target.value)}
       />
+
+      {!isEdit && (
+        <input
+          type="file"
+          accept="audio/*"
+          onChange={(e) => e.target.files && setAudioFile(e.target.files[0])}
+        />
+      )}
 
       <div className={styles.modalActions}>
         <button className={styles.saveBtn} onClick={handleSubmit}>

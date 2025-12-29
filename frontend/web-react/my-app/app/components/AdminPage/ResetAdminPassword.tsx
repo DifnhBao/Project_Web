@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useModal } from "@/app/context/ModalContext";
 import { changeAdminPassword } from "@/app/utils/accountApi";
 import { User } from "@/app/types/music";
+import { validatePassword } from "@/app/utils/passwordValidator";
 import "@/app/styles/AdminPage/addAdmin.css";
 
 export default function ResetAdminPassword({ admin }: { admin: User }) {
@@ -17,6 +18,12 @@ export default function ResetAdminPassword({ admin }: { admin: User }) {
 
     if (newPassword !== confirmPW) {
       alert("Mật khẩu xác nhận không khớp");
+      return;
+    }
+
+    const passwordError = validatePassword(newPassword);
+    if (passwordError) {
+      alert(passwordError);
       return;
     }
 

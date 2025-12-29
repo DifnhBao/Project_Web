@@ -9,6 +9,7 @@ import {
   updateSong,
   deleteSong,
   toggleSongVisibility,
+  createSong,
 } from "@/app/utils/songApi";
 import Pagination from "@/app/components/Pagination";
 import { formatDuration, formatDate } from "@/app/utils/dateHelper";
@@ -47,8 +48,17 @@ function SongManagement() {
   const openAddModal = () => {
     openModal("song-form", {
       song: null,
-      onSave: (newSong: any) => {
-        setSongs([...songs, { id: Date.now(), ...newSong }]);
+      onSave: async (formData: FormData) => {
+        try {
+          const res = await createSong(formData);
+
+          alert(res.message || "Thêm bài hát thành công!");
+
+          setSongs((prev) => [res.data, ...prev]);
+        } catch (error: any) {
+          alert(error.message || "Thêm bài hát thất bại");
+          throw error; 
+        }
       },
     });
   };
@@ -59,7 +69,9 @@ function SongManagement() {
       onSave: async (updatedData: any) => {
         const res = await updateSong(song.song_id, updatedData);
 
-        setSongs(songs.map((s) => (s.song_id === song.song_id ? res.data : s)));
+        setSongs((prev) =>
+          prev.map((s) => (s.song_id === song.song_id ? res.data : s))
+        );
       },
     });
   };
@@ -99,14 +111,15 @@ function SongManagement() {
       setLoading(false);
     }
   };
+  console.log('songs: ', songs)
 
   return (
     <div className={styles.container}>
       <h2 className={styles.header}>Song Management</h2>
 
-      {/* <button className={styles.addButton} onClick={openAddModal}>
+      <button className={styles.addButton} onClick={openAddModal}>
         + Add New Song
-      </button> */}
+      </button>
 
       <table className={styles.songTable}>
         <colgroup>

@@ -2,9 +2,8 @@ import { URL } from "./authApi";
 import { Track } from "../types/music";
 import { adminFetch, userFetch } from "./refreshToken";
 
-export async function fetchDailySongs(limit = 20): Promise<Track[]> {
-  const res = await fetch(`${URL}/songs?limit=${limit}`);
-
+export async function fetchDailySongs(limit = 20, page = 1): Promise<Track[]> {
+  const res = await fetch(`${URL}/songs?limit=${limit}&page=${page}`);
   if (!res.ok) {
     throw new Error("Failed to fetch songs");
   }
@@ -34,6 +33,7 @@ export async function fetchDailySongs(limit = 20): Promise<Track[]> {
 }
 
 // lấy tất cả bài hát có phân trang cho trang quản trị
+
 export async function fetchSongsForManage({
   page = 1,
   limit = 10,
@@ -170,4 +170,19 @@ export async function searchSongs(
 
   const json = await res.json();
   return json.data;
+}
+
+export async function createSong(formData: FormData) {
+  const res = await adminFetch(`${URL}/songs`, {
+    method: "POST",
+    credentials: "include",
+    body: formData, //
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || "Create song failed");
+  }
+
+  return res.json();
 }

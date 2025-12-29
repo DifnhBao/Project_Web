@@ -63,7 +63,7 @@ const loginUser = async (userData) => {
     username: user.username,
   });
 
-  // Lưu refresh token (VD: 7 ngày)
+  // Lưu refresh token 
   const expiresAt = new Date();
   expiresAt.setDate(expiresAt.getDate() + 7);
 

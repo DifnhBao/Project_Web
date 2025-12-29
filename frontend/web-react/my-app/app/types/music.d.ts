@@ -42,6 +42,7 @@ export interface User {
   email: string;
   role: string;
   activity_status: string;
+  
 }
 
 export interface UserProfileData {

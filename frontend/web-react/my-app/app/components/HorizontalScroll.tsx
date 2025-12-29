@@ -1,14 +1,16 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
 interface HorizontalScrollProps {
   children: React.ReactNode;
   scrollAmount?: number;
+  onReachEnd?: () => void;
 }
 
 const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   children,
   scrollAmount = 1000,
+  onReachEnd,
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -19,6 +21,25 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   const scrollRight = () => {
     scrollRef.current?.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    if (!onReachEnd || !scrollRef.current) return;
+
+    const el = scrollRef.current;
+
+    const handleScroll = () => {
+      const threshold = 200; 
+      const isNearEnd =
+        el.scrollLeft + el.clientWidth >= el.scrollWidth - threshold;
+
+      if (isNearEnd) {
+        onReachEnd();
+      }
+    };
+
+    el.addEventListener("scroll", handleScroll);
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, [onReachEnd]);
 
   return (
     <div

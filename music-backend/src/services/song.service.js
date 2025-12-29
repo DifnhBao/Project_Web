@@ -11,26 +11,66 @@ const {
 const { Op } = require("sequelize");
 const cloudinary = require("cloudinary").v2;
 const { Sequelize } = require("sequelize");
+const { v4: uuidv4 } = require("uuid");
 
 /* --- CHỨC NĂNG CHO USER --- */
 
-const createSong = async (songData, audioUrl) => {
-  const { title, artist_id, album_id, genre_id, duration } = songData;
+// const createSong = async (songData, audioUrl) => {
+//   const { title, artist_id, album_id, genre_id, duration } = songData;
 
-  const newSong = await Song.create({
-    title,
-    artist_id,
-    album_id,
-    genre_id,
-    duration: parseInt(duration) || 0,
-    audio_url: audioUrl,
-    view_count: 0,
-  });
+//   const newSong = await Song.create({
+//     title,
+//     artist_id,
+//     album_id,
+//     genre_id,
+//     duration: parseInt(duration) || 0,
+//     audio_url: audioUrl,
+//     view_count: 0,
+//   });
 
-  return newSong;
-};
+//   return newSong;
+// };
 
 // Lấy tất cả bài hát
+
+const createSong = async ({ title, artist, genre, audio_url }) => {
+  let artistRecord = null;
+
+  // 1. Nếu có artist name → tìm hoặc tạo artist
+  if (artist) {
+    [artistRecord] = await Artist.findOrCreate({
+      where: { name: artist },
+      defaults: {
+        jamendo_id: `upload-${uuidv4()}`,
+        image_url: null,
+      },
+    });
+  }
+
+  // 2. Tạo song
+  const newSong = await Song.create({
+    jamendo_id: `upload-${uuidv4()}`,
+    title,
+    artist_name: artist || null,
+    artist_id: artistRecord ? artistRecord.artist_id : null,
+    genre: genre || "Other",
+    audio_url,
+    duration: 0,
+    view_count: 0,
+    is_visible: true,
+  });
+
+  // fetch lại có include
+  const songWithArtist = await Song.findByPk(newSong.song_id, {
+    include: {
+      model: Artist,
+      as: "artists",
+    },
+  });
+
+  return songWithArtist;
+};
+
 const getAllSongs = async ({ page, limit, search }) => {
   const offset = (page - 1) * limit;
 
@@ -81,30 +121,48 @@ const getSongById = async (songId) => {
   return song;
 };
 
-let cachedSongs = null;
-let cacheExpiredAt = 0;
-async function getSongs({ limit = 20 }) {
-  if (cachedSongs && Date.now() < cacheExpiredAt) {
-    return cachedSongs;
-  }
+// let cachedSongs = null;
+// let cacheExpiredAt = 0;
+// async function getSongs({ limit = 20 }) {
+//   if (cachedSongs && Date.now() < cacheExpiredAt) {
+//     return cachedSongs;
+//   }
 
-  const songs = await Song.findAll({
-    where: {
-      is_visible: true,
-    },
-    order: Sequelize.literal("RAND()"),
+//   const songs = await Song.findAll({
+//     where: {
+//       is_visible: true,
+//     },
+//     order: Sequelize.literal("RAND()"),
+//     limit: Number(limit),
+//   });
+
+//   cachedSongs = {
+//     limit: Number(limit),
+//     total: songs.length,
+//     songs,
+//   };
+
+//   cacheExpiredAt = Date.now() + 1000 * 60 * 30;
+
+//   return cachedSongs;
+// }
+
+async function getSongs({ page = 1, limit = 20 }) {
+  const offset = (page - 1) * limit;
+
+  const { rows: songs, count } = await Song.findAndCountAll({
+    where: { is_visible: true },
+    order: [["fetched_at", "DESC"]],
     limit: Number(limit),
+    offset,
   });
 
-  cachedSongs = {
+  return {
+    page: Number(page),
     limit: Number(limit),
-    total: songs.length,
+    total: count,
     songs,
   };
-
-  cacheExpiredAt = Date.now() + 1000 * 60 * 30;
-
-  return cachedSongs;
 }
 
 const incrementSongView = async (songId) => {
