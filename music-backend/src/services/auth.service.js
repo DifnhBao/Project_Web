@@ -63,7 +63,7 @@ const loginUser = async (userData) => {
     username: user.username,
   });
 
-  // Lưu refresh token 
+  // Lưu refresh token
   const expiresAt = new Date();
   expiresAt.setDate(expiresAt.getDate() + 7);
 
@@ -260,6 +260,7 @@ const refreshAdminToken = async (refreshTokenFromClient) => {
 
   return { accessToken };
 };
+
 
 module.exports = {
   registerUser,

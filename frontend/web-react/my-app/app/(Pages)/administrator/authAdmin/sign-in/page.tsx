@@ -83,10 +83,10 @@ export default function SignInAdminPage() {
           Sign In
         </button>
       </form>
-      {/* <div className="fogot-password">
+      <div className="fogot-password">
         <a href="#">Forgot your password?</a>
       </div>
-      <p>
+      {/* <p>
         Not registered?{" "}
         <a className="create" onClick={() => openModal("register-admin")}>
           Create an account

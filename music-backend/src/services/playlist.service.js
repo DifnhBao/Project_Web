@@ -95,7 +95,7 @@ async function getTodayDailyMix() {
       {
         model: Song,
         through: {
-          attributes: [], // KHÔNG lấy gì từ bảng trung gian
+          attributes: [],
         },
       },
     ],

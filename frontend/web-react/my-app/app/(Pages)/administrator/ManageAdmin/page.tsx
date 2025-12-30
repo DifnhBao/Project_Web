@@ -44,17 +44,21 @@ export default function ManageAdmin() {
               <div>{admin.username}</div>
               <div>{admin.email}</div>
               <div>{admin.role}</div>
-              <div
-                className={
-                  admin.account_status
-                    ? `${styles.status} ${styles.active}`
-                    : `${styles.status} ${styles.inactive}`
-                }
-              >
-                {admin.account_status ? "actived" : "pending"}
-              </div>
+              <div className={`${styles.status} ${styles.active}`}>actived</div>
               <div className={stylesUser.rowOption}>
-                {admin.account_status === "pending" ? (
+                <button
+                  className={stylesUser.edit}
+                  onClick={() => openModal("reset-admin-password", admin)}
+                >
+                  Edit
+                </button>
+                <button
+                  className={stylesUser.delete}
+                  onClick={() => deleteAdmin(admin.userId)}
+                >
+                  Delete
+                </button>
+                {/* {admin.account_status === "pending" ? (
                   <>
                     <button
                       className={stylesUser.edit}
@@ -82,9 +86,9 @@ export default function ManageAdmin() {
                       onClick={() => deleteAdmin(admin.userId)}
                     >
                       Delete
-                    </button>
-                  </>
-                )}
+                    </button> */}
+                {/* </> */}
+                {/* )} */}
               </div>
             </div>
           ))}
