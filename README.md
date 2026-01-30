@@ -1,5 +1,4 @@
 # Jamendo Music Management System (Fullstack)
-
 Một ứng dụng web nghe nhạc trực tuyến hoàn chỉnh được xây dựng theo mô hình **MVC (Model–View–Controller)**, tích hợp quản lý tài khoản người dùng, thư viện nhạc và dữ liệu thực tế từ **Jamendo API**.
 
 ## Tech Stack
@@ -12,6 +11,7 @@ Một ứng dụng web nghe nhạc trực tuyến hoàn chỉnh được xây d�
 **External API:** Jamendo API  
 
 ## Key Features
+
 ### For Users
 - **Authentication:** Đăng ký, đăng nhập bảo mật bằng **JWT**  
 - **Music Library:** Xem danh sách bài hát, và thêm vào danh sách yêu thích  
@@ -32,9 +32,10 @@ Dự án đã được cấu hình sẵn với **Docker**, giúp bạn triển k
 - (Tùy chọn) **Node.js** nếu chạy local không dùng container  
 
 ### Step-by-Step
+
 1. **Clone repository:**
 ```
-git clone [https://github.com/DifnhBao/Project_Web.git]
+git clone https://github.com/DifnhBao/Project_Web.git
 cd Project-web
 ```
 
@@ -49,11 +50,13 @@ docker-compose up --build
 - **MySQL:** Chạy tại port `3307` (Tránh xung đột với MySQL máy thật)
 
 ## Security Implementation
+
 Hệ thống sử dụng cơ chế **Double Token (Access & Refresh Token)** để bảo mật phiên đăng nhập của người dùng:
 - **Access Token:** Thời hạn ngắn (15 phút), dùng để xác thực các request.
 - **Refresh Token:** Thời hạn dài (7 ngày), dùng để cấp mới Access Token mà không bắt người dùng đăng nhập lại.
 
 ## Contact
+
 - **Author:** Lê Đình Bảo & Huỳnh Đình Thạch - Sinh viên CNTT PTIT HCM
 - **Email:** [ddinhbao05@gmail.com](mailto:ddinhbao05@gmail.com)
 
