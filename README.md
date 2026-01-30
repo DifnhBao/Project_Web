@@ -33,17 +33,18 @@ Dự án được cấu hình sẵn với **Docker**, giúp bạn triển khai m
 - (Tùy chọn) Node.js nếu chạy local không dùng container  
 
 ### Step-by-Step
-1. 1. **Clone repository:**
+1. **Clone repository:**
 ```bash
 git clone [link-github-cua-ban]
 cd Project-web
 ```
 
-2. 2. **Environment Variables:** Dự án đã cấu hình sẵn biến môi trường trong docker-compose.yml. Bạn có thể tùy chỉnh các thông số như JWT_SECRET hoặc mật khẩu Database nếu cần.
+2. **Environment Variables:** Dự án đã cấu hình sẵn biến môi trường trong docker-compose.yml. Bạn có thể tùy chỉnh các thông số như JWT_SECRET hoặc mật khẩu Database nếu cần.
 
-3. 3. **Run with Docker Compose:**
+3. **Run with Docker Compose:**
 ```bash
 docker-compose up --build
+```
 - **Frontend:** Chạy tại http://localhost:3000
 - **Backend:** Chạy tại http://localhost:5000
 - **MySQL:** Chạy tại port 3307 (Tránh xung đột với MySQL máy thật)
@@ -56,5 +57,5 @@ Hệ thống sử dụng cơ chế **Double Token (Access & Refresh Token)** đ�
 
 ## Contact
 - **Author:** Lê Đình Bảo & Huỳnh Đình Thạch - Sinh viên CNTT PTIT HCM
-- **Email:** ddinhbao05@gmail.com
+- **Email:** [ddinhbao05@gmail.com](mailto:ddinhbao05@gmail.com)
 
