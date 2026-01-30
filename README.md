@@ -2,9 +2,7 @@
 
 Một ứng dụng web nghe nhạc trực tuyến hoàn chỉnh được xây dựng theo mô hình **MVC (Model–View–Controller)**, tích hợp quản lý tài khoản người dùng, thư viện nhạc và dữ liệu thực tế từ **Jamendo API**.
 
----
-
-## 🚀 Tech Stack
+## Tech Stack
 **Frontend:** Next.js, TypeScript  
 **Backend:** Node.js (Express)
 **Database:** MySQL  
@@ -15,8 +13,8 @@ Một ứng dụng web nghe nhạc trực tuyến hoàn chỉnh được xây d�
 
 ---
 
-## ✨ Key Features
-### 👤 For Users
+## Key Features
+### For Users
 - **Authentication:** Đăng ký, đăng nhập bảo mật bằng JWT  
 - **Music Library:** Xem danh sách bài hát, và thêm vào danh sách yêu thích  
 - **Profile Management:** Xem và cập nhật thông tin cá nhân (Tên, năm sinh, địa chỉ, SĐT)  
@@ -24,7 +22,7 @@ Một ứng dụng web nghe nhạc trực tuyến hoàn chỉnh được xây d�
 
 ---
 
-### 🛡️ For Administrators
+### For Administrators
 - **Admin Dashboard:** Hệ thống đăng nhập riêng cho quản trị viên  
 - **User Management:** Quản lý người dùng (Xóa, sửa thông tin)  
 - **Content Management:** Quản lý kho nhạc (Thêm, sửa, xóa, ẩn/hiện bài hát)  
@@ -32,7 +30,7 @@ Một ứng dụng web nghe nhạc trực tuyến hoàn chỉnh được xây d�
 
 ---
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 Dự án được cấu hình sẵn với **Docker**, giúp bạn triển khai môi trường phát triển nhanh chóng.
 
 ### Prerequisites
@@ -56,17 +54,18 @@ docker-compose up --build
 - **Frontend:** Chạy tại http://localhost:3000
 - **Backend:** Chạy tại http://localhost:5000
 - **MySQL:** Chạy tại port 3307 (Tránh xung đột với MySQL máy thật)
+```
 
 ---
 
-## 🔒 Security Implementation
+## Security Implementation
 Hệ thống sử dụng cơ chế **Double Token (Access & Refresh Token)** để bảo mật phiên đăng nhập của người dùng:
 - **Access Token:** Thời hạn ngắn (15 phút), dùng để xác thực các request.
 - **Refresh Token:** Thời hạn dài (7 ngày), dùng để cấp mới Access Token mà không bắt người dùng đăng nhập lại.
 
 ---
 
-## 📧 Contact
+## Contact
 - **Author:** Lê Đình Bảo & Huỳnh Đình Thạch - Sinh viên CNTT PTIT HCM
 - **Email:** ddinhbao05@gmail.com
 
